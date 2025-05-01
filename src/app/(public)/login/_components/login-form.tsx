@@ -35,6 +35,7 @@ export const LoginForm = () => {
                   width={200}
                   height={200}
                   className="object-cover size-full"
+                  priority
                 />
               </div>
               <span className="sr-only">Solvus</span>
