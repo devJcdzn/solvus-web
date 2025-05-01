@@ -21,23 +21,23 @@ export function middleware(request: NextRequest) {
 	// const adminToken = request.cookies.get("admin@solvus-token");
 	const loginToken = request.cookies.get("login@solvus-token");
 
-	if (!loginToken && publicRoute) {
-		return NextResponse.next();
-	}
+	// if (!loginToken && publicRoute) {
+	// 	return NextResponse.next();
+	// }
 
-	if (!loginToken && !publicRoute) {
-		const redirectUrl = request.nextUrl.clone();
-		redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICATED;
+	// if (!loginToken && !publicRoute) {
+	// 	const redirectUrl = request.nextUrl.clone();
+	// 	redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICATED;
 
-		return NextResponse.redirect(redirectUrl);
-	}
+	// 	return NextResponse.redirect(redirectUrl);
+	// }
 
-	if (loginToken && publicRoute && publicRoute.whenAuth === "redirect") {
-		const redirectUrl = request.nextUrl.clone();
-		redirectUrl.pathname = REDIRECT_WHEN_AUTHENTICATED;
+	// if (loginToken && publicRoute && publicRoute.whenAuth === "redirect") {
+	// 	const redirectUrl = request.nextUrl.clone();
+	// 	redirectUrl.pathname = REDIRECT_WHEN_AUTHENTICATED;
 
-		return NextResponse.redirect(redirectUrl);
-	}
+	// 	return NextResponse.redirect(redirectUrl);
+	// }
 
 	if (loginToken && !publicRoute) {
 		// Check token expires in
