@@ -1,0 +1,8 @@
+### Need to use REST CLIENT EXTENSION
+POST http://app.solvus.io/rest/login
+Content-Type: application/json
+
+{
+  "email": "email@email.com",
+  "senha": "senha123"
+}
