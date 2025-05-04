@@ -58,7 +58,7 @@ export const DashboardSidebar = () => {
   return (
     <aside
       className={cn(
-        "pt-6 px-4 border transition-transform sm:ml-4 sm:my-4 sm:rounded-xl bg-background flex flex-col items-center min-h-screen sm:min-h-auto",
+        "pt-6 px-4 border transition-transform sm:ml-4 sm:my-4 sm:rounded-xl bg-background flex flex-col items-center min-h-screen sm:h-screen",
         "sm:static sm:translate-x-0 sm:w-20", // comportamento em telas médias+
         "fixed top-0 left-0 z-50 w-64", // comportamento mobile
         expanded
