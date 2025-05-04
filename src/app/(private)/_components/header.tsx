@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { Info } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { SidebarTrigger } from "./sidebar";
 
 const HeaderBreadcrumb = ({ path }: { path: string }) => {
   const segments = path.split("/").filter(Boolean); // remove vazios
@@ -50,7 +51,10 @@ export const DashboardHeader = () => {
 
   return (
     <header className="flex p-4 border justify-between items-center">
-      <HeaderBreadcrumb path={pathname} />
+      <div className="flex gap-3 items-center">
+        <SidebarTrigger />
+        <HeaderBreadcrumb path={pathname} />
+      </div>
       <div className="flex items-center gap-4 p-2 rounded-full bg-background">
         <form action="">
           <Input
