@@ -104,7 +104,7 @@ export const DashboardSidebar = () => {
           {sidebarLinks.map((link) => (
             <Link
               key={link.path}
-              className="flex gap-2 p-2 rounded hover:bg-secondary transition-colors 
+              className="flex p-2 rounded hover:bg-secondary transition-colors 
               items-center text-slate-950"
               href={link.path}
             >
@@ -114,7 +114,7 @@ export const DashboardSidebar = () => {
                   "transition-all whitespace-nowrap",
                   expanded
                     ? "opacity-100 ml-2"
-                    : "opacity-0 ml-0 w-0 overflow-hidden"
+                    : "opacity-0 ml-0 w-0 hidden overflow-hidden"
                 )}
               >
                 {link.title}

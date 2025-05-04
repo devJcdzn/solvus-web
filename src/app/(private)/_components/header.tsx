@@ -24,7 +24,7 @@ const HeaderBreadcrumb = ({ path }: { path: string }) => {
   );
 
   return (
-    <Breadcrumb>
+    <Breadcrumb className="hidden sm:block">
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink href="/">Dashboard</BreadcrumbLink>
@@ -50,13 +50,13 @@ export const DashboardHeader = () => {
   console.log(pathname);
 
   return (
-    <header className="flex p-4 border justify-between items-center">
+    <header className="flex p-3 w-full justify-between items-center">
       <div className="flex gap-3 items-center">
         <SidebarTrigger />
         <HeaderBreadcrumb path={pathname} />
       </div>
       <div className="flex items-center gap-4 p-2 rounded-full bg-background">
-        <form action="">
+        <form action="" className="hidden sm:block">
           <Input
             type="text"
             placeholder="Pesquisar"
