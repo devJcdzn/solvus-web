@@ -1,4 +1,5 @@
 import { MultiBarChart } from "@/components/bar-chart";
+import { DashboardPieChart } from "@/components/pie-chart";
 import { FilterData } from "./_components/filter-data";
 
 export default function Home() {
@@ -9,6 +10,7 @@ export default function Home() {
       </div>
       <div className="grid grid-cols-2 gap-4">
         <MultiBarChart />
+        <DashboardPieChart />
       </div>
     </div>
   );

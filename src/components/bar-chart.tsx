@@ -76,7 +76,7 @@ export const MultiBarChart = () => {
             />
             <ChartTooltip
               cursor={false}
-              content={<ChartTooltipContent indicator="dashed" />}
+              content={<ChartTooltipContent indicator="dot" />}
             />
             <Bar dataKey="platform" fill="var(--color-platform)" radius={12} />
             <Bar dataKey="messages" fill="var(--color-messages)" radius={12} />
