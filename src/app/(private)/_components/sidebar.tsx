@@ -58,7 +58,7 @@ export const DashboardSidebar = () => {
   return (
     <aside
       className={cn(
-        "pt-6 px-4 border-r transition-transform bg-background flex flex-col items-center min-h-screen",
+        "pt-6 px-4 border transition-transform sm:ml-4 sm:my-4 sm:rounded-xl bg-background flex flex-col items-center min-h-screen sm:min-h-auto",
         "sm:static sm:translate-x-0 sm:w-20", // comportamento em telas médias+
         "fixed top-0 left-0 z-50 w-64", // comportamento mobile
         expanded
@@ -125,18 +125,18 @@ export const DashboardSidebar = () => {
       </div>
 
       {/* Footer */}
-      <footer className="py-4">
-        <div className="flex items-center gap-8 justify-between">
+      <footer className="py-4 w-full">
+        <div className="flex items-center justify-between">
           <div
             className={cn(
-              "flex items-center transition-all overflow-hidden",
+              "flex items-center gap-2 flex-1 transition-all overflow-hidden",
               !expanded ? "w-0 hidden" : ""
             )}
           >
-            <Avatar className="size-12">
+            <Avatar className="size-10">
               <AvatarFallback>J</AvatarFallback>
             </Avatar>
-            <span className="text-slate-950 text-xs">Jean Carlos</span>
+            <span className="text-slate-950 text-xs">Jean</span>
           </div>
           <Button variant={"ghost"}>
             <LogOut className="size-5" />
