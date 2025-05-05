@@ -162,12 +162,12 @@ export const SidebarProvider = ({ children }: { children: ReactNode }) => {
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 
   useEffect(() => {
-    setExpanded(isDesktop); // autoexpande somente em telas grandes
+    setExpanded(isDesktop);
   }, [isDesktop]);
 
   return (
     <SidebarContext.Provider value={{ expanded, setExpanded }}>
-      <main className="flex min-h-screen bg-secondary">
+      <main className="flex min-h-screen bg-secondary overflow-hidden">
         {expanded && (
           // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
           <div
@@ -176,7 +176,7 @@ export const SidebarProvider = ({ children }: { children: ReactNode }) => {
           />
         )}
         <DashboardSidebar />
-        <div className="py-6 px-4 w-full">{children}</div>
+        <div className="py-6 px-4 w-full overflow-auto">{children}</div>
       </main>
     </SidebarContext.Provider>
   );

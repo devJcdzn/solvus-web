@@ -12,23 +12,38 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
 export const FilterData = () => {
+  const pathname = usePathname();
+  const { replace } = useRouter();
+
   const [date, setDate] = useState<DateRange | undefined>({
     from: new Date(2022, 0, 20),
     to: addDays(new Date(2022, 0, 20), 20),
   });
 
+  const handleFilter = () => {
+    const params = new URLSearchParams();
+
+    if (date?.from && date.to) {
+      params.set("from", date?.from.toString());
+      params.set("to", date?.to?.toString());
+    }
+
+    replace(`${pathname}?${params.toString()}`);
+  };
+
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex flex-col sm:flex-row items-center gap-2">
       <div className={cn("grid gap-2")}>
         <Popover>
           <PopoverTrigger asChild>
             <Button
               variant={"outline"}
               className={cn(
-                "w-[250px] justify-start text-left font-normal",
+                "w-full sm:w-[220px] justify-start text-left font-normal",
                 !date && "text-muted-foreground"
               )}
             >
@@ -59,7 +74,13 @@ export const FilterData = () => {
           </PopoverContent>
         </Popover>
       </div>
-      <Button className="bg-foreground hover:bg-foreground/90">Filtrar</Button>
+      <Button
+        onClick={handleFilter}
+        size={"sm"}
+        className="bg-foreground hover:bg-foreground/90"
+      >
+        Filtrar
+      </Button>
     </div>
   );
 };
