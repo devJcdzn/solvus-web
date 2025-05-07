@@ -43,7 +43,7 @@ export function DashboardPieChart() {
   return (
     <Card className="flex flex-col px-4 py-3 gap-3 border-none">
       <CardHeader className="">
-        <CardTitle className="text-2xl">Assistentes mais usados</CardTitle>
+        <CardTitle className="text-2xl text-center sm:text-left">Assistentes mais usados</CardTitle>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
@@ -56,7 +56,7 @@ export function DashboardPieChart() {
           </PieChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col pt-2 border-t text-sm text-muted-foreground text-center">
+      <CardFooter className="flex-col pt-2 border-t text-xs sm:text-sm text-muted-foreground text-center">
         O relatório visa monitorar o crescimento contínuo das atividades da
         comunidade, sinalizando possíveis quedas quando os dados se mostram
         estagnados.
