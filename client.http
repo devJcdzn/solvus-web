@@ -3,6 +3,6 @@ POST http://app.solvus.io/rest/login
 Content-Type: application/json
 
 {
-  "email": "email@email.com",
-  "senha": "senha123"
+  "email": "lopesjean81@gmail.com",
+  "senha": "123456"
 }
