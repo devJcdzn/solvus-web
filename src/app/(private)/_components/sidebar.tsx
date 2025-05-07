@@ -176,7 +176,7 @@ export const SidebarProvider = ({ children }: { children: ReactNode }) => {
           />
         )}
         <DashboardSidebar />
-        <div className="py-6 px-4 w-full overflow-auto">{children}</div>
+        <div className="py-6 px-4 w-full overflow-auto min-h-screen flex flex-col">{children}</div>
       </main>
     </SidebarContext.Provider>
   );
