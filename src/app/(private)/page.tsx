@@ -7,11 +7,11 @@ import { FilterData } from "./_components/filter-data";
 export default function Home() {
   return (
     <div className="p-6 mt-5 bg-background rounded-xl border">
-      <div className="flex items-center justify-center sm:justify-between mb-6">
+      <div className="flex gap-2 w-full  flex-col sm:flex-row items-center justify-between mb-6">
         <FilterData />
-        <Button size={"sm"} variant={"outline"}>
+        <Button size={"sm"} variant={"outline"} className="w-full sm:w-fit">
           <Download />
-          Download Data
+          Baixar dados
         </Button>
       </div>
       <div className="grid sm:grid-cols-2 gap-4">

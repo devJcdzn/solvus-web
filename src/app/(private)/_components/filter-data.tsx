@@ -1,7 +1,7 @@
 "use client";
 
 import { addDays, format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, Filter } from "lucide-react";
 import type { DateRange } from "react-day-picker";
 
 import { Button } from "@/components/ui/button";
@@ -20,30 +20,30 @@ export const FilterData = () => {
   const { replace } = useRouter();
 
   const [date, setDate] = useState<DateRange | undefined>({
-    from: new Date(2022, 0, 20),
-    to: addDays(new Date(2022, 0, 20), 20),
+    from: addDays(new Date(), -7),
+    to: new Date(),
   });
 
   const handleFilter = () => {
     const params = new URLSearchParams();
 
     if (date?.from && date.to) {
-      params.set("from", date?.from.toString());
-      params.set("to", date?.to?.toString());
+      params.set("from", format(date.from, "dd-MM-yyyy"));
+      params.set("to", format(date.to, "dd-MM-yyyy"));
     }
 
     replace(`${pathname}?${params.toString()}`);
   };
 
   return (
-    <div className="flex flex-col sm:flex-row items-center gap-2">
-      <div className={cn("grid gap-2")}>
+    <div className="flex items-center justify-between gap-2 w-full sm:w-fit">
+      <div className={cn("grid gap-2 flex-1 sm:flex-none")}>
         <Popover>
           <PopoverTrigger asChild>
             <Button
               variant={"outline"}
               className={cn(
-                "w-full sm:w-[220px] justify-start text-left font-normal",
+                "w-full sm:w-[250px]justify-start text-left font-normal",
                 !date && "text-muted-foreground"
               )}
             >
@@ -77,9 +77,10 @@ export const FilterData = () => {
       <Button
         onClick={handleFilter}
         size={"sm"}
-        className="bg-foreground hover:bg-foreground/90"
+        className="bg-foreground w-fit rounded-lg sm:w-auto hover:bg-foreground/90"
       >
-        Filtrar
+        <Filter className="size-4" />
+        <span className="sr-only">Filtrar</span>
       </Button>
     </div>
   );

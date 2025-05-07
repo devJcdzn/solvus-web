@@ -13,7 +13,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     <SidebarProvider>
       <DashboardHeader />
       {children}
-      <footer className="fixed bottom-0 text-muted-foreground py-3 px-4 rounded-xl ">
+      <footer className="sticky bottom-0 text-muted-foreground py-3 px-4 rounded-xl ">
         ©{new Date().getFullYear()} SOLVUS. Todos os direitos reservados.
       </footer>
     </SidebarProvider>
