@@ -1,5 +1,6 @@
 "use client";
 
+import { BarChartData } from "@/app/(private)/types/dashoboard";
 import {
   Card,
   CardContent,
@@ -14,33 +15,39 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { Users } from "lucide-react";
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
-
-const chartData = [
-  { month: "Segunda", platform: 186, messages: 80 },
-  { month: "Terça", platform: 305, messages: 200 },
-  { month: "Quarta", platform: 237, messages: 120 },
-  { month: "Quinta", platform: 73, messages: 190 },
-  { month: "Sexta", platform: 209, messages: 130 },
-  { month: "Sábado", platform: 214, messages: 140 },
-];
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 interface MultibarChartProps {
   primaryColor?: string;
-  secondarColor?: string;
+  secondaryColor?: string;
 }
 
-export const MultiBarChart = ({ team }: { team: MultibarChartProps }) => {
+export const MultiBarChart = ({
+  team,
+  data,
+}: {
+  team: MultibarChartProps;
+  data: BarChartData[];
+}) => {
   const chartConfig = {
-    platform: {
-      label: "Plataforma",
+    tokens: {
+      label: "Tokens",
       color: team.primaryColor || "var(--chart-1)",
     },
-    messages: {
-      label: "WhatsApp",
-      color: team.secondarColor || "var(--chart-2)",
+    requests: {
+      label: "Requisições",
+      color: team.secondaryColor || "var(--chart-2)",
+    },
+    cost: {
+      label: "Custo (USD)",
+      color: "#f59e0b",
     },
   } satisfies ChartConfig;
+
+  const totalCost = data.reduce((sum, item) => sum + item.cost, 0);
+  const totalRequests = data.reduce((sum, item) => sum + item.requests, 0);
+  const totalTokens = data.reduce((sum, item) => sum + item.tokens, 0);
+  const usageRate = totalTokens ? (totalRequests / totalTokens) * 100 : 0;
 
   return (
     <Card className="px-4 py-3 gap-3 border-none">
@@ -48,43 +55,78 @@ export const MultiBarChart = ({ team }: { team: MultibarChartProps }) => {
         <div className="size-12 p-2 grid place-items-center bg-border rounded-lg">
           <Users className="size-6 text-muted-foreground" />
         </div>
-        <div className="">
+        <div>
           <CardTitle className="text-2xl">1.4K</CardTitle>
           <CardDescription>Acessos na Semana</CardDescription>
         </div>
-        <span
-          className="py-1 absolute top-3 right-4 px-3 rounded 
-          bg-emerald-100 text-emerald-800 text-xs"
-        >
+        <span className="py-1 absolute top-3 right-4 px-3 rounded bg-emerald-100 text-emerald-800 text-xs">
           +50%
         </span>
       </CardHeader>
       <CardContent>
         <div className="flex justify-between items-center">
           <span className="text-sm text-muted-foreground">
-            Créditos gastos: <strong className="text-foreground">$2,232</strong>
+            Créditos gastos:{" "}
+            <strong className="text-foreground">${totalCost.toFixed(2)}</strong>
           </span>
           <span className="text-sm text-muted-foreground">
-            Taxa de Uso: <strong className="text-foreground">1.2%</strong>
+            Taxa de Uso:{" "}
+            <strong className="text-foreground">{usageRate.toFixed(3)}%</strong>
           </span>
         </div>
 
-        <ChartContainer config={chartConfig}>
-          <BarChart accessibilityLayer data={chartData}>
+        <ChartContainer config={chartConfig} className="mt-6">
+          <BarChart data={data}>
             <CartesianGrid vertical={false} />
+
             <XAxis
-              dataKey="month"
+              dataKey="date"
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
             />
+
+            {/* Eixos Y independentes */}
+            <YAxis yAxisId="left" tickLine={false} axisLine={false} />
+            <YAxis
+              yAxisId="right-1"
+              orientation="right"
+              tickLine={false}
+              axisLine={false}
+            />
+            <YAxis
+              yAxisId="right-2"
+              orientation="right"
+              tickLine={false}
+              axisLine={false}
+              hide
+            />
+
+            {/* Tooltip */}
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent indicator="dot" />}
             />
-            <Bar dataKey="platform" fill="var(--color-platform)" radius={12} />
-            <Bar dataKey="messages" fill="var(--color-messages)" radius={12} />
+
+            {/* Barras vinculadas aos eixos */}
+            <Bar
+              yAxisId="left"
+              dataKey="tokens"
+              fill={chartConfig.tokens.color}
+              radius={[4, 4, 0, 0]}
+            />
+            <Bar
+              yAxisId="right-1"
+              dataKey="requests"
+              fill={chartConfig.requests.color}
+              radius={[4, 4, 0, 0]}
+            />
+            <Bar
+              yAxisId="right-2"
+              dataKey="cost"
+              fill={chartConfig.cost.color}
+              radius={[4, 4, 0, 0]}
+            />
           </BarChart>
         </ChartContainer>
       </CardContent>

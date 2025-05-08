@@ -1,5 +1,17 @@
 "use server";
 
+import { format } from "date-fns";
+import {
+  BarChartData,
+  CompletionsOpenai,
+  CostsOpenai,
+  DashboardData,
+  PieChartData,
+} from "../types/dashoboard";
+import { api } from "@/lib/api";
+import { cookies } from "next/headers";
+import axios from "axios";
+
 const data = {
   time: {
     id: "2",
@@ -151,3 +163,88 @@ const data = {
     },
   ],
 };
+
+async function getData(startDate?: string, endDate?: string) {
+  const token = (await cookies()).get("login@solvus-token")?.value;
+
+  console.log(token);
+
+  const { data } = await axios.post<DashboardData>(
+    "http://app.solvus.io/rest/dashboard",
+    {
+      Authorization: `Bearer ${token}`,
+      startDate: "",
+      endDate: "",
+    }
+  );
+
+  return data;
+}
+
+export async function loadDashboardData() {
+  const { time, completions_openai, costs_openai } = data;
+
+  const [barChartData, pieChartData] = await Promise.all([
+    prepareBarChartData({
+      completions: completions_openai,
+      costs: costs_openai,
+    }),
+    preparePieChartData(costs_openai),
+  ]);
+
+  const teamData = {
+    primaryColor: time?.cor_primaria ?? undefined,
+    secondaryColor: time?.cor_secundaria ?? undefined,
+  };
+
+  return {
+    teamData,
+    barChartData,
+    pieChartData,
+  };
+}
+
+export async function prepareBarChartData({
+  completions,
+  costs,
+}: {
+  completions: CompletionsOpenai[];
+  costs: CostsOpenai[];
+}): Promise<BarChartData[]> {
+  return completions.map((bucket, index) => {
+    const date = format(new Date(bucket.start_time * 1000), "dd/MM");
+
+    const usage = bucket.results?.[0] ?? {
+      input_tokens: 0,
+      output_tokens: 0,
+      num_model_requests: 0,
+    };
+
+    const costResult = costs[index]?.results?.[0];
+    const cost = costResult ? costResult.amount.value : 0;
+
+    return {
+      date,
+      tokens: usage.input_tokens + usage.output_tokens,
+      requests: usage.num_model_requests,
+      cost: Number(cost.toFixed(2)),
+    };
+  });
+}
+
+export async function preparePieChartData(
+  costs: CostsOpenai[]
+): Promise<PieChartData[]> {
+  const costByOrg: Record<string, number> = {};
+
+  costs.forEach((c) => {
+    c.results.forEach((r) => {
+      const org = r.organization_id || "desconhecido";
+      const value = r.amount.value || 0;
+
+      costByOrg[org] = (costByOrg[org] || 0) + value;
+    });
+  });
+
+  return Object.entries(costByOrg).map(([name, value]) => ({ name, value }));
+}

@@ -12,5 +12,5 @@ POST http://app.solvus.io/rest/dashboard
 Content-Type: application/json
 
 {
-  "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDY2NzY0NDQsImV4cCI6MTc0NjY4MDA0NCwidWlkIjoiMTMiLCJlbWFpbCI6ImRhbmFAZ21haWwuY29tIiwibm9tZSI6IkRhbmEifQ.uHEnsnbpZ30ey3x6K5liErsWYaMswiAFOSweAwS1y64"
+  "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDY3MzcwNzYsImV4cCI6MTc0Njc0MDY3NiwidWlkIjoiMTMiLCJlbWFpbCI6ImRhbmFAZ21haWwuY29tIiwibm9tZSI6IkRhbmEifQ.CTT0X_vh3QaJexmUlg4T58ohpEZDPzHPAz31w_fmT1Q"
 }
