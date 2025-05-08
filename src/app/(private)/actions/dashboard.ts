@@ -8,11 +8,10 @@ import {
   DashboardData,
   PieChartData,
 } from "../types/dashoboard";
-import { api } from "@/lib/api";
 import { cookies } from "next/headers";
 import axios from "axios";
 
-const data = {
+const mockData = {
   time: {
     id: "2",
     logo: "uploads/images/logo-dana.png",
@@ -173,8 +172,8 @@ async function getData(startDate?: string, endDate?: string) {
     "http://app.solvus.io/rest/dashboard",
     {
       Authorization: `Bearer ${token}`,
-      startDate: "",
-      endDate: "",
+      startDate,
+      endDate,
     }
   );
 
@@ -182,7 +181,7 @@ async function getData(startDate?: string, endDate?: string) {
 }
 
 export async function loadDashboardData() {
-  const { time, completions_openai, costs_openai } = data;
+  const { time, completions_openai, costs_openai } = mockData;
 
   const [barChartData, pieChartData] = await Promise.all([
     prepareBarChartData({
