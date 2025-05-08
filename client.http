@@ -3,6 +3,14 @@ POST http://app.solvus.io/rest/login
 Content-Type: application/json
 
 {
-  "email": "lopesjean81@gmail.com",
+  "email": "dana@gmail.com",
   "senha": "123456"
+}
+
+### Need to use REST CLIENT EXTENSION
+POST http://app.solvus.io/rest/dashboard
+Content-Type: application/json
+
+{
+  "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDY2NzY0NDQsImV4cCI6MTc0NjY4MDA0NCwidWlkIjoiMTMiLCJlbWFpbCI6ImRhbmFAZ21haWwuY29tIiwibm9tZSI6IkRhbmEifQ.uHEnsnbpZ30ey3x6K5liErsWYaMswiAFOSweAwS1y64"
 }
