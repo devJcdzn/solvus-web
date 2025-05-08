@@ -21,29 +21,38 @@ const chartData = [
   { assistant: "fort", usage: 5250 / 100, fill: "var(--color-fort)" },
 ];
 
-const chartConfig = {
-  usage: {
-    label: "Uso",
-  },
-  "assist-rh": {
-    label: "Assist. RH",
-    color: "var(--chart-1)",
-  },
-  "tech-aut": {
-    label: "Tec. Aut.",
-    color: "var(--chart-2)",
-  },
-  fort: {
-    label: "FortBras",
-    color: "var(--chart-4)",
-  },
-} satisfies ChartConfig;
 
-export function DashboardPieChart() {
+
+interface PieChartProps {
+  primaryColor?: string;
+  secondarColor?: string;
+}
+export function DashboardPieChart({ team }: { team: PieChartProps }) {
+
+  const chartConfig = {
+    usage: {
+      label: "Uso",
+    },
+    "assist-rh": {
+      label: "Assist. RH",
+      color: team.primaryColor || "var(--chart-1)",
+    },
+    "tech-aut": {
+      label: "Tec. Aut.",
+      color: team.secondarColor || "var(--chart-2)",
+    },
+    fort: {
+      label: "FortBras",
+      color: "var(--chart-4)",
+    },
+  } satisfies ChartConfig;
+
   return (
     <Card className="flex flex-col px-4 py-3 gap-3 border-none">
       <CardHeader className="">
-        <CardTitle className="text-2xl text-center sm:text-left">Assistentes mais usados</CardTitle>
+        <CardTitle className="text-2xl text-center sm:text-left">
+          Assistentes mais usados
+        </CardTitle>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer

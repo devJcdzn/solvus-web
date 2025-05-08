@@ -25,18 +25,23 @@ const chartData = [
   { month: "Sábado", platform: 214, messages: 140 },
 ];
 
-const chartConfig = {
-  platform: {
-    label: "Plataforma",
-    color: "var(--chart-1)",
-  },
-  messages: {
-    label: "WhatsApp",
-    color: "var(--chart-2)",
-  },
-} satisfies ChartConfig;
+interface MultibarChartProps {
+  primaryColor?: string;
+  secondarColor?: string;
+}
 
-export const MultiBarChart = () => {
+export const MultiBarChart = ({ team }: { team: MultibarChartProps }) => {
+  const chartConfig = {
+    platform: {
+      label: "Plataforma",
+      color: team.primaryColor || "var(--chart-1)",
+    },
+    messages: {
+      label: "WhatsApp",
+      color: team.secondarColor || "var(--chart-2)",
+    },
+  } satisfies ChartConfig;
+
   return (
     <Card className="px-4 py-3 gap-3 border-none">
       <CardHeader className="relative border-b flex gap-2 items-center">
