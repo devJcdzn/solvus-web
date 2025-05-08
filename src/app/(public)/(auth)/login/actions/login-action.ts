@@ -17,15 +17,33 @@ export async function login(_formState: any, formData: FormData) {
   }
 
   try {
-    const { data } = await axios.post<UserData>(process.env.API_URL || "", {
-      email,
-      senha: password,
-    });
+    // const { data } = await axios.post<UserData>(process.env.API_URL || "", {
+    //   email,
+    //   senha: password,
+    // });
+
+    const data: UserData = {
+      token:
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDY2NjAzMDEsImV4cCI6MTc0NjY2MzkwMSwidWlkIjoiMjAiLCJlbWFpbCI6ImxvcGVzamVhbjgxQGdtYWlsLmNvbSIsIm5vbWUiOiJKZWFuIENhcmxvcyJ9.3qtLxF2pZfaLnHPdBepDSjYJcLZmNQJ_04AxsZ040Zw",
+      usuario: {
+        id: "20",
+        nome: "Jean Carlos",
+        email: "lopesjean81@gmail.com",
+      },
+      time: {
+        id: "1",
+        logo: "uploads/images/logo-solvus.png",
+        nome: "Solvus",
+        cor_primaria: "#8A2BE2",
+        cor_secundaria: "#8a2be2",
+        project_id: "proj_emBK9G1SxAtGhUjXApHhWIVF",
+      },
+    };
 
     console.table({ data });
 
     (await cookies()).set("login@solvus-token", data.token);
-	await setUserInfo(data.usuario, data.time);
+    await setUserInfo(data.usuario, data.time);
 
     return {
       success: true,
@@ -40,8 +58,8 @@ export async function login(_formState: any, formData: FormData) {
   }
 }
 
-export async function setUserInfo(user: Usuario, team: Time) {
-  const payload = JSON.stringify({ user, team });
+export async function setUserInfo(usuario: Usuario, time: Time) {
+  const payload = JSON.stringify({ usuario, time });
 
   (await cookies()).set("userinfo", payload, {
     path: "/",
@@ -51,13 +69,13 @@ export async function setUserInfo(user: Usuario, team: Time) {
 }
 
 export async function getSessionData() {
-	const userCookie = (await cookies()).get('userinfo')
-	if (!userCookie) return null
-  
-	try {
-	  const parsed = JSON.parse(userCookie.value)
-	  return parsed as { usuario: Usuario; time: Time }
-	} catch {
-	  return null
-	}
+  const userCookie = (await cookies()).get("userinfo");
+  if (!userCookie) return null;
+
+  try {
+    const parsed = JSON.parse(userCookie.value);
+    return parsed as { usuario: Usuario; time: Time };
+  } catch {
+    return null;
   }
+}

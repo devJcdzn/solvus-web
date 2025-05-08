@@ -1,20 +1,14 @@
 "use client";
 
+import { UserData } from "@/app/(public)/(auth)/types/user-data";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useMediaQuery } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
-import {
-  Bot,
-  FileClock,
-  Gauge,
-  LogOut,
-  MenuIcon,
-  Sparkles,
-  X,
-} from "lucide-react";
+import { Bot, FileClock, Gauge, LogOut, MenuIcon, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   type Dispatch,
   type ReactNode,
@@ -26,7 +20,11 @@ import {
 } from "react";
 
 const SidebarContext = createContext(
-  {} as { expanded: boolean; setExpanded: Dispatch<SetStateAction<boolean>> }
+  {} as {
+    expanded: boolean;
+    setExpanded: Dispatch<SetStateAction<boolean>>;
+    userData: Partial<UserData>;
+  }
 );
 
 const sidebarLinks = [
@@ -34,11 +32,6 @@ const sidebarLinks = [
     title: "Dashboard",
     path: "/",
     icon: Gauge,
-  },
-  {
-    title: "Assistentes Solvus",
-    path: "/assistants-solvus",
-    icon: Sparkles,
   },
   {
     title: "Assistentes",
@@ -53,7 +46,16 @@ const sidebarLinks = [
 ];
 
 export const DashboardSidebar = () => {
-  const { expanded, setExpanded } = useContext(SidebarContext);
+  const { expanded, setExpanded, userData } = useContext(SidebarContext);
+
+  const pathname = usePathname();
+
+  const teamData = {
+    name: userData.time?.nome || "Solvus - DevTeam",
+    primaryColor: userData.time?.cor_primaria,
+    secondaryColor: userData.time?.cor_secundaria,
+    logo: userData.time?.logo,
+  };
 
   return (
     <aside
@@ -94,33 +96,42 @@ export const DashboardSidebar = () => {
             expanded ? "opacity-100 ml-2" : "opacity-0 ml-0 w-0 overflow-hidden"
           )}
         >
-          Solvus
+          {teamData.name}
         </h2>
       </div>
 
       {/* Nav */}
       <div className="flex-1 w-full py-4 border-b">
         <nav className="flex flex-col gap-2">
-          {sidebarLinks.map((link) => (
-            <Link
-              key={link.path}
-              className="flex p-2 rounded hover:bg-secondary transition-colors 
-              items-center text-slate-950"
-              href={link.path}
-            >
-              <link.icon className="size-5" />
-              <span
+          {sidebarLinks.map((link) => {
+            const active = pathname === link.path;
+
+            return (
+              <Link
+                key={link.path}
                 className={cn(
-                  "transition-all whitespace-nowrap",
-                  expanded
-                    ? "opacity-100 ml-2"
-                    : "opacity-0 ml-0 w-0 hidden overflow-hidden"
+                  "flex p-2 rounded hover:bg-secondary transition-colors items-center text-slate-950",
+                  active
+                    ? `bg-muted-foreground/10 text-[${teamData.primaryColor}]`
+                    : ""
                 )}
+                style={{color: active ? teamData.primaryColor : ""}}
+                href={link.path}
               >
-                {link.title}
-              </span>
-            </Link>
-          ))}
+                <link.icon className="size-5" />
+                <span
+                  className={cn(
+                    "transition-all whitespace-nowrap",
+                    expanded
+                      ? "opacity-100 ml-2"
+                      : "opacity-0 ml-0 w-0 hidden overflow-hidden"
+                  )}
+                >
+                  {link.title}
+                </span>
+              </Link>
+            );
+          })}
         </nav>
       </div>
 
@@ -134,9 +145,9 @@ export const DashboardSidebar = () => {
             )}
           >
             <Avatar className="size-10">
-              <AvatarFallback>J</AvatarFallback>
+              <AvatarFallback>{userData.usuario?.nome[0]}</AvatarFallback>
             </Avatar>
-            <span className="text-slate-950 text-xs">Jean</span>
+            <span className="text-slate-950 text-xs">{userData.usuario?.nome}</span>
           </div>
           <Button variant={"ghost"}>
             <LogOut className="size-5" />
@@ -157,7 +168,13 @@ export const SidebarTrigger = () => {
   );
 };
 
-export const SidebarProvider = ({ children }: { children: ReactNode }) => {
+export const SidebarProvider = ({
+  children,
+  userData,
+}: {
+  children: ReactNode;
+  userData: Partial<UserData>;
+}) => {
   const [expanded, setExpanded] = useState<boolean>(false);
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 
@@ -166,7 +183,7 @@ export const SidebarProvider = ({ children }: { children: ReactNode }) => {
   }, [isDesktop]);
 
   return (
-    <SidebarContext.Provider value={{ expanded, setExpanded }}>
+    <SidebarContext.Provider value={{ expanded, setExpanded, userData }}>
       <main className="flex min-h-screen bg-secondary overflow-hidden">
         {expanded && (
           // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
@@ -176,7 +193,9 @@ export const SidebarProvider = ({ children }: { children: ReactNode }) => {
           />
         )}
         <DashboardSidebar />
-        <div className="py-6 px-4 w-full overflow-auto min-h-screen flex flex-col">{children}</div>
+        <div className="py-6 px-4 w-full overflow-auto min-h-screen flex flex-col">
+          {children}
+        </div>
       </main>
     </SidebarContext.Provider>
   );
