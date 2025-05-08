@@ -8,8 +8,6 @@ export const useGetDashboardData = (startDate?: string, endDate?: string) => {
     queryFn: async () => {
       const { teamData, barChartData, pieChartData } =
         await loadDashboardData();
-
-        console.log("Query feita")
     
         return {
             teamData,

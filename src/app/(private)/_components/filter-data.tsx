@@ -1,6 +1,6 @@
 "use client";
 
-import { addDays, format } from "date-fns";
+import { addDays, format, isValid, parse } from "date-fns";
 import { CalendarIcon, Filter } from "lucide-react";
 import type { DateRange } from "react-day-picker";
 
@@ -12,21 +12,40 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useState, useEffect } from "react";
 
 export const FilterData = () => {
   const pathname = usePathname();
   const { replace } = useRouter();
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams.toString());
+
+  const parseDate = (dateStr: string | null) => {
+    if (!dateStr) return null;
+    const parsedDate = parse(dateStr, "dd-MM-yyyy", new Date());
+    return isValid(parsedDate) ? parsedDate : null;
+  };
+
+  const from = parseDate(searchParams.get("from"));
+  const to = parseDate(searchParams.get("to"));
 
   const [date, setDate] = useState<DateRange | undefined>({
-    from: addDays(new Date(), -7),
-    to: new Date(),
+    from: from || addDays(new Date(), -7),
+    to: to || new Date(),
   });
 
-  const handleFilter = () => {
-    const params = new URLSearchParams();
+  useEffect(() => {
+    const from = parseDate(searchParams.get("from"));
+    const to = parseDate(searchParams.get("to"));
+    
+    setDate({
+      from: from || addDays(new Date(), -7),
+      to: to || new Date(),
+    });
+  }, [searchParams]);
 
+  const handleFilter = () => {
     if (date?.from && date.to) {
       params.set("from", format(date.from, "dd-MM-yyyy"));
       params.set("to", format(date.to, "dd-MM-yyyy"));

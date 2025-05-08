@@ -15,6 +15,7 @@ import { Info } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { SidebarTrigger } from "./sidebar";
+import React from "react";
 
 const HeaderBreadcrumb = ({ path }: { path: string }) => {
   const segments = path.split("/").filter(Boolean); // remove vazios
@@ -30,14 +31,14 @@ const HeaderBreadcrumb = ({ path }: { path: string }) => {
           <BreadcrumbLink href="/">Dashboard</BreadcrumbLink>
         </BreadcrumbItem>
         {segments.map((segment, i) => (
-          <>
+          <React.Fragment key={`segment-${segment}-${i}`}>
             <BreadcrumbSeparator key={`sep-${segment + i}`} />
             <BreadcrumbItem key={fullPaths[i]}>
               <BreadcrumbLink className="capitalize" href={fullPaths[i]}>
                 {segment.replace(/-/g, " ")}
               </BreadcrumbLink>
             </BreadcrumbItem>
-          </>
+          </React.Fragment>
         ))}
       </BreadcrumbList>
     </Breadcrumb>
