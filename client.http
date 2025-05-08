@@ -12,5 +12,7 @@ POST http://app.solvus.io/rest/dashboard
 Content-Type: application/json
 
 {
-  "Authorization": "Bearer "
+  "Authorization": "Bearer",
+  "startDate": "2025-04-26",
+  "endDate": "2025-05-01"
 }
