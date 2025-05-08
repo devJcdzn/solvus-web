@@ -181,7 +181,7 @@ async function getData(startDate?: string, endDate?: string) {
 }
 
 export async function loadDashboardData() {
-  const { time, completions_openai, costs_openai } = mockData;
+  const { time, completions_openai, costs_openai } = await getData();
 
   const [barChartData, pieChartData] = await Promise.all([
     prepareBarChartData({

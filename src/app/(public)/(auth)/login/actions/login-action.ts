@@ -24,6 +24,8 @@ export async function login(_formState: any, formData: FormData) {
       senha: password,
     });
 
+    console.log(data);
+
     (await cookies()).set("login@solvus-token", data.token, {
       httpOnly: true,
       secure: true,
@@ -66,8 +68,6 @@ export async function setUserInfo(usuario: Usuario, time: Time) {
 export async function getSessionData() {
   const userCookie = (await cookies()).get("userinfo");
   if (!userCookie) return null;
-
-  await new Promise((resolve) => setTimeout(resolve, 3000));
 
   try {
     const parsed = JSON.parse(userCookie.value);
