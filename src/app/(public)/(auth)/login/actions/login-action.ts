@@ -2,8 +2,9 @@
 
 import { Time, UserData, Usuario } from "@/app/(public)/(auth)/types/user-data";
 import { api } from "@/lib/api";
-import axios from "axios";
 import { cookies } from "next/headers";
+
+const expires = 60 * 60 * 24 * 7; // 7 dias
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export async function login(_formState: any, formData: FormData) {
@@ -18,36 +19,17 @@ export async function login(_formState: any, formData: FormData) {
   }
 
   try {
-    
-    const { data: response } = await api.post<UserData>("/login", {
+    const { data } = await api.post<UserData>("/login", {
       email,
       senha: password,
     });
-
-    const data: UserData = {
-      token:
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDY2NzU4MDcsImV4cCI6MTc0NjY3OTQwNywidWlkIjoiMTMiLCJlbWFpbCI6ImRhbmFAZ21haWwuY29tIiwibm9tZSI6IkRhbmEifQ.8Ptm3r0D7XlQ6FrCoyeeCpayh_3Jo41_U24imOIxgKY",
-      usuario: {
-        id: "13",
-        nome: "Dana",
-        email: "dana@gmail.com",
-      },
-      time: {
-        id: "2",
-        logo: "uploads/images/logo-dana.png",
-        nome: "Dana",
-        cor_primaria: " #088ec9",
-        cor_secundaria: "#000000",
-        project_id: "proj_MVnxk2FNOWg0d9KyNxDjSTAz",
-      },
-    };
 
     (await cookies()).set("login@solvus-token", data.token, {
       httpOnly: true,
       secure: true,
       sameSite: "strict",
       path: "/",
-      maxAge: 60 * 60 * 24 * 7, // 7 dias
+      maxAge: expires, 
     });
 
     await setUserInfo(data.usuario, data.time);
@@ -77,7 +59,7 @@ export async function setUserInfo(usuario: Usuario, time: Time) {
   (await cookies()).set("userinfo", payload, {
     path: "/",
     sameSite: "lax",
-    maxAge: 60 * 60 * 24 * 7,
+    maxAge: expires,
   });
 }
 
