@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
+import { Suspense, type ReactNode } from "react";
 import { DashboardHeader } from "./_components/header";
 import { SidebarProvider } from "./_components/sidebar";
 import { getSessionData } from "../(public)/(auth)/login/actions/login-action";
@@ -9,11 +9,23 @@ export const metadata: Metadata = {
   description: "Meu Painel Solvus",
 };
 
-export default async function AdminLayout({ children }: { children: ReactNode }) {
-  const userInfo = await getSessionData()
-  console.log({userInfo})
+function LoadingState() {
+  return (
+    <div className="w-full h-screen grid place-items-center">
+      <div className="flex flex-col items-center gap-2">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
+        <p className="text-muted-foreground">Carregando...</p>
+      </div>
+    </div>
+  );
+}
 
-  if(!userInfo) return null;
+async function DashboardContent({ children }: { children: ReactNode }) {
+  const userInfo = await getSessionData();
+
+  if (!userInfo) {
+    return <LoadingState />;
+  }
 
   return (
     <SidebarProvider userData={userInfo}>
@@ -23,5 +35,13 @@ export default async function AdminLayout({ children }: { children: ReactNode })
         ©{new Date().getFullYear()} SOLVUS. Todos os direitos reservados.
       </footer>
     </SidebarProvider>
+  );
+}
+
+export default function AdminLayout({ children }: { children: ReactNode }) {
+  return (
+    <Suspense fallback={<LoadingState />}>
+      <DashboardContent>{children}</DashboardContent>
+    </Suspense>
   );
 }
