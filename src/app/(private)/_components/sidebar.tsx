@@ -1,5 +1,6 @@
 "use client";
 
+import { logout } from "@/app/(public)/(auth)/login/actions/login-action";
 import { UserData } from "@/app/(public)/(auth)/types/user-data";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -8,7 +9,7 @@ import { cn } from "@/lib/utils";
 import { Bot, FileClock, Gauge, LogOut, MenuIcon, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import {
   type Dispatch,
   type ReactNode,
@@ -49,6 +50,11 @@ export const DashboardSidebar = () => {
   const { expanded, setExpanded, userData } = useContext(SidebarContext);
 
   const pathname = usePathname();
+
+  const handleLogout = async () => {
+    await logout();
+    redirect("/login");
+  }
 
   const teamData = {
     name: userData.time?.nome || "Solvus - DevTeam",
@@ -150,7 +156,7 @@ export const DashboardSidebar = () => {
             </Avatar>
             <span className="text-slate-950 text-xs">{userData.usuario?.nome}</span>
           </div>
-          <Button variant={"ghost"}>
+          <Button variant={"ghost"} onClick={handleLogout}>
             <LogOut className="size-5" />
           </Button>
         </div>
