@@ -1,7 +1,11 @@
 "use server";
 
-import axios from "axios";
+import { api } from "@/lib/api";
 import { cookies } from "next/headers";
+import { UserData, Usuario } from "../../../types/user-data";
+import { Time } from "@/app/(private)/types/dashoboard";
+
+const expires = 60 * 60 * 24 * 7; // 7 dias
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export async function login(_formState: any, formData: FormData) {
@@ -20,17 +24,24 @@ export async function login(_formState: any, formData: FormData) {
 	}
 
 	try {
-		const { data } = await axios.post<{ token: string }>(
-			process.env.API_URL || "",
+		const { data } = await api.post<UserData>(
+			"/loginAdmin",
 			{
 				email,
 				senha: password,
 			},
 		);
 
-		console.table({ data });
 
-		(await cookies()).set("login@solvus-token", data.token);
+		(await cookies()).set("admin@solvus-token", data.token, {
+			httpOnly: true,
+			secure: true,
+			sameSite: "strict",
+			path: "/",
+			maxAge: expires, 
+		  });
+	  
+		  await setAdminInfo(data.usuario, data.time);
 
 		return {
 			success: true,
@@ -44,3 +55,32 @@ export async function login(_formState: any, formData: FormData) {
 		};
 	}
 }
+
+
+export async function logout() {
+	const store = await cookies();
+	store.delete("admin@solvus-token");
+	store.delete("adminInfo");
+  }
+  
+  export async function setAdminInfo(usuario: Usuario, time: Time) {
+	const payload = JSON.stringify({ usuario, time });
+  
+	(await cookies()).set("aminInfo", payload, {
+	  path: "/",
+	  sameSite: "lax",
+	  maxAge: expires,
+	});
+  }
+  
+  export async function getSessionData() {
+	const userCookie = (await cookies()).get("aminInfo");
+	if (!userCookie) return null;
+  
+	try {
+	  const parsed = JSON.parse(userCookie.value);
+	  return parsed as { usuario: Usuario; time: Time };
+	} catch {
+	  return null;
+	}
+  }
