@@ -59,16 +59,17 @@ export const DashboardSidebar = () => {
 
   return (
     <aside
-      className={cn(
-        "pt-6 px-4 border transition-transform sm:ml-4 sm:my-4 sm:rounded-xl bg-background flex flex-col items-center min-h-screen sm:h-screen",
-        "sm:static sm:translate-x-0 sm:w-20", // comportamento em telas médias+
-        "fixed top-0 left-0 z-50 w-64", // comportamento mobile
-        expanded
-          ? "translate-x-0 sm:min-w-1/3 lg:min-w-1/6"
-          : "-translate-x-full", // slide
-        "duration-300 ease-in-out"
-      )}
-    >
+    className={cn(
+      "pt-6 px-4 pb-4 border transition-transform sm:ml-4 sm:my-4 sm:rounded-xl bg-background flex flex-col items-center min-h-screen sm:min-h-0 sm:max-h-[calc(100vh-2rem)]",
+      "sm:static sm:translate-x-0 sm:w-20", // desktop
+      "fixed top-0 left-0 z-50 w-64", // mobile
+      expanded
+        ? "translate-x-0 sm:min-w-1/3 lg:min-w-1/6"
+        : "-translate-x-full",
+      "duration-300 ease-in-out"
+    )}
+  >
+  
       <div className="absolute top-4 right-4 sm:hidden">
         <Button
           onClick={() => setExpanded(false)}
@@ -184,19 +185,19 @@ export const SidebarProvider = ({
 
   return (
     <SidebarContext.Provider value={{ expanded, setExpanded, userData }}>
-      <main className="flex min-h-screen bg-secondary overflow-hidden">
-        {expanded && (
-          // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
-          <div
-            onClick={() => setExpanded(false)}
-            className="fixed inset-0 bg-black/40 z-40 sm:hidden"
-          />
-        )}
-        <DashboardSidebar />
-        <div className="py-6 px-4 w-full overflow-auto min-h-screen flex flex-col">
-          {children}
-        </div>
-      </main>
+      <main className="flex h-screen bg-secondary overflow-hidden">
+  {expanded && (
+    <div
+      onClick={() => setExpanded(false)}
+      className="fixed inset-0 bg-black/40 z-40 sm:hidden"
+    />
+  )}
+  <DashboardSidebar />
+  <div className="py-6 px-4 w-full h-screen overflow-y-auto flex flex-col">
+    {children}
+  </div>
+</main>
+
     </SidebarContext.Provider>
   );
 };
