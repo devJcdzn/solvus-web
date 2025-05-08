@@ -1,6 +1,7 @@
 "use server";
 
 import { Time, UserData, Usuario } from "@/app/(public)/(auth)/types/user-data";
+import { api } from "@/lib/api";
 import axios from "axios";
 import { cookies } from "next/headers";
 
@@ -18,10 +19,10 @@ export async function login(_formState: any, formData: FormData) {
 
   try {
     
-    // const { data } = await axios.post<UserData>(process.env.API_URL || "", {
-    //   email,
-    //   senha: password,
-    // });
+    const { data: response } = await api.post<UserData>("/login", {
+      email,
+      senha: password,
+    });
 
     const data: UserData = {
       token:
@@ -40,8 +41,6 @@ export async function login(_formState: any, formData: FormData) {
         project_id: "proj_MVnxk2FNOWg0d9KyNxDjSTAz",
       },
     };
-
-    console.table({ data });
 
     (await cookies()).set("login@solvus-token", data.token);
     await setUserInfo(data.usuario, data.time);
