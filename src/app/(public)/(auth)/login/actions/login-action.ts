@@ -42,7 +42,14 @@ export async function login(_formState: any, formData: FormData) {
       },
     };
 
-    (await cookies()).set("login@solvus-token", data.token);
+    (await cookies()).set("login@solvus-token", data.token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7, // 7 dias
+    });
+
     await setUserInfo(data.usuario, data.time);
 
     return {
@@ -56,6 +63,12 @@ export async function login(_formState: any, formData: FormData) {
       message: "Email ou senha inválidos.",
     };
   }
+}
+
+export async function logout() {
+  const store = await cookies();
+  store.delete("login@solvus-token");
+  store.delete("userinfo");
 }
 
 export async function setUserInfo(usuario: Usuario, time: Time) {
