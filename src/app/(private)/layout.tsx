@@ -31,7 +31,7 @@ async function DashboardContent({ children }: { children: ReactNode }) {
     <SidebarProvider userData={userInfo}>
       <DashboardHeader />
       {children}
-      <footer className="sticky bottom-0 text-muted-foreground py-3 px-4 rounded-xl ">
+      <footer className="mt-4 text-muted-foreground py-3 px-4 rounded-xl">
         ©{new Date().getFullYear()} SOLVUS. Todos os direitos reservados.
       </footer>
     </SidebarProvider>

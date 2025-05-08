@@ -50,7 +50,7 @@ export const DashboardHeader = () => {
   console.log(pathname);
 
   return (
-    <header className="flex p-3 w-full justify-between items-center">
+    <header className="flex sticky top-0 z-30 rounded-lg border border-secondary sm:border-none left-0 bg-secondary/30 backdrop-blur-lg p-3 w-full justify-between items-center">
       <div className="flex gap-3 items-center">
         <SidebarTrigger />
         <HeaderBreadcrumb path={pathname} />

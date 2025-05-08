@@ -185,7 +185,7 @@ export const SidebarProvider = ({
 
   return (
     <SidebarContext.Provider value={{ expanded, setExpanded, userData }}>
-      <main className="flex h-screen bg-secondary overflow-hidden">
+      <main className="flex h-screen min-h-screen bg-secondary overflow-hidden">
   {expanded && (
     <div
       onClick={() => setExpanded(false)}
@@ -193,7 +193,7 @@ export const SidebarProvider = ({
     />
   )}
   <DashboardSidebar />
-  <div className="py-6 px-4 w-full h-screen overflow-y-auto flex flex-col">
+  <div className="py-3 px-4 w-full h-screen overflow-y-auto flex flex-col">
     {children}
   </div>
 </main>
