@@ -15,7 +15,8 @@ import { Info } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { SidebarTrigger } from "./sidebar";
-import React from "react";
+import React, { useContext } from "react";
+import { UserData } from "@/app/(public)/(auth)/types/user-data";
 
 const HeaderBreadcrumb = ({ path }: { path: string }) => {
   const segments = path.split("/").filter(Boolean); // remove vazios
@@ -45,7 +46,11 @@ const HeaderBreadcrumb = ({ path }: { path: string }) => {
   );
 };
 
-export const DashboardHeader = () => {
+export const DashboardHeader = ({
+  userData,
+}: {
+  userData: Partial<UserData>;
+}) => {
   const pathname = usePathname();
 
   console.log(pathname);
@@ -77,7 +82,7 @@ export const DashboardHeader = () => {
 
         <Avatar className="" asChild>
           <Link href={"/account"}>
-            <AvatarFallback className="">J</AvatarFallback>
+            <AvatarFallback className="">{userData.usuario?.nome[0]}</AvatarFallback>
           </Link>
         </Avatar>
       </div>

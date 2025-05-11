@@ -54,7 +54,9 @@ export const DashboardSidebar = () => {
   const handleLogout = async () => {
     await logout();
     redirect("/login");
-  }
+  };
+
+  const userName = userData.usuario?.nome.split(" ")[0];
 
   const teamData = {
     name: userData.time?.nome || "Solvus - DevTeam",
@@ -65,17 +67,16 @@ export const DashboardSidebar = () => {
 
   return (
     <aside
-    className={cn(
-      "pt-6 px-4 pb-4 border transition-transform sm:ml-4 sm:my-4 sm:rounded-xl bg-background flex flex-col items-center min-h-screen sm:min-h-0 sm:max-h-[calc(100vh-2rem)]",
-      "sm:static sm:translate-x-0 sm:w-20", // desktop
-      "fixed top-0 left-0 z-50 w-64", // mobile
-      expanded
-        ? "translate-x-0 sm:min-w-1/3 lg:min-w-1/6"
-        : "-translate-x-full",
-      "duration-300 ease-in-out"
-    )}
-  >
-  
+      className={cn(
+        "pt-6 px-4 pb-4 border transition-transform sm:ml-4 sm:my-4 sm:rounded-xl bg-background flex flex-col items-center min-h-screen sm:min-h-0 sm:max-h-[calc(100vh-2rem)]",
+        "sm:static sm:translate-x-0 sm:w-20", // desktop
+        "fixed top-0 left-0 z-50 w-64", // mobile
+        expanded
+          ? "translate-x-0 sm:min-w-1/3 lg:min-w-1/6"
+          : "-translate-x-full",
+        "duration-300 ease-in-out"
+      )}
+    >
       <div className="absolute top-4 right-4 sm:hidden">
         <Button
           onClick={() => setExpanded(false)}
@@ -122,7 +123,7 @@ export const DashboardSidebar = () => {
                     ? `bg-muted-foreground/10 text-[${teamData.primaryColor}]`
                     : ""
                 )}
-                style={{color: active ? teamData.primaryColor : ""}}
+                style={{ color: active ? teamData.primaryColor : "" }}
                 href={link.path}
               >
                 <link.icon className="size-5" />
@@ -154,7 +155,9 @@ export const DashboardSidebar = () => {
             <Avatar className="size-10">
               <AvatarFallback>{userData.usuario?.nome[0]}</AvatarFallback>
             </Avatar>
-            <span className="text-slate-950 text-xs">{userData.usuario?.nome}</span>
+            <span className="text-slate-950 text-xs">
+              {userName}
+            </span>
           </div>
           <Button variant={"ghost"} onClick={handleLogout}>
             <LogOut className="size-5" />
@@ -192,18 +195,17 @@ export const SidebarProvider = ({
   return (
     <SidebarContext.Provider value={{ expanded, setExpanded, userData }}>
       <main className="flex h-screen min-h-screen bg-secondary overflow-hidden">
-  {expanded && (
-    <div
-      onClick={() => setExpanded(false)}
-      className="fixed inset-0 bg-black/40 z-40 sm:hidden"
-    />
-  )}
-  <DashboardSidebar />
-  <div className="py-3 px-4 w-full h-screen overflow-y-auto flex flex-col">
-    {children}
-  </div>
-</main>
-
+        {expanded && (
+          <div
+            onClick={() => setExpanded(false)}
+            className="fixed inset-0 bg-black/40 z-40 sm:hidden"
+          />
+        )}
+        <DashboardSidebar />
+        <div className="py-3 px-4 w-full h-screen overflow-y-auto flex flex-col">
+          {children}
+        </div>
+      </main>
     </SidebarContext.Provider>
   );
 };

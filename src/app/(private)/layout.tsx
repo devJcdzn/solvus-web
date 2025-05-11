@@ -29,7 +29,7 @@ async function DashboardContent({ children }: { children: ReactNode }) {
 
   return (
     <SidebarProvider userData={userInfo}>
-      <DashboardHeader />
+      <DashboardHeader userData={userInfo} />
       {children}
       <footer className="mt-4 text-muted-foreground py-3 px-4 rounded-xl">
         ©{new Date().getFullYear()} SOLVUS. Todos os direitos reservados.
