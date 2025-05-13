@@ -92,7 +92,7 @@ export const DashboardSidebar = () => {
         )}
       >
         <Image
-          src={"/logo-t.png"}
+          src={`${process.env.S3_FILES}/${teamData.logo}`}
           width={200}
           height={200}
           alt="logo-solvus.png"
