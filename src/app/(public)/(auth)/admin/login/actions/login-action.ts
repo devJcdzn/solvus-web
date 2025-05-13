@@ -3,7 +3,7 @@
 import { api } from "@/lib/api";
 import { cookies } from "next/headers";
 import { UserData, Usuario } from "../../../types/user-data";
-import { Time } from "@/app/(private)/types/dashoboard";
+import { Time } from "@/app/(private)/types/dashboard";
 
 const expires = 60 * 60 * 24 * 7; // 7 dias
 
@@ -11,10 +11,6 @@ const expires = 60 * 60 * 24 * 7; // 7 dias
 export async function login(_formState: any, formData: FormData) {
 	const email = formData.get("email")?.toString();
 	const password = formData.get("password")?.toString();
-
-	console.log(process.env.API_URL);
-
-	console.log({ email, password });
 
 	if (!email || !password) {
 		return {

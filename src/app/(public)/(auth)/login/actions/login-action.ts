@@ -24,8 +24,6 @@ export async function login(_formState: any, formData: FormData) {
       senha: password,
     });
 
-    console.log(data);
-
     (await cookies()).set("login@solvus-token", data.token, {
       httpOnly: true,
       secure: true,

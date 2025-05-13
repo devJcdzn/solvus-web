@@ -5,14 +5,16 @@ export const useGetDashboardData = (startDate?: string, endDate?: string) => {
   const query = useQuery({
     queryKey: ["dashboard", startDate, endDate],
     queryFn: async () => {
-      const { teamData, barChartData, pieChartData, access } =
+      const { teamData, barChartData, pieChartData, access, assistants } =
         await loadDashboardData();
+
 
       return {
         access,
         teamData,
         barChartData,
         pieChartData,
+        assistants
       };
     },
   });

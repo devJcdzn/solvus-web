@@ -8,7 +8,7 @@ import {
   CostsOpenai,
   DashboardData,
   PieChartData,
-} from "../types/dashoboard";
+} from "../types/dashboard";
 import { cookies } from "next/headers";
 import axios from "axios";
 
@@ -221,8 +221,6 @@ const mockData = {
 async function getData(startDate?: string, endDate?: string) {
   const token = (await cookies()).get("login@solvus-token")?.value;
 
-  console.log(token);
-
   const { data } = await axios.post<DashboardData>(
     "http://app.solvus.io/rest/dashboard",
     {
@@ -251,11 +249,13 @@ export async function loadDashboardData() {
     secondaryColor: time?.cor_secundaria ?? undefined,
   };
 
+
   return {
     access: dados_uso.quantidades_acessos,
     teamData,
     barChartData,
     pieChartData,
+    assistants: dados_uso.assistentes_usados
   };
 }
 

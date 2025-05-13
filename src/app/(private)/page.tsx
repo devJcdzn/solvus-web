@@ -14,8 +14,6 @@ export default function Home() {
   const startDate = params.get("from") || "";
   const endDate = params.get("to") || "";
 
-  console.log({ startDate, endDate });
-
   const { data, isLoading } = useGetDashboardData(startDate, endDate);
 
   if (!data || isLoading) return <p>Carregando...</p>;
@@ -37,7 +35,7 @@ export default function Home() {
             access: data.access,
           }}
         />
-        <DashboardPieChart team={data.teamData} data={data.pieChartData} />
+        <DashboardPieChart team={data.teamData} data={data.assistants} />
       </div>
     </div>
   );

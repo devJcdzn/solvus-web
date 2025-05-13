@@ -16,7 +16,8 @@ export interface Time {
 
 export interface accessData {
   quantidades_acessos: number;
-} 
+  assistentes_usados: string[];
+}
 
 export interface CompletionsOpenai {
   object: string;
@@ -66,7 +67,6 @@ export type BarChartData = {
   requests: number;
   cost: number;
 };
-
 
 export interface PieChartData {
   name: string;
