@@ -65,6 +65,10 @@ export const DashboardSidebar = () => {
     logo: userData.time?.logo,
   };
 
+  const logoUrl = teamData.logo
+    ? new URL(teamData.logo, process.env.NEXT_PUBLIC_S3_FILES).toString()
+    : "/fallback-logo.png";
+
   return (
     <aside
       className={cn(
@@ -92,7 +96,7 @@ export const DashboardSidebar = () => {
         )}
       >
         <Image
-          src={`${process.env.S3_FILES}/${teamData.logo}`}
+          src={logoUrl}
           width={200}
           height={200}
           alt="logo-solvus.png"
@@ -155,9 +159,7 @@ export const DashboardSidebar = () => {
             <Avatar className="size-10">
               <AvatarFallback>{userData.usuario?.nome[0]}</AvatarFallback>
             </Avatar>
-            <span className="text-slate-950 text-xs">
-              {userName}
-            </span>
+            <span className="text-slate-950 text-xs">{userName}</span>
           </div>
           <Button variant={"ghost"} onClick={handleLogout}>
             <LogOut className="size-5" />
