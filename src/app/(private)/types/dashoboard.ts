@@ -1,6 +1,6 @@
 export interface DashboardData {
   time: Time;
-  dados_uso: any[];
+  dados_uso: accessData;
   completions_openai: CompletionsOpenai[];
   costs_openai: CostsOpenai[];
 }
@@ -13,6 +13,10 @@ export interface Time {
   cor_secundaria: string;
   project_id: string;
 }
+
+export interface accessData {
+  quantidades_acessos: number;
+} 
 
 export interface CompletionsOpenai {
   object: string;

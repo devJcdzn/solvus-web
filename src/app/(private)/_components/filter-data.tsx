@@ -1,6 +1,7 @@
 "use client";
 
 import { addDays, format, isValid, parse } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import { CalendarIcon, Filter } from "lucide-react";
 import type { DateRange } from "react-day-picker";
 
@@ -38,7 +39,7 @@ export const FilterData = () => {
   useEffect(() => {
     const from = parseDate(searchParams.get("from"));
     const to = parseDate(searchParams.get("to"));
-    
+
     setDate({
       from: from || addDays(new Date(), -7),
       to: to || new Date(),
@@ -62,7 +63,7 @@ export const FilterData = () => {
             <Button
               variant={"outline"}
               className={cn(
-                "w-full sm:w-[250px]justify-start text-left font-normal",
+                "w-full sm:w-[250px]justify-start truncate text-left font-normal",
                 !date && "text-muted-foreground"
               )}
             >
@@ -70,14 +71,17 @@ export const FilterData = () => {
               {date?.from ? (
                 date.to ? (
                   <>
-                    {format(date.from, "LLL dd, y")} -{" "}
-                    {format(date.to, "LLL dd, y")}
+                    {format(date.from, "d 'de' LLLL 'de' yyyy", {
+                      locale: ptBR,
+                    })}{" "}
+                    -{" "}
+                    {format(date.to, "d 'de' LLLL 'de' yyyy", { locale: ptBR })}
                   </>
                 ) : (
-                  format(date.from, "LLL dd, y")
+                  format(date.from, "d 'de' LLLL 'de' yyyy", { locale: ptBR })
                 )
               ) : (
-                <span>Pick a date</span>
+                <span>Escolha uma data</span>
               )}
             </Button>
           </PopoverTrigger>
@@ -89,6 +93,7 @@ export const FilterData = () => {
               selected={date}
               onSelect={setDate}
               numberOfMonths={2}
+              locale={ptBR}
             />
           </PopoverContent>
         </Popover>

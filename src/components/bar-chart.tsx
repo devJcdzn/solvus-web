@@ -27,7 +27,10 @@ export const MultiBarChart = ({
   data,
 }: {
   team: MultibarChartProps;
-  data: BarChartData[];
+  data: {
+    access: number;
+    barChart: BarChartData[];
+  };
 }) => {
   const chartConfig = {
     tokens: {
@@ -44,9 +47,12 @@ export const MultiBarChart = ({
     },
   } satisfies ChartConfig;
 
-  const totalCost = data.reduce((sum, item) => sum + item.cost, 0);
-  const totalRequests = data.reduce((sum, item) => sum + item.requests, 0);
-  const totalTokens = data.reduce((sum, item) => sum + item.tokens, 0);
+  const totalCost = data.barChart.reduce((sum, item) => sum + item.cost, 0);
+  const totalRequests = data.barChart.reduce(
+    (sum, item) => sum + item.requests,
+    0
+  );
+  const totalTokens = data.barChart.reduce((sum, item) => sum + item.tokens, 0);
   const usageRate = totalTokens ? (totalRequests / totalTokens) * 100 : 0;
 
   return (
@@ -56,8 +62,12 @@ export const MultiBarChart = ({
           <Users className="size-6 text-muted-foreground" />
         </div>
         <div>
-          <CardTitle className="text-2xl">1.4K</CardTitle>
-          <CardDescription>Acessos na Semana</CardDescription>
+          <CardTitle className="text-2xl">
+            {Intl.NumberFormat("pt-BR", { notation: "compact" }).format(
+              data.access
+            )}
+          </CardTitle>
+          <CardDescription>Acessos na Plataforma</CardDescription>
         </div>
         <span className="py-1 absolute top-3 right-4 px-3 rounded bg-emerald-100 text-emerald-800 text-xs">
           +50%
@@ -76,7 +86,7 @@ export const MultiBarChart = ({
         </div>
 
         <ChartContainer config={chartConfig} className="mt-6">
-          <BarChart data={data}>
+          <BarChart data={data.barChart}>
             <CartesianGrid vertical={false} />
 
             <XAxis

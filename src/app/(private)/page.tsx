@@ -14,11 +14,11 @@ export default function Home() {
   const startDate = params.get("from") || "";
   const endDate = params.get("to") || "";
 
-  console.log({startDate, endDate})
+  console.log({ startDate, endDate });
 
   const { data, isLoading } = useGetDashboardData(startDate, endDate);
 
-  if(!data || isLoading) return <p>Carregando...</p>
+  if (!data || isLoading) return <p>Carregando...</p>;
 
   return (
     <div className="p-6 mt-5 bg-background rounded-xl border">
@@ -30,7 +30,13 @@ export default function Home() {
         </Button>
       </div>
       <div className="grid sm:grid-cols-2 gap-4">
-        <MultiBarChart team={data.teamData} data={data.barChartData} />
+        <MultiBarChart
+          team={data.teamData}
+          data={{
+            barChart: data.barChartData,
+            access: data.access,
+          }}
+        />
         <DashboardPieChart team={data.teamData} data={data.pieChartData} />
       </div>
     </div>

@@ -2,6 +2,7 @@
 
 import { format } from "date-fns";
 import {
+  accessData,
   BarChartData,
   CompletionsOpenai,
   CostsOpenai,
@@ -20,32 +21,10 @@ const mockData = {
     cor_secundaria: "#000000",
     project_id: "proj_MVnxk2FNOWg0d9KyNxDjSTAz",
   },
-  dados_uso: [],
+  dados_uso: {
+    quantidades_acessos: 0,
+  },
   completions_openai: [
-    {
-      object: "bucket",
-      start_time: 1746057600,
-      end_time: 1746144000,
-      results: [],
-    },
-    {
-      object: "bucket",
-      start_time: 1746144000,
-      end_time: 1746230400,
-      results: [],
-    },
-    {
-      object: "bucket",
-      start_time: 1746230400,
-      end_time: 1746316800,
-      results: [],
-    },
-    {
-      object: "bucket",
-      start_time: 1746316800,
-      end_time: 1746403200,
-      results: [],
-    },
     {
       object: "bucket",
       start_time: 1746403200,
@@ -94,32 +73,62 @@ const mockData = {
         },
       ],
     },
+    {
+      object: "bucket",
+      start_time: 1746662400,
+      end_time: 1746748800,
+      results: [
+        {
+          object: "organization.usage.completions.result",
+          input_tokens: 21687,
+          output_tokens: 197,
+          num_model_requests: 3,
+          project_id: null,
+          user_id: null,
+          api_key_id: null,
+          model: null,
+          batch: null,
+          input_cached_tokens: 3200,
+          input_audio_tokens: 0,
+          output_audio_tokens: 0,
+        },
+      ],
+    },
+    {
+      object: "bucket",
+      start_time: 1746748800,
+      end_time: 1746835200,
+      results: [
+        {
+          object: "organization.usage.completions.result",
+          input_tokens: 60261,
+          output_tokens: 873,
+          num_model_requests: 16,
+          project_id: null,
+          user_id: null,
+          api_key_id: null,
+          model: null,
+          batch: null,
+          input_cached_tokens: 10112,
+          input_audio_tokens: 0,
+          output_audio_tokens: 0,
+        },
+      ],
+    },
+    {
+      object: "bucket",
+      start_time: 1746835200,
+      end_time: 1746921600,
+      results: [],
+    },
+    {
+      object: "bucket",
+      start_time: 1746921600,
+      end_time: 1747008000,
+      results: [],
+    },
   ],
   costs_openai: [
-    {
-      object: "bucket",
-      start_time: 1746057600,
-      end_time: 1746144000,
-      results: [],
-    },
-    {
-      object: "bucket",
-      start_time: 1746144000,
-      end_time: 1746230400,
-      results: [],
-    },
-    {
-      object: "bucket",
-      start_time: 1746230400,
-      end_time: 1746316800,
-      results: [],
-    },
-    {
-      object: "bucket",
-      start_time: 1746316800,
-      end_time: 1746403200,
-      results: [],
-    },
     {
       object: "bucket",
       start_time: 1746403200,
@@ -160,6 +169,52 @@ const mockData = {
         },
       ],
     },
+    {
+      object: "bucket",
+      start_time: 1746662400,
+      end_time: 1746748800,
+      results: [
+        {
+          object: "organization.costs.result",
+          amount: {
+            value: 0.050323949999999999238564640791082638315856456756591796875,
+            currency: "usd",
+          },
+          line_item: null,
+          project_id: null,
+          organization_id: "org-K8jEJsfHPPI8DzoHFJqNYICO",
+        },
+      ],
+    },
+    {
+      object: "bucket",
+      start_time: 1746748800,
+      end_time: 1746835200,
+      results: [
+        {
+          object: "organization.costs.result",
+          amount: {
+            value: 0.1364901999999999782087201083413674496114253997802734375,
+            currency: "usd",
+          },
+          line_item: null,
+          project_id: null,
+          organization_id: "org-K8jEJsfHPPI8DzoHFJqNYICO",
+        },
+      ],
+    },
+    {
+      object: "bucket",
+      start_time: 1746835200,
+      end_time: 1746921600,
+      results: [],
+    },
+    {
+      object: "bucket",
+      start_time: 1746921600,
+      end_time: 1747008000,
+      results: [],
+    },
   ],
 };
 
@@ -181,7 +236,7 @@ async function getData(startDate?: string, endDate?: string) {
 }
 
 export async function loadDashboardData() {
-  const { time, completions_openai, costs_openai } = await getData();
+  const { time, completions_openai, costs_openai, dados_uso } = await getData();
 
   const [barChartData, pieChartData] = await Promise.all([
     prepareBarChartData({
@@ -197,6 +252,7 @@ export async function loadDashboardData() {
   };
 
   return {
+    access: dados_uso.quantidades_acessos,
     teamData,
     barChartData,
     pieChartData,
