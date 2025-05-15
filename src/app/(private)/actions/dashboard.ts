@@ -233,8 +233,11 @@ async function getData(startDate?: string, endDate?: string) {
   return data;
 }
 
-export async function loadDashboardData() {
-  const { time, completions_openai, costs_openai, dados_uso } = await getData();
+export async function loadDashboardData(startDate?: string, endDate?: string) {
+  const { time, completions_openai, costs_openai, dados_uso } = await getData(
+    startDate,
+    endDate
+  );
 
   const [barChartData, pieChartData] = await Promise.all([
     prepareBarChartData({
@@ -249,13 +252,12 @@ export async function loadDashboardData() {
     secondaryColor: time?.cor_secundaria ?? undefined,
   };
 
-
   return {
     access: dados_uso.quantidades_acessos,
     teamData,
     barChartData,
     pieChartData,
-    assistants: dados_uso.assistentes_usados
+    assistants: dados_uso.assistentes_usados,
   };
 }
 
@@ -267,7 +269,7 @@ export async function prepareBarChartData({
   costs: CostsOpenai[];
 }): Promise<BarChartData[]> {
   return completions.map((bucket, index) => {
-    const date = format(new Date(bucket.start_time * 1000), "dd/MM");
+    const date = format(new Date(bucket.start_time), "dd/MM");
 
     const usage = bucket.results?.[0] ?? {
       input_tokens: 0,
@@ -293,7 +295,7 @@ export async function preparePieChartData(
   const costByOrg: Record<string, number> = {};
 
   costs.forEach((c) => {
-    c.results.forEach((r) => {
+    c.results?.forEach((r) => {
       const org = r.organization_id || "desconhecido";
       const value = r.amount.value || 0;
 
