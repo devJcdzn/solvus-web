@@ -1,4 +1,4 @@
-import { loadDashboardData } from "@/app/(private)/actions/dashboard";
+import { loadDashboardData } from "@/app/(private)/(user)/actions/dashboard";
 import { useQuery } from "@tanstack/react-query";
 import { format, formatISO, parse } from "date-fns";
 

@@ -1,62 +1,75 @@
 import { type NextRequest, NextResponse } from "next/server";
 
 const publicRoutes = [
-	{
-		path: "/admin/login",
-		whenAuth: "redirect",
-	},
-	{
-		path: "/login",
-		whenAuth: "redirect",
-	},
+  { path: "/login", role: "user", whenAuth: "redirect" },
+  { path: "/admin/login", role: "admin", whenAuth: "redirect" },
 ];
 
-const REDIRECT_WHEN_NOT_AUTHENTICATED = "/login";
-const REDIRECT_WHEN_AUTHENTICATED_AS_ADMIN = "/admin";
-const REDIRECT_WHEN_AUTHENTICATED = "/";
+const REDIRECTS = {
+  user: {
+    login: "/login",
+    dashboard: "/",
+  },
+  admin: {
+    login: "/admin/login",
+    dashboard: "/dashboard",
+  },
+};
 
 export function middleware(request: NextRequest) {
-	const path = request.nextUrl.pathname;
-	const publicRoute = publicRoutes.find((route) => route.path === path);
-	// const adminToken = request.cookies.get("admin@solvus-token");
-	const loginToken = request.cookies.get("login@solvus-token");
+  const { pathname } = request.nextUrl;
 
-	if (!loginToken && publicRoute) {
-		return NextResponse.next();
-	}
+  const loginToken = request.cookies.get("login@solvus-token");
+  const adminToken = request.cookies.get("admin@solvus-token");
 
-	if (!loginToken && !publicRoute) {
-		const redirectUrl = request.nextUrl.clone();
-		redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICATED;
+  const isAuthenticatedUser = !!loginToken;
+  const isAuthenticatedAdmin = !!adminToken;
 
-		return NextResponse.redirect(redirectUrl);
-	}
+  const isAdminPath = pathname.startsWith("/dashboard");
+  const isPublicRoute = publicRoutes.some(route => route.path === pathname);
+  const routeConfig = publicRoutes.find(route => route.path === pathname);
 
-	if (loginToken && publicRoute && publicRoute.whenAuth === "redirect") {
-		const redirectUrl = request.nextUrl.clone();
-		redirectUrl.pathname = REDIRECT_WHEN_AUTHENTICATED;
+  // ⚠️ Protegendo rotas privadas
+  if (isAdminPath && !isAuthenticatedAdmin) {
+    if (pathname !== REDIRECTS.admin.login) {
+      const redirectUrl = request.nextUrl.clone();
+      redirectUrl.pathname = REDIRECTS.admin.login;
+      return NextResponse.redirect(redirectUrl);
+    }
+  }
 
-		return NextResponse.redirect(redirectUrl);
-	}
+  if (!isAdminPath && !isPublicRoute && !isAuthenticatedUser) {
+    if (pathname !== REDIRECTS.user.login) {
+      const redirectUrl = request.nextUrl.clone();
+      redirectUrl.pathname = REDIRECTS.user.login;
+      return NextResponse.redirect(redirectUrl);
+    }
+  }
 
-	if (loginToken && !publicRoute) {
-		// Check token expires in
+  // ⚠️ Redirecionamento de usuários autenticados tentando acessar rotas públicas
+  if (routeConfig?.whenAuth === "redirect") {
+    if (routeConfig.role === "admin" && isAuthenticatedAdmin) {
+      if (pathname !== REDIRECTS.admin.dashboard) {
+        const redirectUrl = request.nextUrl.clone();
+        redirectUrl.pathname = REDIRECTS.admin.dashboard;
+        return NextResponse.redirect(redirectUrl);
+      }
+    }
 
-		return NextResponse.next();
-	}
+    if (routeConfig.role === "user" && isAuthenticatedUser) {
+      if (pathname !== REDIRECTS.user.dashboard) {
+        const redirectUrl = request.nextUrl.clone();
+        redirectUrl.pathname = REDIRECTS.user.dashboard;
+        return NextResponse.redirect(redirectUrl);
+      }
+    }
+  }
 
-	return NextResponse.next();
+  return NextResponse.next();
 }
 
 export const config = {
-	matcher: [
-		/*
-		 * Match all request paths except for the ones starting with:
-		 * - api (API routes)
-		 * - _next/static (static files)
-		 * - _next/image (image optimization files)
-		 * - favicon.ico, sitemap.xml, robots.txt (metadata files)
-		 */
-		"/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
-	],
+  matcher: [
+    "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
+  ],
 };
