@@ -7,6 +7,7 @@ import { Download } from "lucide-react";
 import { FilterData } from "./_components/filter-data";
 import { useGetDashboardData } from "@/features/dashboard/api/use-get-data";
 import { useSearchParams } from "next/navigation";
+import Loading from "./loading";
 
 export default function Home() {
   const params = useSearchParams();
@@ -16,7 +17,7 @@ export default function Home() {
 
   const { data, isLoading } = useGetDashboardData(startDate, endDate);
 
-  if (!data || isLoading) return <p>Carregando...</p>;
+  if (!data || isLoading) return <Loading />;
 
   return (
     <div className="p-6 mt-5 bg-background rounded-xl border">
