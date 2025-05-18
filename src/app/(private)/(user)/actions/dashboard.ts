@@ -8,7 +8,7 @@ import {
   CostsOpenai,
   DashboardData,
   PieChartData,
-} from "../types/dashboard";
+} from "../../types/dashboard";
 import { cookies } from "next/headers";
 import axios from "axios";
 
