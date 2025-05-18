@@ -1,20 +1,35 @@
 "use client";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useGetUserInfo } from "@/features/user/api/use-get-user-info";
 import Image from "next/image";
 import { UserInfoForm } from "./_components/user-info-form";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import React from "react";
 
 export default function AccountPage() {
   const { data, isLoading } = useGetUserInfo();
+  const [logoUrl, setLogoUrl] = React.useState("/fallback-logo.png");
+  const [formattedDate, setFormattedDate] = React.useState("Nunca acessou");
 
-  const logoUrl = data?.time.logo
-    ? new URL(data.time.logo, process.env.NEXT_PUBLIC_S3_FILES).toString()
-    : "/fallback-logo.png";
+  React.useEffect(() => {
+    if (data?.time.logo) {
+      setLogoUrl(
+        new URL(data.time.logo, process.env.NEXT_PUBLIC_S3_FILES).toString()
+      );
+    }
+  }, [data?.time.logo]);
+
+  React.useEffect(() => {
+    if (data?.usuario.ultimo_acesso) {
+      setFormattedDate(
+        format(new Date(data.usuario.ultimo_acesso), "dd/MM/yyyy 'às' HH:mm", {
+          locale: ptBR,
+        })
+      );
+    }
+  }, [data?.usuario.ultimo_acesso]);
 
   if (isLoading || !data) return <p>Carregando...</p>;
 
@@ -53,12 +68,7 @@ export default function AccountPage() {
       <div className="grid gap-4 justify-center md:justify-start py-6 md:py-8 text-left border-b">
         <h3 className="text-lg font-semibold">Segurança:</h3>
         <h3 className="text-muted-foreground">
-          Ultimo Acesso:{" "}
-          {data.usuario.ultimo_acesso
-            ? format(new Date(data.usuario.ultimo_acesso), "dd/MM/yyyy 'às' HH:mm", {
-                locale: ptBR,
-              })
-            : "Nunca acessou"}
+          Último Acesso: {formattedDate}
         </h3>
       </div>
     </div>

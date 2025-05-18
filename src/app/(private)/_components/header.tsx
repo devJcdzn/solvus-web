@@ -17,6 +17,7 @@ import { usePathname } from "next/navigation";
 import { SidebarTrigger } from "./sidebar";
 import React, { useContext } from "react";
 import { UserData } from "@/app/(public)/(auth)/types/user-data";
+import { useGetUserInfo } from "@/features/user/api/use-get-user-info";
 
 const HeaderBreadcrumb = ({ path }: { path: string }) => {
   const segments = path.split("/").filter(Boolean); // remove vazios
@@ -52,6 +53,7 @@ export const DashboardHeader = ({
   userData: Partial<UserData>;
 }) => {
   const pathname = usePathname();
+  const { data } = useGetUserInfo();
 
   return (
     <header className="flex sticky top-0 z-30 rounded-lg border border-secondary sm:border-none left-0 bg-secondary/30 backdrop-blur-lg p-3 w-full justify-between items-center">
@@ -80,7 +82,9 @@ export const DashboardHeader = ({
 
         <Avatar className="" asChild>
           <Link href={"/account"}>
-            <AvatarFallback className="">{userData.usuario?.nome[0]}</AvatarFallback>
+            <AvatarFallback className="">
+              {data?.usuario.nome[0] || userData.usuario?.nome[0]}
+            </AvatarFallback>
           </Link>
         </Avatar>
       </div>

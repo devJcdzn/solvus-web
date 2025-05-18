@@ -4,9 +4,19 @@ import { logout } from "@/app/(public)/(auth)/login/actions/login-action";
 import { UserData } from "@/app/(public)/(auth)/types/user-data";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { useGetUserInfo } from "@/features/user/api/use-get-user-info";
 import { useMediaQuery } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
-import { Bot, FileClock, Gauge, LogOut, MenuIcon, X } from "lucide-react";
+import {
+  Bot,
+  ChartCandlestick,
+  Contact,
+  FileClock,
+  Gauge,
+  LogOut,
+  MenuIcon,
+  X,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect, usePathname } from "next/navigation";
@@ -40,6 +50,16 @@ const sidebarLinks = [
     icon: Bot,
   },
   {
+    title: "Analytics",
+    path: "/analytics",
+    icon: ChartCandlestick,
+  },
+  {
+    title: "Leads",
+    path: "/Leads",
+    icon: Contact,
+  },
+  {
     title: "Histórico",
     path: "/history",
     icon: FileClock,
@@ -48,6 +68,7 @@ const sidebarLinks = [
 
 export const DashboardSidebar = () => {
   const { expanded, setExpanded, userData } = useContext(SidebarContext);
+  const { data } = useGetUserInfo();
 
   const pathname = usePathname();
 
@@ -56,7 +77,8 @@ export const DashboardSidebar = () => {
     redirect("/login");
   };
 
-  const userName = userData.usuario?.nome.split(" ")[0];
+  const userName =
+    data?.usuario.nome.split(" ")[0] || userData.usuario?.nome.split(" ")[0];
 
   const teamData = {
     name: userData.time?.nome || "Solvus - DevTeam",
@@ -108,7 +130,7 @@ export const DashboardSidebar = () => {
             expanded ? "opacity-100 ml-2" : "opacity-0 ml-0 w-0 overflow-hidden"
           )}
         >
-          {teamData.name}
+          {data?.time.nome || teamData.name}
         </h2>
       </div>
 
@@ -157,7 +179,9 @@ export const DashboardSidebar = () => {
             )}
           >
             <Avatar className="size-10">
-              <AvatarFallback>{userData.usuario?.nome[0]}</AvatarFallback>
+              <AvatarFallback>
+                {data?.usuario.nome[0] || userData.usuario?.nome[0]}
+              </AvatarFallback>
             </Avatar>
             <span className="text-slate-950 text-xs">{userName}</span>
           </div>

@@ -1,5 +1,5 @@
 ### Need to use REST CLIENT EXTENSION
-POST http://app.solvus.io/rest/login
+POST https://app.solvus.io/rest/login
 Content-Type: application/json
 
 {
@@ -8,11 +8,29 @@ Content-Type: application/json
 }
 
 ### Need to use REST CLIENT EXTENSION
-POST http://app.solvus.io/rest/dashboard
+POST https://app.solvus.io/rest/dashboard
 Content-Type: application/json
 
 {
   "Authorization": "Bearer",
   "startDate": "2025-05-09",
   "endDate": "2025-05-11"
+}
+
+
+### Get Profile
+POST https://app.solvus.io/rest/profile
+Content-Type: application/json
+
+{
+  "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDc1ODI4NDUsImV4cCI6MTc0NzU4NjQ0NSwidWlkIjoiMTMiLCJlbWFpbCI6ImRhbmFAZ21haWwuY29tIiwibm9tZSI6IkVxdWlwZSBEYW5hIn0.-k4g9vOR1kPufbh_WQx8XC_zJHljrLMR1erov0hMiPA"
+}
+
+### Update Profile
+PUT https://app.solvus.io/rest/profile
+Content-Type: application/json
+
+{
+  "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDc1ODI4NDUsImV4cCI6MTc0NzU4NjQ0NSwidWlkIjoiMTMiLCJlbWFpbCI6ImRhbmFAZ21haWwuY29tIiwibm9tZSI6IkVxdWlwZSBEYW5hIn0.-k4g9vOR1kPufbh_WQx8XC_zJHljrLMR1erov0hMiPA",
+  "nome": "Equipe Dana" 
 }
