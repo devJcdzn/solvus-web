@@ -23,7 +23,7 @@ POST https://app.solvus.io/rest/profile
 Content-Type: application/json
 
 {
-  "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDc1ODI4NDUsImV4cCI6MTc0NzU4NjQ0NSwidWlkIjoiMTMiLCJlbWFpbCI6ImRhbmFAZ21haWwuY29tIiwibm9tZSI6IkVxdWlwZSBEYW5hIn0.-k4g9vOR1kPufbh_WQx8XC_zJHljrLMR1erov0hMiPA"
+  "Authorization": "Bearer"
 }
 
 ### Update Profile
@@ -31,6 +31,6 @@ PUT https://app.solvus.io/rest/profile
 Content-Type: application/json
 
 {
-  "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDc1ODI4NDUsImV4cCI6MTc0NzU4NjQ0NSwidWlkIjoiMTMiLCJlbWFpbCI6ImRhbmFAZ21haWwuY29tIiwibm9tZSI6IkVxdWlwZSBEYW5hIn0.-k4g9vOR1kPufbh_WQx8XC_zJHljrLMR1erov0hMiPA",
+  "Authorization": "Bearer",
   "nome": "Equipe Dana" 
 }
