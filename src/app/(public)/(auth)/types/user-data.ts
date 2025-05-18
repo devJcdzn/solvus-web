@@ -8,6 +8,7 @@ export interface Usuario {
   id: string;
   nome: string;
   email: string;
+  ultimo_acesso?: string;
 }
 
 export interface Time {
