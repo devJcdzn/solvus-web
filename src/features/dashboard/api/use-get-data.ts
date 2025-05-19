@@ -13,8 +13,14 @@ export const useGetDashboardData = (startDate?: string, endDate?: string) => {
         const startUTC = formatISO(parsedStart, { representation: "date" });
         const endUTC = formatISO(parsedEnd, { representation: "date" });
 
-        const { teamData, barChartData, pieChartData, access, assistants } =
-          await loadDashboardData(startUTC, endUTC);
+        const {
+          teamData,
+          barChartData,
+          pieChartData,
+          access,
+          assistants,
+          chats,
+        } = await loadDashboardData(startUTC, endUTC);
 
         return {
           access,
@@ -22,11 +28,18 @@ export const useGetDashboardData = (startDate?: string, endDate?: string) => {
           barChartData,
           pieChartData,
           assistants,
+          chats,
         };
       }
 
-      const { teamData, barChartData, pieChartData, access, assistants } =
-        await loadDashboardData();
+      const {
+        teamData,
+        barChartData,
+        pieChartData,
+        access,
+        assistants,
+        chats,
+      } = await loadDashboardData();
 
       return {
         access,
@@ -34,6 +47,7 @@ export const useGetDashboardData = (startDate?: string, endDate?: string) => {
         barChartData,
         pieChartData,
         assistants,
+        chats,
       };
     },
   });

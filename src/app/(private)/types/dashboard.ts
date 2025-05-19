@@ -17,6 +17,15 @@ export interface Time {
 export interface accessData {
   quantidades_acessos: number;
   assistentes_usados: string[];
+  chats: {
+    [key: string]: ChatContact[];
+  }
+}
+
+export interface ChatContact {
+  numero: string;
+  nome: string;
+  foto: string | null;
 }
 
 export interface CompletionsOpenai {

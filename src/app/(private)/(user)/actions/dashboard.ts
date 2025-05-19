@@ -2,7 +2,6 @@
 
 import { format } from "date-fns";
 import {
-  accessData,
   BarChartData,
   CompletionsOpenai,
   CostsOpenai,
@@ -239,6 +238,8 @@ export async function loadDashboardData(startDate?: string, endDate?: string) {
     endDate
   );
 
+ console.log({dados_uso})
+
   const [barChartData, pieChartData] = await Promise.all([
     prepareBarChartData({
       completions: completions_openai,
@@ -258,6 +259,7 @@ export async function loadDashboardData(startDate?: string, endDate?: string) {
     barChartData,
     pieChartData,
     assistants: dados_uso.assistentes_usados,
+    chats: dados_uso.chats
   };
 }
 
