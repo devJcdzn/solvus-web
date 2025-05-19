@@ -15,6 +15,7 @@ import {
   Gauge,
   LogOut,
   MenuIcon,
+  Users,
   X,
 } from "lucide-react";
 import Image from "next/image";
@@ -58,6 +59,11 @@ const sidebarLinks = [
     title: "Leads",
     path: "/leads",
     icon: Contact,
+  },
+  {
+    title: "Contatos",
+    path: "/contact",
+    icon: Users,
   },
   {
     title: "Histórico",

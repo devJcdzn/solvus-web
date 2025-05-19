@@ -22,6 +22,7 @@ import { useGetUserInfo } from "@/features/user/api/use-get-user-info";
 const pathTranslations: Record<string, string> = {
   account: "Conta",
   assistants: "Assistentes",
+  contact: "Contatos",
   settings: "Configurações",
   history: "Histórico",
   profile: "Perfil",
