@@ -19,12 +19,33 @@ import React, { useContext } from "react";
 import { UserData } from "@/app/(public)/(auth)/types/user-data";
 import { useGetUserInfo } from "@/features/user/api/use-get-user-info";
 
+const pathTranslations: Record<string, string> = {
+  account: "Conta",
+  assistants: "Assistentes",
+  settings: "Configurações",
+  history: "Histórico",
+  profile: "Perfil",
+  dashboard: "Dashboard",
+  users: "Usuários",
+  projects: "Projetos",
+  tasks: "Tarefas",
+  reports: "Relatórios",
+  analytics: "Anlytics",
+  notifications: "Notificações",
+  help: "Ajuda",
+  about: "Sobre",
+};
+
 const HeaderBreadcrumb = ({ path }: { path: string }) => {
   const segments = path.split("/").filter(Boolean); // remove vazios
   const fullPaths = segments.map(
     // biome-ignore lint/style/useTemplate: <explanation>
     (_, i) => "/" + segments.slice(0, i + 1).join("/")
   );
+
+  const translateSegment = (segment: string) => {
+    return pathTranslations[segment] || segment.replace(/-/g, " ");
+  };
 
   return (
     <Breadcrumb className="hidden sm:block">
@@ -37,7 +58,7 @@ const HeaderBreadcrumb = ({ path }: { path: string }) => {
             <BreadcrumbSeparator key={`sep-${segment + i}`} />
             <BreadcrumbItem key={fullPaths[i]}>
               <BreadcrumbLink className="capitalize" href={fullPaths[i]}>
-                {segment.replace(/-/g, " ")}
+                {translateSegment(segment)}
               </BreadcrumbLink>
             </BreadcrumbItem>
           </React.Fragment>

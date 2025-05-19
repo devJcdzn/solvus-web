@@ -56,7 +56,7 @@ const sidebarLinks = [
   },
   {
     title: "Leads",
-    path: "/Leads",
+    path: "/leads",
     icon: Contact,
   },
   {

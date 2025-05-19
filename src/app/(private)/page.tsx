@@ -8,6 +8,8 @@ import { FilterData } from "./_components/filter-data";
 import { useGetDashboardData } from "@/features/dashboard/api/use-get-data";
 import { useSearchParams } from "next/navigation";
 import Loading from "./loading";
+import { Card } from "@/components/ui/card";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 export default function Home() {
   const params = useSearchParams();
@@ -36,6 +38,29 @@ export default function Home() {
             access: data.access,
           }}
         />
+        <div>
+          <Card className="flex flex-col border-none p-0 overflow-hidden gap-2">
+            <header
+              className="px-2 py-3 w-full"
+              style={{ backgroundColor: data.teamData.primaryColor }}
+            >
+              <h4 className="text-white font-semibold">Conversas</h4>
+            </header>
+            <div className="flex flex-col">
+              <div className="px-3 py-3 border-b flex gap-1">
+                <Avatar className="size-10">
+                  <AvatarFallback>U</AvatarFallback>
+                </Avatar>
+                <div className="">
+                  <h5 className="text-base font-semibold">Nome do Lead</h5>
+                  <p className="text-muted-foreground text-sm leading-3">
+                    Numero do lead
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Card>
+        </div>
         <DashboardPieChart team={data.teamData} data={data.assistants} />
       </div>
     </div>
