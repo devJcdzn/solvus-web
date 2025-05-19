@@ -1,26 +1,22 @@
 "use client";
 
-import { Cell, Pie, PieChart } from "recharts";
+import { TrendingUp } from "lucide-react";
+import { Pie, PieChart, Cell } from "recharts";
 
 import {
   Card,
   CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import {
-  type ChartConfig,
+  ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { PieChartData } from "@/app/(private)/types/dashboard";
-const chartData = [
-  { assistant: "assist-rh", usage: 2750 / 100, fill: "var(--color-assist-rh)" },
-  { assistant: "tech-aut", usage: 2000 / 100, fill: "var(--color-tech-aut)" },
-  { assistant: "fort", usage: 5250 / 100, fill: "var(--color-fort)" },
-];
 
 interface PieChartProps {
   primaryColor?: string;
@@ -36,50 +32,73 @@ export function DashboardPieChart({
 }) {
   const pieData = data?.map((assistant) => ({
     name: assistant,
-    value: 100 / data.length,
+    value: Math.round((100 / data.length) * 100) / 100,
   }));
 
-  const defaultColors = [
-    team.primaryColor || "var(--chart-1)",
-    team.secondaryColor || "var(--chart-2)",
-    "var(--chart-3)",
-    "var(--chart-4)",
-    "var(--chart-5)",
-    "var(--chart-6)",
-  ];
+  const chartConfig = data.reduce((acc, assistant, index) => {
+    acc[assistant] = {
+      label: assistant,
+      color:
+        [
+          team.primaryColor,
+          team.secondaryColor,
+          "var(--chart-3)",
+          "var(--chart-4)",
+          "var(--chart-5)",
+          "var(--chart-6)",
+        ][index % 6] ?? `var(--chart-${index + 1})`,
+    };
+    return acc;
+  }, {} as ChartConfig);
 
-  const chartConfig = {
-    value: {
-      label: "Valor",
-      color: team.primaryColor || "var(--chart-1)",
-    },
-  } satisfies ChartConfig;
+  // Custom Tooltip para exibir porcentagem
+  const CustomTooltip = ({
+    active,
+    payload,
+  }: {
+    active?: boolean;
+    payload?: any;
+  }) => {
+    if (active && payload?.length) {
+      const { name, value } = payload[0];
+      return (
+        <div className="rounded-md border bg-background px-3 py-2 text-sm shadow-sm">
+          <div className="font-medium text-xs">{name}</div>
+          <div className="text-muted-foreground text-sm">
+            {value.toFixed(0)}%
+          </div>
+        </div>
+      );
+    }
+    return null;
+  };
 
   return (
-    <Card className="flex flex-col px-4 py-3 gap-3 border-none">
-      <CardHeader>
-        <CardTitle className="text-2xl text-center sm:text-left">
-          Assistentes mais usados
-        </CardTitle>
+    <Card className="flex flex-col">
+      <CardHeader className="items-center pb-0">
+        <CardTitle>Assistentes mais usados</CardTitle>
+        <CardDescription>
+          Análise de uso proporcional por assistente
+        </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
-        <ChartContainer
-          config={chartConfig}
-          className="mx-auto aspect-square max-h-[280px] pb-0 [&_.recharts-pie-label-text]:fill-foreground"
-        >
+        <ChartContainer config={chartConfig} className="mx-auto max-h-[300px]">
           <PieChart>
-            <ChartTooltip content={<ChartTooltipContent hideLabel />} />
+            <ChartTooltip cursor={false} content={<CustomTooltip />} />
             <Pie
               data={pieData}
               dataKey="value"
               nameKey="name"
-              label
-              outerRadius="100%"
+              stroke="0"
+              label={({ name, value }) => `${value.toFixed(0)}%`}
             >
-              {data.map((entry, index) => (
+              {pieData.map((entry, index) => (
                 <Cell
                   key={`cell-${index}`}
-                  fill={defaultColors[index % defaultColors.length]}
+                  fill={
+                    chartConfig[entry.name]?.color ??
+                    `var(--chart-${(index % 6) + 1})`
+                  }
                 />
               ))}
             </Pie>
