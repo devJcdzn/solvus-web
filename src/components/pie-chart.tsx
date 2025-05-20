@@ -87,7 +87,7 @@ export function DashboardPieChart({
             className="text-xl font-normal text-muted-foreground 
           text-center"
           >
-            Sem assisitentes usados no preríodo.
+            Sem assisitentes usados no período.
           </p>
         </CardContent>
       </Card>
