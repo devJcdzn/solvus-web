@@ -21,6 +21,7 @@ import { useGetUserInfo } from "@/features/user/api/use-get-user-info";
 
 const pathTranslations: Record<string, string> = {
   account: "Conta",
+  about: "Sobre",
   assistants: "Assistentes",
   contact: "Contatos",
   settings: "Configurações",
@@ -34,7 +35,6 @@ const pathTranslations: Record<string, string> = {
   analytics: "Anlytics",
   notifications: "Notificações",
   help: "Ajuda",
-  about: "Sobre",
 };
 
 const HeaderBreadcrumb = ({ path }: { path: string }) => {
