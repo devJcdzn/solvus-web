@@ -31,7 +31,7 @@ import {
   useState,
 } from "react";
 
-const SidebarContext = createContext(
+export const SidebarContext = createContext(
   {} as {
     expanded: boolean;
     setExpanded: Dispatch<SetStateAction<boolean>>;
