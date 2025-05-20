@@ -14,6 +14,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { cn } from "@/lib/utils";
 import { Users } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
@@ -25,8 +26,10 @@ interface MultibarChartProps {
 export const MultiBarChart = ({
   team,
   data,
+  access_percent,
 }: {
   team: MultibarChartProps;
+  access_percent: number;
   data: {
     access: number;
     barChart: BarChartData[];
@@ -69,8 +72,14 @@ export const MultiBarChart = ({
           </CardTitle>
           <CardDescription>Acessos na Plataforma</CardDescription>
         </div>
-        <span className="py-1 absolute top-3 right-4 px-3 rounded bg-emerald-100 text-emerald-800 text-xs">
-          +50%
+        <span
+          className={cn(
+            "py-1 absolute top-3 right-4 px-3 rounded ",
+            "bg-emerald-100 text-emerald-800 text-xs",
+            access_percent < 0 ? "bg-red-100 text-red-800" : ""
+          )}
+        >
+          {access_percent > 0 ? `+${access_percent}%` : `-${access_percent}%`}
         </span>
       </CardHeader>
       <CardContent>

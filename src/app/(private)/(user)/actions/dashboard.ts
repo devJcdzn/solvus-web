@@ -238,7 +238,7 @@ export async function loadDashboardData(startDate?: string, endDate?: string) {
     endDate
   );
 
- console.log({dados_uso})
+  console.log({ dados_uso });
 
   const [barChartData, pieChartData] = await Promise.all([
     prepareBarChartData({
@@ -255,11 +255,12 @@ export async function loadDashboardData(startDate?: string, endDate?: string) {
 
   return {
     access: dados_uso.quantidades_acessos,
+    access_percent: dados_uso.percentual_acessos,
+    assistants: dados_uso.assistentes_usados,
+    chats: dados_uso.chats,
     teamData,
     barChartData,
     pieChartData,
-    assistants: dados_uso.assistentes_usados,
-    chats: dados_uso.chats
   };
 }
 

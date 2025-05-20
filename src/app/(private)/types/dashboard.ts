@@ -17,9 +17,10 @@ export interface Time {
 export interface accessData {
   quantidades_acessos: number;
   assistentes_usados: string[];
+  percentual_acessos: number;
   chats: {
     [key: string]: ChatContact[];
-  }
+  };
 }
 
 export interface ChatContact {

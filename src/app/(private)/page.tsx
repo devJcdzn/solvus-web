@@ -36,6 +36,7 @@ export default function Home() {
       <div className="grid sm:grid-cols-2 gap-4">
         <MultiBarChart
           team={data.teamData}
+          access_percent={data.access_percent}
           data={{
             barChart: data.barChartData,
             access: data.access,
@@ -52,7 +53,7 @@ export default function Home() {
             <div className="flex flex-col">
               {Array.isArray(
                 data?.chats?.["UI - Dana - Seus assistente de trabalho!"]
-              ) && data.chats[data.assistants[0]].length > 0 ? (
+              ) && data.chats[data.assistants[0]]?.length > 0 ? (
                 data.chats[data.assistants[0]].map((chat) => {
                   const firstWord = chat.nome?.split("-")[0]?.trim() || "";
                   const fallback = /^\d/.test(firstWord)

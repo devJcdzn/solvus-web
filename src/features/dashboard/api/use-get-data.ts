@@ -18,12 +18,14 @@ export const useGetDashboardData = (startDate?: string, endDate?: string) => {
           barChartData,
           pieChartData,
           access,
+          access_percent,
           assistants,
           chats,
         } = await loadDashboardData(startUTC, endUTC);
 
         return {
           access,
+          access_percent,
           teamData,
           barChartData,
           pieChartData,
@@ -37,12 +39,14 @@ export const useGetDashboardData = (startDate?: string, endDate?: string) => {
         barChartData,
         pieChartData,
         access,
+        access_percent,
         assistants,
         chats,
       } = await loadDashboardData();
 
       return {
         access,
+        access_percent,
         teamData,
         barChartData,
         pieChartData,
