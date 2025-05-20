@@ -73,6 +73,26 @@ export function DashboardPieChart({
     return null;
   };
 
+  if (data.length === 0)
+    return (
+      <Card className="flex flex-col">
+        <CardHeader className="items-center pb-0">
+          <CardTitle>Assistentes mais usados</CardTitle>
+          <CardDescription>
+            Análise de uso proporcional por assistente
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="flex-1 pb-0">
+          <p
+            className="text-xl font-normal text-muted-foreground 
+          text-center"
+          >
+            Sem assisitentes usados no preíodo.
+          </p>
+        </CardContent>
+      </Card>
+    );
+
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
