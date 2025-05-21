@@ -10,14 +10,14 @@ export const AssistantCard = ({ agent }: { agent: Agente }) => {
   const { userData } = useContext(SidebarContext);
 
   return (
-    <Card className="p-0 gap-2 relative overflow-hidden shadow-none">
-      <div className="w-full flex-1 p-4">
+    <Card className="p-0 gap-0 relative overflow-hidden shadow-none">
+      <div className="w-full flex flex-col p-4">
         <Image
           src={`${process.env.NEXT_PUBLIC_S3_FILES}/assets/images/logo-dana.png`}
           alt="logo dana"
           width={120}
           height={120}
-          className="size-full p-4"
+          className="size-24 border rounded-full object-contain"
         />
       </div>
       <div className="px-4 py-3 flex flex-col gap-2">
