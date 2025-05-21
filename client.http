@@ -17,6 +17,16 @@ Content-Type: application/json
   "endDate": "2025-05-11"
 }
 
+### Get assistants
+POST https://app.solvus.io/rest/assistants
+Content-Type: application/json
+
+{
+  "Authorization": "Bearer",
+  "startDate": "2025-05-09",
+  "endDate": "2025-05-11"
+}
+
 
 ### Get Profile
 POST https://app.solvus.io/rest/profile
