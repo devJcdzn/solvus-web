@@ -217,7 +217,7 @@ const mockData = {
   ],
 };
 
-async function getData(startDate?: string, endDate?: string) {
+export async function getData(startDate?: string, endDate?: string) {
   const token = (await cookies()).get("login@solvus-token")?.value;
 
   const { data } = await axios.post<DashboardData>(
