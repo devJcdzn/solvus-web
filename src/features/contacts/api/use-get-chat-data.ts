@@ -7,16 +7,13 @@ export const useGetChatData = (remoteJid: string) => {
     queryFn: async () => {
       try {
         const data = await getChatData(remoteJid);
-        console.log(data)
-
-        return data;
 
         return data;
       } catch (err) {
         throw new Error((err as Error).message);
       }
     },
-    refetchInterval: 1000 * 60 * 5
+    refetchInterval: 1000 * 60 * 5,
   });
 
   return query;
