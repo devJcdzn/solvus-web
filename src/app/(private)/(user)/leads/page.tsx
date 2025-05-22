@@ -6,6 +6,7 @@ import { AssistantCard } from "../assistants/_components/assistant-card";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import { normalizarNumero } from "@/lib/utils";
+import { LeadsCard } from "./_components/leads-card";
 
 export default function LeadsPage() {
   const { data, isLoading } = useGetContacts();
@@ -20,28 +21,14 @@ export default function LeadsPage() {
             Array.isArray(chats) && chats.length > 0 ? (
               <div key={assistantName}>
                 <div className="px-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                  {chats.map((chat) => {
-                    const firstWord = chat.nome?.split("-")[0]?.trim() || "";
+                  {chats.map((contact) => {
+                    const firstWord = contact.nome?.split("-")[0]?.trim() || "";
                     const fallback = /^\d/.test(firstWord)
-                      ? chat.nome?.split("-")[1]?.trim()[0] || ""
+                      ? contact.nome?.split("-")[1]?.trim()[0] || ""
                       : firstWord[0] || "";
 
                     return (
-                      <div
-                        key={chat.numero}
-                        className="px-3 py-3 border-b flex gap-2"
-                      >
-                        <Avatar className="size-10">
-                          <AvatarImage src={chat.foto || ""} />
-                          <AvatarFallback>{fallback}</AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <h5 className="text-sm font-semibold">{chat.nome}</h5>
-                          <p className="text-muted-foreground text-sm leading-3">
-                            {normalizarNumero(chat.numero)}
-                          </p>
-                        </div>
-                      </div>
+                      <LeadsCard key={contact.remoteJid} contact={contact} />
                     );
                   })}
                 </div>
