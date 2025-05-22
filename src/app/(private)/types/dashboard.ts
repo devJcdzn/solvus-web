@@ -27,6 +27,7 @@ export interface ChatContact {
   numero: string;
   nome: string;
   foto: string | null;
+  remoteJid: string;
 }
 
 export interface CompletionsOpenai {
