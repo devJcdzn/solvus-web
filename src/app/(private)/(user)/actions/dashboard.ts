@@ -238,7 +238,6 @@ export async function loadDashboardData(startDate?: string, endDate?: string) {
     endDate
   );
 
-  console.log({ dados_uso });
 
   const [barChartData, pieChartData] = await Promise.all([
     prepareBarChartData({

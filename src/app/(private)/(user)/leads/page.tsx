@@ -1,18 +1,11 @@
 "use client";
 
-import { useGetContacts } from "@/features/contacts/api/use-get-contacts";
 import Loading from "../../loading";
-import { AssistantCard } from "../assistants/_components/assistant-card";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { AvatarFallback } from "@radix-ui/react-avatar";
-import { normalizarNumero } from "@/lib/utils";
 import { LeadsCard } from "./_components/leads-card";
 import { useGetLeads } from "@/features/leads/api/use-get-leads";
 
 export default function LeadsPage() {
   const { data, isLoading } = useGetLeads();
-
-  console.log({ data });
 
   if (!data || isLoading) return <Loading />;
 

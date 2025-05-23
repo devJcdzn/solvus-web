@@ -22,7 +22,6 @@ export default function Home() {
 
   if (!data || isLoading) return <Loading />;
 
-  console.log(data);
 
   return (
     <div className="p-6 mt-5 bg-background rounded-xl border">

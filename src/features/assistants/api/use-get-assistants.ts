@@ -7,8 +7,6 @@ export const useGetAssistants = () => {
     queryFn: async () => {
       const response = await getAssistants();
 
-        console.log(response);
-
       if (!response) return;
 
       return {
