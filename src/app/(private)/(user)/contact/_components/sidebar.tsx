@@ -79,9 +79,9 @@ export const SidebarChats = ({
                   <h3 className="text-[#e9edef] font-medium truncate">
                     {contact.name}
                   </h3>
-                  <span className="text-xs text-[#8696a0]">
+                  {/* <span className="text-xs text-[#8696a0]">
                     {contact.timestamp}
-                  </span>
+                  </span> */}
                 </div>
                 <div className="flex justify-between items-center">
                   <p className="text-sm text-[#8696a0] truncate">
