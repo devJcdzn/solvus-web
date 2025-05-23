@@ -134,7 +134,7 @@ export function transformChatContactsToContacts(
         id: contact.remoteJid,
         name: contact.nome,
         avatar: contact.foto || null,
-        lastMessage: contact.numero, // opcional: substitua por fetch real
+        lastMessage: contact.ultimaMensagem as string, // opcional: substitua por fetch real
         timestamp: "Agora", // opcional: substitua por timestamp real
         unread: 0, // fake para visual, ou use um valor real
         messages: [],

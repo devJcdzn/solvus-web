@@ -51,11 +51,9 @@ export const ChatInterface = () => {
           } min-w-[300px] flex-col border-r border-[#8696a026]`}
         >
           {!data || isLoading ? (
-            <SidebarChats
-              contacts={contacts}
-              onSelectContact={handleContactSelect}
-              selectedContactId={selectedContact?.id}
-            />
+            <div className="flex h-full flex-col items-center justify-center bg-[#111b21] place-items-center">
+              <p className="text-muted-foreground">Carregando...</p>
+            </div>
           ) : (
             <SidebarChats
               contacts={parsedContacts || []}

@@ -3,9 +3,9 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Contact } from "../types";
-import { normalizarNumero } from "@/lib/utils";
+import { SidebarContext } from "@/app/(private)/_components/sidebar";
 
 interface SidebarProps {
   contacts: Contact[];
@@ -19,6 +19,7 @@ export const SidebarChats = ({
   selectedContactId,
 }: SidebarProps) => {
   const [searchQuery, setSearchQuery] = useState("");
+  const { userData } = useContext(SidebarContext);
 
   const filteredContacts = contacts.filter((contact) =>
     contact.name?.toLowerCase().includes(searchQuery.toLowerCase())
@@ -29,7 +30,8 @@ export const SidebarChats = ({
       {/* Header */}
       <div className="flex items-center justify-between p-3 bg-[#202c33] rounded-tl-lg">
         <Avatar className="h-10 w-10">
-          <AvatarFallback>D</AvatarFallback>
+          <AvatarImage src={userData.time?.logo} />
+          <AvatarFallback>{userData.time?.nome[0]}</AvatarFallback>
         </Avatar>
       </div>
 
@@ -70,9 +72,7 @@ export const SidebarChats = ({
                   src={contact.avatar || "/placeholder.svg"}
                   alt={contact.name}
                 />
-                <AvatarFallback>
-                  {fallback}
-                </AvatarFallback>
+                <AvatarFallback>{fallback}</AvatarFallback>
               </Avatar>
               <div className="flex-1 min-w-0">
                 <div className="flex justify-between items-baseline">
@@ -85,7 +85,7 @@ export const SidebarChats = ({
                 </div>
                 <div className="flex justify-between items-center">
                   <p className="text-sm text-[#8696a0] truncate">
-                    {normalizarNumero(contact.lastMessage)}
+                    {contact.lastMessage}
                   </p>
                   {contact.unread > 0 && (
                     <span className="bg-[#00a884] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">

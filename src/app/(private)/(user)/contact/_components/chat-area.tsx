@@ -26,14 +26,23 @@ export const ChatArea = ({ contact, onBack, isMobile }: ChatAreaProps) => {
     : firstWord[0] || "";
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollTop = 0;
-    }
-  }, [parsedChats?.messages, contact.messages]);
+    const scrollToBottom = () => {
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.scrollTop = scrollContainerRef.current.scrollHeight;
+      }
+    };
+
+    // Scroll immediately
+    scrollToBottom();
+
+    // Scroll again after a short delay to ensure content is rendered
+    const timeoutId = setTimeout(scrollToBottom, 100);
+
+    return () => clearTimeout(timeoutId);
+  }, [parsedChats?.messages]);
 
   // if (!data || isLoading) {};
 
@@ -71,7 +80,7 @@ export const ChatArea = ({ contact, onBack, isMobile }: ChatAreaProps) => {
         className="flex-1 overflow-y-auto p-4 bg-[#0b141a] bg-repeat"
         style={{ backgroundSize: "360px" }}
       >
-        <div className="flex flex-col-reverse gap-2">
+        <div className="flex flex-col gap-2">
           {parsedChats && parsedChats.messages.length > 0 ? (
             <>
               {(parsedChats?.messages || contact.messages).map((msg) => (
@@ -136,6 +145,7 @@ export const ChatArea = ({ contact, onBack, isMobile }: ChatAreaProps) => {
                   </div>
                 </div>
               ))}
+              <div ref={messagesEndRef} />
             </>
           ) : (
             <div className="place-items-center">
