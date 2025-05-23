@@ -7,21 +7,24 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import { normalizarNumero } from "@/lib/utils";
 import { LeadsCard } from "./_components/leads-card";
+import { useGetLeads } from "@/features/leads/api/use-get-leads";
 
 export default function LeadsPage() {
-  const { data, isLoading } = useGetContacts();
+  const { data, isLoading } = useGetLeads();
+
+  console.log({ data });
 
   if (!data || isLoading) return <Loading />;
 
   return (
     <div className="p-6 mt-5 bg-background rounded-xl border">
       <div className="px-2 md:px-6 grid grid-cols-1 gap-6">
-        {data?.chats && Object.keys(data.chats).length > 0 ? (
-          Object.entries(data.chats).map(([assistantName, chats]) =>
-            Array.isArray(chats) && chats.length > 0 ? (
+        {data?.conversas && Object.keys(data.conversas).length > 0 ? (
+          Object.entries(data.conversas).map(([assistantName, conversas]) =>
+            Array.isArray(conversas) && conversas.length > 0 ? (
               <div key={assistantName}>
                 <div className="px-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                  {chats.map((contact) => {
+                  {conversas.map((contact) => {
                     const firstWord = contact.nome?.split("-")[0]?.trim() || "";
                     const fallback = /^\d/.test(firstWord)
                       ? contact.nome?.split("-")[1]?.trim()[0] || ""
