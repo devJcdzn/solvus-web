@@ -3,7 +3,7 @@ POST https://app.solvus.io/rest/login
 Content-Type: application/json
 
 {
-  "email": "dana@gmail.com",
+  "email": "fortbras@gmail.com",
   "senha": "123456"
 }
 
@@ -12,9 +12,7 @@ POST https://app.solvus.io/rest/dashboard
 Content-Type: application/json
 
 {
-  "Authorization": "Bearer",
-  "startDate": "2025-05-09",
-  "endDate": "2025-05-11"
+  "Authorization": "Bearer "
 }
 
 ### Get assistants
@@ -43,4 +41,21 @@ Content-Type: application/json
 {
   "Authorization": "Bearer",
   "nome": "Equipe Dana" 
+}
+
+### Get Chat 
+POST https://app.solvus.io/rest/getChat
+Content-Type: application/json
+
+{
+  "Authorization": "Bearer",
+  "remoteJid" : "559183191259@s.whatsapp.net"
+}
+
+### Get Leads 
+POST  https://app.solvus.io/rest/leads
+Content-Type: application/json
+
+{
+  "Authorization": "Bearer "
 }
