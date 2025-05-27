@@ -133,7 +133,7 @@ export const DashboardSidebar = () => {
         <h2
           className={cn(
             "text-lg font-semibold capitalize transition-all whitespace-nowrap",
-            expanded ? "opacity-100 ml-2" : "opacity-0 ml-0 w-0 overflow-hidden"
+            expanded ? "opacity-100" : "opacity-0 ml-0 w-0 overflow-hidden"
           )}
         >
           {data?.time.nome || teamData.name}

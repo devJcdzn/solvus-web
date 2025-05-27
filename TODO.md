@@ -1,6 +1,6 @@
 # A Fazer:
 
-- [ ] Margem "titulo" do painel
+- [x] Margem "titulo" do painel
 
 - [ ] Font Weight 500 quando menu estiver ativo
 
