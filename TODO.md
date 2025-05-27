@@ -14,4 +14,4 @@
 
 - [ ] Página de histórico
 
-- [ ] Popup novidades
+- [x] Popup novidades
