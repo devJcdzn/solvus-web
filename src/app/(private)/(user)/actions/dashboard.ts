@@ -9,7 +9,7 @@ import {
   PieChartData,
 } from "../../types/dashboard";
 import { cookies } from "next/headers";
-import axios from "axios";
+import { api } from "@/lib/api";
 
 const mockData = {
   time: {
@@ -220,8 +220,8 @@ const mockData = {
 export async function getData(startDate?: string, endDate?: string) {
   const token = (await cookies()).get("login@solvus-token")?.value;
 
-  const { data } = await axios.post<DashboardData>(
-    "http://app.solvus.io/rest/dashboard",
+  const { data } = await api.post<DashboardData>(
+    "/dashboard",
     {
       Authorization: `Bearer ${token}`,
       startDate,
