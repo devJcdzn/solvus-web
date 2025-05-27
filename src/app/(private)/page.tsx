@@ -44,7 +44,7 @@ export default function Home() {
         <div>
           <Card className="flex flex-col border-none p-0 gap-0 max-h-[60vh] overflow-auto">
             <header
-              className="px-2 py-3 w-full sticky top-0 z-40"
+              className="px-2 py-3 w-full sticky top-0 z-30"
               style={{ backgroundColor: data.teamData.primaryColor }}
             >
               <h4 className="text-white font-semibold">Conversas</h4>

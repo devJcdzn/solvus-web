@@ -78,7 +78,7 @@ export const DashboardHeader = ({
   const { data } = useGetUserInfo();
 
   return (
-    <header className="flex sticky top-0 z-30 rounded-lg border border-secondary sm:border-none left-0 bg-secondary/30 backdrop-blur-lg p-3 w-full justify-between items-center">
+    <header className="flex sticky top-0 z-40 rounded-lg border border-secondary sm:border-none left-0 bg-secondary/80 backdrop-blur-lg p-3 w-full justify-between items-center">
       <div className="flex gap-3 items-center">
         <SidebarTrigger />
         <HeaderBreadcrumb path={pathname} />
