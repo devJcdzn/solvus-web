@@ -1,7 +1,7 @@
 "use server";
 
 import { Time, Usuario } from "@/app/(public)/(auth)/types/user-data";
-import axios from "axios";
+import { api } from "@/lib/api";
 import { cookies } from "next/headers";
 
 export async function getProfileInfo(): Promise<{
@@ -11,8 +11,8 @@ export async function getProfileInfo(): Promise<{
   const token = (await cookies()).get("login@solvus-token")?.value;
 
   try {
-    const { data } = await axios.post<{ usuario: Usuario; time: Time }>(
-      "https://app.solvus.io/rest/profile",
+    const { data } = await api.post<{ usuario: Usuario; time: Time }>(
+      "/profile",
       {
         Authorization: `Bearer ${token}`,
       }
@@ -44,7 +44,7 @@ export async function updateProfileInfo({
   if (!token) throw new Error("No authentication token found");
 
   try {
-    const { data } = await axios.put("https://app.solvus.io/rest/profile", {
+    const { data } = await api.put("/profile", {
       Authorization: `Bearer ${token}`,
       email,
       nome: name,

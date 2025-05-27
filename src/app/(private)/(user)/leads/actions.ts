@@ -1,15 +1,15 @@
 "use server";
 
-import axios from "axios";
 import { cookies } from "next/headers";
 import { LeadsResponse } from "./types";
+import { api } from "@/lib/api";
 
 export async function getLeads() {
   const token = (await cookies()).get("login@solvus-token")?.value;
 
   try {
-    const { data } = await axios.post<LeadsResponse>(
-      "https://app.solvus.io/rest/leads",
+    const { data } = await api.post<LeadsResponse>(
+      "/leads",
       {
         Authorization: `Bearer ${token}`,
       }
