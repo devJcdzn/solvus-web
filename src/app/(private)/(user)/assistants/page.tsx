@@ -2,11 +2,12 @@
 
 import { useGetAssistants } from "@/features/assistants/api/use-get-assistants";
 import { AssistantCard } from "./_components/assistant-card";
+import Loading from "../../loading";
 
 export default function AssistantsPage() {
   const { data, isLoading } = useGetAssistants();
 
-  if (!data || isLoading) return <p>Carregando...</p>;
+  if (!data || isLoading) return <Loading />;
 
   return (
     <div className="p-6 mt-5 bg-background rounded-xl border">

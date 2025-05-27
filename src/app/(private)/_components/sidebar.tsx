@@ -132,7 +132,7 @@ export const DashboardSidebar = () => {
         />
         <h2
           className={cn(
-            "text-lg font-semibold capitalize transition-all whitespace-nowrap",
+            "text-lg font-semibold capitalize transition-all whitespace-nowrap --font-plus-jacarta",
             expanded ? "opacity-100" : "opacity-0 ml-0 w-0 overflow-hidden"
           )}
         >
@@ -152,7 +152,7 @@ export const DashboardSidebar = () => {
                 className={cn(
                   "flex p-2 rounded hover:bg-secondary transition-colors items-center text-slate-950",
                   active
-                    ? `bg-muted-foreground/10 text-[${teamData.primaryColor}]`
+                    ? `bg-muted-foreground/10 text-[${teamData.primaryColor}] font-semibold`
                     : ""
                 )}
                 style={{ color: active ? teamData.primaryColor : "" }}

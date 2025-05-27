@@ -7,6 +7,7 @@ import { UserInfoForm } from "./_components/user-info-form";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import React from "react";
+import Loading from "../../loading";
 
 export default function AccountPage() {
   const { data, isLoading } = useGetUserInfo();
@@ -31,7 +32,7 @@ export default function AccountPage() {
     }
   }, [data?.usuario.ultimo_acesso]);
 
-  if (isLoading || !data) return <p>Carregando...</p>;
+  if (!data || isLoading) return <Loading />;
 
   return (
     <div className="p-6 mt-5 bg-background rounded-xl border">
