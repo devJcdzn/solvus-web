@@ -4,7 +4,7 @@ import { Time, UserData, Usuario } from "@/app/(public)/(auth)/types/user-data";
 import { api } from "@/lib/api";
 import { cookies } from "next/headers";
 
-const expires = 60 * 60 * 24 * 7; // 7 dias
+const expires = 60 * 60 * 24; // 7 dias
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export async function login(_formState: any, formData: FormData) {
