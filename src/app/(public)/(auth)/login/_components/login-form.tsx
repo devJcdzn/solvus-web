@@ -30,12 +30,11 @@ export const LoginForm = () => {
             <div className="flex flex-col items-center gap-2 font-medium">
               <div className="flex size-20 items-center justify-center rounded-md">
                 <Image
-                  src={"/logo-t.png"}
-                  alt="logo-solvus"
+                  src={"/solvus.png"}
+                  alt="Solvus"
                   width={200}
                   height={200}
                   className="object-cover size-full"
-                  priority
                 />
               </div>
               <span className="sr-only">Solvus</span>
