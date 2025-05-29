@@ -79,7 +79,7 @@ export const MultiBarChart = ({
             access_percent < 0 ? "bg-red-100 text-red-800" : ""
           )}
         >
-          {access_percent > 0 ? `+${access_percent}%` : `-${access_percent}%`}
+          {access_percent > 0 ? `+${access_percent}%` : `${access_percent}%`}
         </span>
       </CardHeader>
       <CardContent>

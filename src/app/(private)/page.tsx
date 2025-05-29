@@ -22,7 +22,6 @@ export default function Home() {
 
   if (!data || isLoading) return <Loading />;
 
-
   return (
     <div className="p-6 mt-5 bg-background rounded-xl border">
       <div className="flex gap-2 w-full  flex-col sm:flex-row items-center justify-between mb-6">
@@ -55,8 +54,12 @@ export default function Home() {
                 Object.entries(data.chats).map(([assistantName, chats]) =>
                   Array.isArray(chats) && chats.length > 0 ? (
                     <div key={assistantName}>
-                      <div className="px-3 py-2 bg-muted font-medium text-sm text-muted-foreground">
-                        {assistantName}
+                      <div
+                        className="px-3 py-2 bg-muted flex items-center justify-between font-medium 
+                        text-sm text-muted-foreground"
+                      >
+                        <p>{assistantName}</p>
+                        <p>{data.leads_length} Leads</p>
                       </div>
                       {chats.map((chat) => {
                         const firstWord =

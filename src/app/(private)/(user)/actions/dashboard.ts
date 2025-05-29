@@ -220,14 +220,11 @@ const mockData = {
 export async function getData(startDate?: string, endDate?: string) {
   const token = (await cookies()).get("login@solvus-token")?.value;
 
-  const { data } = await api.post<DashboardData>(
-    "/dashboard",
-    {
-      Authorization: `Bearer ${token}`,
-      startDate,
-      endDate,
-    }
-  );
+  const { data } = await api.post<DashboardData>("/dashboard", {
+    Authorization: `Bearer ${token}`,
+    startDate,
+    endDate,
+  });
 
   return data;
 }
@@ -237,7 +234,6 @@ export async function loadDashboardData(startDate?: string, endDate?: string) {
     startDate,
     endDate
   );
-
 
   const [barChartData, pieChartData] = await Promise.all([
     prepareBarChartData({
@@ -256,6 +252,7 @@ export async function loadDashboardData(startDate?: string, endDate?: string) {
     access: dados_uso.quantidades_acessos,
     access_percent: dados_uso.percentual_acessos,
     assistants: dados_uso.assistentes_usados,
+    leads_length: dados_uso.quantidades_leads,
     chats: dados_uso.chats,
     teamData,
     barChartData,

@@ -18,6 +18,7 @@ export const useGetDashboardData = (startDate?: string, endDate?: string) => {
           barChartData,
           pieChartData,
           access,
+          leads_length,
           access_percent,
           assistants,
           chats,
@@ -29,6 +30,7 @@ export const useGetDashboardData = (startDate?: string, endDate?: string) => {
           teamData,
           barChartData,
           pieChartData,
+          leads_length,
           assistants,
           chats,
         };
@@ -39,6 +41,7 @@ export const useGetDashboardData = (startDate?: string, endDate?: string) => {
         barChartData,
         pieChartData,
         access,
+        leads_length,
         access_percent,
         assistants,
         chats,
@@ -50,6 +53,7 @@ export const useGetDashboardData = (startDate?: string, endDate?: string) => {
         teamData,
         barChartData,
         pieChartData,
+        leads_length,
         assistants,
         chats,
       };

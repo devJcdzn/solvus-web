@@ -14,4 +14,6 @@
 
 - [ ] Página de histórico
 
+- [x] Add total de Leads na dashboard
+
 - [x] Popup novidades
