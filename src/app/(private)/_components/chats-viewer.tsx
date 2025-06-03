@@ -35,7 +35,7 @@ export const ChatViewer = ({
                         text-sm text-muted-foreground"
                 >
                   <p>{assistantName}</p>
-                  <p>{data.leads_length} Conversas</p>
+                  <p>{data.leads_length} Contatos</p>
                 </div>
                 {chats.map((chat) => {
                   const firstWord = chat.nome?.split("-")[0]?.trim() || "";
