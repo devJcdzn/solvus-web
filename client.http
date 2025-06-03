@@ -1,18 +1,18 @@
 ### Need to use REST CLIENT EXTENSION
-POST https://app.solvus.io/rest/login
+POST https://solvus.io/api/rest/login
 Content-Type: application/json
 
 {
-  "email": "fortbras@gmail.com",
+  "email": "dana@gmail.com",
   "senha": "123456"
 }
 
 ### Need to use REST CLIENT EXTENSION
-POST https://app.solvus.io/rest/dashboard
+POST https://solvus.io/api/rest/dashboard
 Content-Type: application/json
 
 {
-  "Authorization": "Bearer "
+  "Authorization": "Bearer"
 }
 
 ### Get assistants
@@ -58,4 +58,12 @@ Content-Type: application/json
 
 {
   "Authorization": "Bearer "
+}
+
+### Get History 
+POST https://solvus.io/api/rest/history
+Content-Type: application/json
+
+{
+  "Authorization": "Bearer"
 }
