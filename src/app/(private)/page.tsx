@@ -9,6 +9,8 @@ import { useGetDashboardData } from "@/features/dashboard/api/use-get-data";
 import { useSearchParams } from "next/navigation";
 import Loading from "./loading";
 import { ChatViewer } from "./_components/chats-viewer";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { ChatsData } from "./_components/chats-data";
 
 export default function Home() {
   const params = useSearchParams();
@@ -38,7 +40,10 @@ export default function Home() {
             access: data.access,
           }}
         />
-        <ChatViewer data={data} />
+        <div className="grid gap-3">
+          <ChatsData data={data} />
+          <ChatViewer data={data} />
+        </div>
         <DashboardPieChart team={data.teamData} data={data.assistants} />
       </div>
     </div>
