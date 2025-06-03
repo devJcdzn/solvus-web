@@ -13,59 +13,16 @@ export const useGetDashboardData = (startDate?: string, endDate?: string) => {
         const startUTC = formatISO(parsedStart, { representation: "date" });
         const endUTC = formatISO(parsedEnd, { representation: "date" });
 
-        const {
-          teamData,
-          barChartData,
-          pieChartData,
-          access,
-          leads_length,
-          access_percent,
-          messages_length,
-          chats_length,
-          assistants,
-          chats,
-        } = await loadDashboardData(startUTC, endUTC);
+        const data = await loadDashboardData(startUTC, endUTC);
 
-        return {
-          access,
-          access_percent,
-          teamData,
-          barChartData,
-          pieChartData,
-          leads_length,
-          messages_length,
-          chats_length,
-          assistants,
-          chats,
-        };
+        return data;
       }
 
-      const {
-        teamData,
-        barChartData,
-        pieChartData,
-        access,
-        leads_length,
-        access_percent,
-        chats_length,
-        messages_length,
-        assistants,
-        chats,
-      } = await loadDashboardData();
+      const data = await loadDashboardData();
 
-      return {
-        access,
-        access_percent,
-        teamData,
-        barChartData,
-        pieChartData,
-        leads_length,
-        messages_length,
-        chats_length,
-        assistants,
-        chats,
-      };
+      return data;
     },
+    refetchInterval: 5 * 60 * 1000,
   });
 
   return query;
