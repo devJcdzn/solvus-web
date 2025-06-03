@@ -8,9 +8,6 @@ import { FilterData } from "./_components/filter-data";
 import { useGetDashboardData } from "@/features/dashboard/api/use-get-data";
 import { useSearchParams } from "next/navigation";
 import Loading from "./loading";
-import { Card } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { normalizarNumero } from "@/lib/utils";
 import { ChatViewer } from "./_components/chats-viewer";
 
 export default function Home() {
