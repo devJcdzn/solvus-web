@@ -1,6 +1,6 @@
 "use client";
 
-import { BarChartData } from "@/app/(private)/types/dashboard";
+import { BarChartData } from "@/features/dashboard/types";
 import {
   Card,
   CardContent,
