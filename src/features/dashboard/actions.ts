@@ -48,6 +48,7 @@ export async function loadDashboardData(startDate?: string, endDate?: string) {
     assistants: dados_uso.assistentes_usados,
     leads_length: dados_uso.quantidade_contatos,
     messages_length: dados_uso.quantidade_mensagens,
+    chats_length: dados_uso.quantidade_chats,
     chats: dados_uso.chats,
     teamData,
     barChartData,

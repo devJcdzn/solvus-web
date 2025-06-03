@@ -20,6 +20,7 @@ export interface DashboardData {
     assistentes_usados: string[];
     quantidade_contatos: number;
     quantidade_mensagens: number;
+    quantidade_chats: number;
     chats: {
       [key: string]: ChatContact[];
     };
