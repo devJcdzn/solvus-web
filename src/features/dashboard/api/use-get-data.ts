@@ -20,6 +20,7 @@ export const useGetDashboardData = (startDate?: string, endDate?: string) => {
           access,
           leads_length,
           access_percent,
+          messages_length,
           assistants,
           chats,
         } = await loadDashboardData(startUTC, endUTC);

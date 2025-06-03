@@ -47,7 +47,7 @@ export async function loadDashboardData(startDate?: string, endDate?: string) {
     access_percent: dados_uso.percentual_acessos,
     assistants: dados_uso.assistentes_usados,
     leads_length: dados_uso.quantidade_contatos,
-    messages_lenght: dados_uso.quantidade_mensagens,
+    messages_length: dados_uso.quantidade_mensagens,
     chats: dados_uso.chats,
     teamData,
     barChartData,
