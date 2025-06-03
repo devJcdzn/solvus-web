@@ -6,7 +6,7 @@
 
 - [x] Skeleton Pagina perfil e Assistentes
 
-- [ ] Fonte Plus Jakarta Sans no Titulo do painel e Login
+- [x] Fonte Plus Jakarta Sans no Titulo do painel e Login
 
 - [x] Imagem Logo não carrega no login Windows (mac funcionando)
 
@@ -18,11 +18,11 @@
 
 - [x] Popup novidades
 
-- [ ] Trocar "Leads" por "Conversas" no numero de leads dentro da dashboard
+- [x] Trocar "Leads" por "Conversas" no numero de leads dentro da dashboard
 
 - [ ] Criar um card novo na dashboard para gráfico de mapa de calor
 
-- [ ] Criar card novo para números de chats e números de mensagens recebidas
+- [x] Criar card novo para números de chats e números de mensagens recebidas
 
 - [ ] Fazer busca funcionar na pagina de leads e mostrar os leads resultantes
 
