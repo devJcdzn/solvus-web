@@ -6,14 +6,38 @@
 
 - [x] Skeleton Pagina perfil e Assistentes
 
-- [ ] Fonte Plus Jakarta Sans no Titulo do painel e Login 
+- [ ] Fonte Plus Jakarta Sans no Titulo do painel e Login
 
-- [x] Imagem Logo não carrega no login  Windows (mac funcionando)
+- [x] Imagem Logo não carrega no login Windows (mac funcionando)
 
 - [ ] Login do admin
 
-- [ ] Página de histórico
+- [x] Página de histórico
 
 - [x] Add total de Leads na dashboard
 
 - [x] Popup novidades
+
+- [ ] Trocar "Leads" por "Conversas" no numero de leads dentro da dashboard
+
+- [ ] Criar um card novo na dashboard para gráfico de mapa de calor
+
+- [ ] Criar card novo para números de chats e números de mensagens recebidas
+
+- [ ] Fazer busca funcionar na pagina de leads e mostrar os leads resultantes
+
+- [ ] Ao Clicar no lead em "Leads", entrar na conversa dele em conversas
+
+- [ ] Criar parte de ordenação em "Leads"
+
+- [ ] Adicionar campo para visualizar a data das mensagens no campo "Contatos"
+
+- [ ] Criação da Página de chat anônimo por assistente
+
+- [ ] Criação da Página de chat com assistente dentro da plataforma
+
+- [ ] Criar campo "Mailboxes" no painel
+
+- [ ] Criar tela com campo para selecionar os leads e digitar a mensagem em "Mailboxes"
+
+- [ ] Criar visualização do chat do histórico
