@@ -1,6 +1,6 @@
-import { loadDashboardData } from "@/app/(private)/(user)/actions/dashboard";
+import { loadDashboardData } from "../actions";
 import { useQuery } from "@tanstack/react-query";
-import { format, formatISO, parse } from "date-fns";
+import { formatISO, parse } from "date-fns";
 
 export const useGetDashboardData = (startDate?: string, endDate?: string) => {
   const query = useQuery({
