@@ -9,7 +9,6 @@ import { useGetDashboardData } from "@/features/dashboard/api/use-get-data";
 import { useSearchParams } from "next/navigation";
 import Loading from "./loading";
 import { ChatViewer } from "./_components/chats-viewer";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChatsData } from "./_components/chats-data";
 
 export default function Home() {
