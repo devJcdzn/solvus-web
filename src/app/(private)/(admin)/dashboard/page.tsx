@@ -1,10 +1,4 @@
 "use client";
-
-import { MultiBarChart } from "@/components/bar-chart";
-import { DashboardPieChart } from "@/components/pie-chart";
-import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
-import { useGetDashboardData } from "@/features/dashboard/api/use-get-data";
 import { useSearchParams } from "next/navigation";
 import Loading from "../../loading";
 
