@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 import { RawData } from "./types";
-import { getData } from "../actions/dashboard";
+import { getData } from "@/features/dashboard/actions";
 import { api } from "@/lib/api";
 
 export async function getChatData(remoteJid: string) {

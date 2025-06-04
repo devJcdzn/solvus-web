@@ -1,4 +1,4 @@
-import { ChatContact } from "@/app/(private)/types/dashboard";
+import { ChatContact } from "@/features/dashboard/types";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardHeader } from "@/components/ui/card";
 import { normalizarNumero } from "@/lib/utils";

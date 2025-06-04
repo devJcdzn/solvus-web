@@ -2,7 +2,7 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 import { Contact, Message } from "@/app/(private)/(user)/contact/types";
-import { ChatContact } from "@/app/(private)/types/dashboard";
+import { ChatContact } from "@/features/dashboard/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
