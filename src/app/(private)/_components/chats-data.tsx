@@ -24,7 +24,7 @@ export const ChatsData = ({
           </span>
         </div>
         <div className="grid gap-1">
-          <CardTitle className="text-right">Leads</CardTitle>
+          <CardTitle className="text-right">Conversas</CardTitle>
           <span
             className="text-3xl font-bold text-right"
             style={{ color: data.teamData.primaryColor }}
