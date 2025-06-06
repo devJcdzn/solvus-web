@@ -53,11 +53,11 @@ Content-Type: application/json
 }
 
 ### Get Leads 
-POST  https://app.solvus.io/rest/leads
+POST https://solvus.io/api/rest/leads?q=ju
 Content-Type: application/json
 
 {
-  "Authorization": "Bearer "
+  "Authorization": "Bearer"
 }
 
 ### Get History 

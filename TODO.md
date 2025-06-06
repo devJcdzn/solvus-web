@@ -24,11 +24,11 @@
 
 - [x] Criar card novo para números de chats e números de mensagens recebidas
 
-- [ ] Fazer busca funcionar na pagina de leads e mostrar os leads resultantes
+- [1/2] Fazer busca funcionar na pagina de leads e mostrar os leads resultantes
 
 - [ ] Ao Clicar no lead em "Leads", entrar na conversa dele em conversas
 
-- [ ] Criar parte de ordenação em "Leads"
+- [x] Criar parte de ordenação em "Leads"
 
 - [ ] Adicionar campo para visualizar a data das mensagens no campo "Contatos"
 
