@@ -14,6 +14,7 @@ import {
   FileClock,
   Gauge,
   LogOut,
+  Mailbox,
   MenuIcon,
   Users,
   X,
@@ -69,6 +70,11 @@ const sidebarLinks = [
     title: "Histórico",
     path: "/history",
     icon: FileClock,
+  },
+  {
+    title: "Mailbox",
+    path: "/mailbox",
+    icon: Mailbox,
   },
 ];
 
