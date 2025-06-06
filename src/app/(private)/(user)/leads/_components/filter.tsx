@@ -22,11 +22,14 @@ export const FilterLeads = () => {
   const params = new URLSearchParams(searchParams.toString());
 
   const [order, setOrder] = useState("asc");
+  const [query, setQuery] = useState("asc");
 
   useEffect(() => {
     const orderBy = params.get("order");
+    const leadsQuery = params.get("q");
 
     if (orderBy) setOrder(orderBy);
+    if (leadsQuery) setQuery(leadsQuery);
   }, [searchParams]);
 
   const handleFilter = () => {

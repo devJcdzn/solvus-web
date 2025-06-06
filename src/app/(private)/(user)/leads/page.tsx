@@ -1,11 +1,17 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import Loading from "../../loading";
 import { FilterLeads } from "./_components/filter";
 import { LeadsCard } from "./_components/leads-card";
 import { useGetLeads } from "@/features/leads/api/use-get-leads";
 
 export default function LeadsPage() {
+  const params = useSearchParams();
+
+  const orderBy = params.get("order") || "";
+  const leadsQuery = params.get("query") || "";
+
   const { data, isLoading } = useGetLeads();
 
   if (!data || isLoading) return <Loading />;

@@ -13,9 +13,9 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { Info } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { SidebarTrigger } from "./sidebar";
-import React, { useContext } from "react";
+import React, { FormEvent, useContext, useState } from "react";
 import { UserData } from "@/app/(public)/(auth)/types/user-data";
 import { useGetUserInfo } from "@/features/user/api/use-get-user-info";
 
@@ -75,7 +75,15 @@ export const DashboardHeader = ({
   userData: Partial<UserData>;
 }) => {
   const pathname = usePathname();
+  const router = useRouter();
+
   const { data } = useGetUserInfo();
+  const [leadQuery, setLeadQuery] = useState("");
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    router.push(`/leads?q=${leadQuery}`);
+  };
 
   return (
     <header className="flex sticky top-0 z-40 rounded-lg border border-secondary sm:border-none left-0 bg-secondary/80 backdrop-blur-lg p-3 w-full justify-between items-center">
@@ -84,10 +92,12 @@ export const DashboardHeader = ({
         <HeaderBreadcrumb path={pathname} />
       </div>
       <div className="flex items-center gap-4 p-2 rounded-full bg-background">
-        <form action="" className="hidden sm:block">
+        <form onSubmit={handleSubmit} className="hidden sm:block">
           <Input
             type="text"
-            placeholder="Pesquisar"
+            onChange={(e) => setLeadQuery(e.target.value)}
+            defaultValue={leadQuery}
+            placeholder="Pesquisar Leads"
             className="bg-background rounded-full"
           />
         </form>
