@@ -1,9 +1,9 @@
 import { getLeads } from "@/app/(private)/(user)/leads/actions";
 import { useQuery } from "@tanstack/react-query";
 
-export const useGetLeads = () => {
+export const useGetLeads = (orderby?: string, leadsQuery?: string) => {
   const query = useQuery({
-    queryKey: ["leads"],
+    queryKey: ["leads", orderby, leadsQuery],
     queryFn: async () => {
       const data = await getLeads();
 

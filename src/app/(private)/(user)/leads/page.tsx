@@ -12,7 +12,7 @@ export default function LeadsPage() {
   const orderBy = params.get("order") || "";
   const leadsQuery = params.get("query") || "";
 
-  const { data, isLoading } = useGetLeads();
+  const { data, isLoading } = useGetLeads(orderBy, leadsQuery);
 
   if (!data || isLoading) return <Loading />;
 
