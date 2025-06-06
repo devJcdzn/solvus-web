@@ -1,6 +1,7 @@
 "use client";
 
 import Loading from "../../loading";
+import { FilterLeads } from "./_components/filter";
 import { LeadsCard } from "./_components/leads-card";
 import { useGetLeads } from "@/features/leads/api/use-get-leads";
 
@@ -12,6 +13,7 @@ export default function LeadsPage() {
   return (
     <div className="p-6 mt-5 bg-background rounded-xl border">
       <div className="px-2 md:px-6 grid grid-cols-1 gap-6">
+        <FilterLeads />
         {data?.conversas && Object.keys(data.conversas).length > 0 ? (
           Object.entries(data.conversas).map(([assistantName, conversas]) =>
             Array.isArray(conversas) && conversas.length > 0 ? (

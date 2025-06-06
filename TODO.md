@@ -36,7 +36,7 @@
 
 - [ ] Criação da Página de chat com assistente dentro da plataforma
 
-- [ ] Criar campo "Mailboxes" no painel
+- [x] Criar campo "Mailboxes" no painel
 
 - [ ] Criar tela com campo para selecionar os leads e digitar a mensagem em "Mailboxes"
 
