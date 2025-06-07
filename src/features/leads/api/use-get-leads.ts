@@ -5,7 +5,7 @@ export const useGetLeads = (orderby?: string, leadsQuery?: string) => {
   const query = useQuery({
     queryKey: ["leads", orderby, leadsQuery],
     queryFn: async () => {
-      const data = await getLeads();
+      const data = await getLeads(orderby, leadsQuery);
 
       return data;
     },

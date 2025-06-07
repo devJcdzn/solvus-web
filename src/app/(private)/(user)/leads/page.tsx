@@ -10,7 +10,7 @@ export default function LeadsPage() {
   const params = useSearchParams();
 
   const orderBy = params.get("order") || "";
-  const leadsQuery = params.get("query") || "";
+  const leadsQuery = params.get("q") || "";
 
   const { data, isLoading } = useGetLeads(orderBy, leadsQuery);
 
