@@ -26,6 +26,14 @@ export const ChatInterface = () => {
   const [contacts, setContacts] = useState<Contact[]>([]);
 
   useEffect(() => {
+    const contactId = params.get("chat");
+    if (contactId) {
+      const contact = parsedContacts?.find((c) => c.id === contactId);
+      if (contact) setSelectedContact(contact);
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
     setContacts(sampleContacts);
   }, []);
 

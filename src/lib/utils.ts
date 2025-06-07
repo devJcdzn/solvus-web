@@ -106,7 +106,7 @@ export function transformChatData(raw: RawChatResponse): Contact {
   return {
     id: records[0]?.key.remoteJid ?? "unknown",
     name: records[0]?.pushName || "Contato",
-    avatar: "/placeholder.svg",
+    avatar: "",
     lastMessage: lastMsg?.content || "",
     timestamp: lastMsg?.timestamp || "",
     unread: 0,

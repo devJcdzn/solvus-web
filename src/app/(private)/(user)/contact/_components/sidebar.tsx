@@ -71,10 +71,7 @@ export const SidebarChats = ({
               onClick={() => onSelectContact(contact)}
             >
               <Avatar className="h-12 w-12">
-                <AvatarImage
-                  src={contact.avatar || "/placeholder.svg"}
-                  alt={contact.name}
-                />
+                <AvatarImage src={contact.avatar || ""} alt={contact.name} />
                 <AvatarFallback>{fallback}</AvatarFallback>
               </Avatar>
               <div className="flex-1 min-w-0">
