@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { Info } from "lucide-react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { SidebarTrigger } from "./sidebar";
 import React, { FormEvent, useContext, useState } from "react";
 import { UserData } from "@/app/(public)/(auth)/types/user-data";
@@ -75,6 +75,8 @@ export const DashboardHeader = ({
   userData: Partial<UserData>;
 }) => {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams.toString());
   const router = useRouter();
 
   const { data } = useGetUserInfo();
@@ -82,7 +84,9 @@ export const DashboardHeader = ({
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    router.push(`/leads?q=${leadQuery}`);
+    params.set("q", leadQuery);
+    router.push(`/leads?${params.toString()}`);
+    setLeadQuery("");
   };
 
   return (
@@ -96,7 +100,7 @@ export const DashboardHeader = ({
           <Input
             type="text"
             onChange={(e) => setLeadQuery(e.target.value)}
-            defaultValue={leadQuery}
+            value={leadQuery}
             placeholder="Pesquisar Leads"
             className="bg-background rounded-full"
           />

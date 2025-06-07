@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-import { Filter } from "lucide-react";
+import { Filter, X } from "lucide-react";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -43,6 +43,12 @@ export const FilterLeads = () => {
     replace(`${pathname}?${params.toString()}`);
   };
 
+  const handleRemoveFilters = () => {
+    params.delete("order");
+    params.delete("q");
+    replace(`${pathname}`);
+  };
+
   return (
     <div className="flex items-center justify-between gap-2 w-full sm:w-fit">
       <div className={cn("grid gap-2 flex-1 sm:flex-none")}>
@@ -66,6 +72,17 @@ export const FilterLeads = () => {
         <Filter className="size-4" />
         <span className="sr-only">Filtrar</span>
       </Button>
+      {(orderBy || leadsQuery) && (
+          <Button
+            onClick={handleRemoveFilters}
+            size={"sm"}
+            variant={"destructive"}
+            className=" w-fit rounded-lg sm:w-auto"
+          >
+            <X className="size-4" />
+            <span className="sr-only">Remover filtros</span>
+          </Button>
+        )}
     </div>
   );
 };
