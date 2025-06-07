@@ -31,6 +31,8 @@ export interface Message {
   id: string;
   content: string;
   timestamp: string;
+  date: string;
+  messageTimestamp: number;
   sender: "me" | "them";
   senderName?: string;
   status: "sent" | "delivered" | "read";

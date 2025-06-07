@@ -80,20 +80,26 @@ interface RawChatResponse {
 export function transformChatData(raw: RawChatResponse): Contact {
   const records = raw.chat.messages.records;
 
-  const messages: Message[] = records.map((msg) => ({
-    id: msg.id,
-    content: msg.message?.conversation || "",
-    timestamp: new Date(msg.messageTimestamp * 1000).toLocaleTimeString(
-      "pt-BR",
-      {
+  const messages: Message[] = records.map((msg) => {
+    const date = new Date(msg.messageTimestamp * 1000);
+    return {
+      id: msg.id,
+      content: msg.message?.conversation || "",
+      timestamp: date.toLocaleTimeString("pt-BR", {
         hour: "2-digit",
         minute: "2-digit",
-      }
-    ),
-    sender: msg.key.fromMe ? "me" : "them",
-    senderName: msg.pushName || undefined,
-    status: mapStatus(msg),
-  }));
+      }),
+      date: date.toLocaleDateString("pt-BR", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      }),
+      messageTimestamp: msg.messageTimestamp,
+      sender: msg.key.fromMe ? "me" : "them",
+      senderName: msg.pushName || undefined,
+      status: mapStatus(msg),
+    };
+  });
 
   const lastMsg = messages.at(-1);
 

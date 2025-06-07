@@ -24,13 +24,13 @@
 
 - [x] Criar card novo para números de chats e números de mensagens recebidas
 
-- [1/2] Fazer busca funcionar na pagina de leads e mostrar os leads resultantes
+- [x] Fazer busca funcionar na pagina de leads e mostrar os leads resultantes
 
 - [ ] Ao Clicar no lead em "Leads", entrar na conversa dele em conversas
 
 - [x] Criar parte de ordenação em "Leads"
 
-- [ ] Adicionar campo para visualizar a data das mensagens no campo "Contatos"
+- [x] Adicionar campo para visualizar a data das mensagens no campo "Contatos"
 
 - [ ] Criação da Página de chat anônimo por assistente
 
