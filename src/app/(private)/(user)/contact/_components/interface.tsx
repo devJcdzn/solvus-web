@@ -8,9 +8,15 @@ import { sampleContacts } from "@/lib/const";
 import { SidebarChats } from "./sidebar";
 import { ChatArea } from "./chat-area";
 import { useGetContacts } from "@/features/contacts/api/use-get-contacts";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export const ChatInterface = () => {
   const isMobile = useMobile();
+
+  const pathname = usePathname();
+  const { replace } = useRouter();
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams.toString());
 
   const { data, isLoading } = useGetContacts();
   const parsedContacts = data && transformChatContactsToContacts(data.chats);
@@ -24,6 +30,9 @@ export const ChatInterface = () => {
   }, []);
 
   const handleContactSelect = (contact: Contact) => {
+    params.set("chat", contact.id);
+    replace(`${pathname}?${params.toString()}`);
+
     setSelectedContact(contact);
     if (isMobile) {
       setShowChat(true);

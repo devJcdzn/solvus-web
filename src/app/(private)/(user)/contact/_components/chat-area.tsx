@@ -8,6 +8,7 @@ import { ArrowLeft, MoreVertical, Search } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useGetChatData } from "@/features/contacts/api/use-get-chat-data";
 import { transformChatData } from "@/lib/utils";
+import { useSearchParams } from "next/navigation";
 
 interface ChatAreaProps {
   contact: Contact;
@@ -16,7 +17,12 @@ interface ChatAreaProps {
 }
 
 export const ChatArea = ({ contact, onBack, isMobile }: ChatAreaProps) => {
-  const { data, isLoading } = useGetChatData(contact.id);
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams.toString());
+
+  const contactId = params.get("chat") || "";
+
+  const { data, isLoading } = useGetChatData(contactId);
   const parsedChats = data && transformChatData(data);
 
   const firstWord = contact.name?.split("-")[0]?.trim() || "";
@@ -35,16 +41,12 @@ export const ChatArea = ({ contact, onBack, isMobile }: ChatAreaProps) => {
       }
     };
 
-    // Scroll immediately
     scrollToBottom();
 
-    // Scroll again after a short delay to ensure content is rendered
     const timeoutId = setTimeout(scrollToBottom, 100);
 
     return () => clearTimeout(timeoutId);
   }, [parsedChats?.messages]);
-
-  console.log({ data: data?.chat.messages });
 
   return (
     <div className="flex flex-col h-full">
@@ -94,10 +96,18 @@ export const ChatArea = ({ contact, onBack, isMobile }: ChatAreaProps) => {
               )
                 .sort(([dateA], [dateB]) => {
                   // Convert dates to timestamps for comparison
-                  const [dayA, monthA, yearA] = dateA.split('/').map(Number);
-                  const [dayB, monthB, yearB] = dateB.split('/').map(Number);
-                  const timestampA = new Date(yearA, monthA - 1, dayA).getTime();
-                  const timestampB = new Date(yearB, monthB - 1, dayB).getTime();
+                  const [dayA, monthA, yearA] = dateA.split("/").map(Number);
+                  const [dayB, monthB, yearB] = dateB.split("/").map(Number);
+                  const timestampA = new Date(
+                    yearA,
+                    monthA - 1,
+                    dayA
+                  ).getTime();
+                  const timestampB = new Date(
+                    yearB,
+                    monthB - 1,
+                    dayB
+                  ).getTime();
                   return timestampA - timestampB;
                 })
                 .map(([date, messages]) => (
@@ -113,7 +123,9 @@ export const ChatArea = ({ contact, onBack, isMobile }: ChatAreaProps) => {
                         <div
                           key={msg.id}
                           className={`flex ${
-                            msg.sender === "me" ? "justify-end" : "justify-start"
+                            msg.sender === "me"
+                              ? "justify-end"
+                              : "justify-start"
                           }`}
                         >
                           <div
@@ -175,6 +187,12 @@ export const ChatArea = ({ contact, onBack, isMobile }: ChatAreaProps) => {
                 ))}
               <div ref={messagesEndRef} />
             </>
+          ) : isLoading ? (
+            <div className="place-items-center">
+              <p className="text-muted-foreground animate-pulse">
+                Carregando dados da conversa...
+              </p>
+            </div>
           ) : (
             <div className="place-items-center">
               <p className="text-muted-foreground">

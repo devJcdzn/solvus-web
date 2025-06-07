@@ -30,7 +30,10 @@ export const SidebarChats = ({
       {/* Header */}
       <div className="flex items-center justify-between p-3 bg-[#202c33] rounded-tl-lg">
         <Avatar className="h-10 w-10">
-          <AvatarImage src={userData.time?.logo} />
+          <AvatarImage
+            src={`${process.env.NEXT_PUBLIC_S3_FILES}/${userData.time?.logo}`}
+            className="object-cover"
+          />
           <AvatarFallback>{userData.time?.nome[0]}</AvatarFallback>
         </Avatar>
       </div>
