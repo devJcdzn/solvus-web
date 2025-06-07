@@ -20,23 +20,23 @@
 
 - [x] Trocar "Leads" por "Conversas" no numero de leads dentro da dashboard
 
-- [ ] Criar um card novo na dashboard para gráfico de mapa de calor
-
 - [x] Criar card novo para números de chats e números de mensagens recebidas
 
 - [x] Fazer busca funcionar na pagina de leads e mostrar os leads resultantes
 
-- [ ] Ao Clicar no lead em "Leads", entrar na conversa dele em conversas
+- [x] Ao Clicar no lead em "Leads", entrar na conversa dele em conversas
 
 - [x] Criar parte de ordenação em "Leads"
 
 - [x] Adicionar campo para visualizar a data das mensagens no campo "Contatos"
 
+- [x] Criar campo "Mailboxes" no painel
+
 - [ ] Criação da Página de chat anônimo por assistente
 
 - [ ] Criação da Página de chat com assistente dentro da plataforma
 
-- [x] Criar campo "Mailboxes" no painel
+- [ ] Criar um card novo na dashboard para gráfico de mapa de calor
 
 - [ ] Criar tela com campo para selecionar os leads e digitar a mensagem em "Mailboxes"
 
