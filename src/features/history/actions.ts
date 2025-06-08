@@ -18,3 +18,18 @@ export async function getHistory() {
     throw new Error((err as Error).message);
   }
 }
+
+export async function useGetHistoryChat(threadId: string) {
+  const token = (await cookies()).get("login@solvus-token")?.value;
+
+  try {
+    const { data } = await api.post("/historyChat", {
+      Authorization: `Bearer ${token}`,
+      thread_id: threadId,
+    });
+
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+}
