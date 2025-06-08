@@ -66,7 +66,7 @@ export const ChatContent = () => {
           </>
         )}
       </div>
-      <div className="mx-auto bg-muted w-fit mt-8 p-4 rounded-lg text-sm">
+      <div className="mx-auto bg-muted w-fit mt-8 px-4 py-3 rounded-lg text-sm">
         Conversa Encerrada
       </div>
     </div>
