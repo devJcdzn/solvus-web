@@ -223,3 +223,37 @@ export const sampleContacts: Contact[] = [
     ],
   },
 ];
+
+export const messages = [
+  {
+    id: "126",
+    id_usuario: "13",
+    id_agente: "",
+    conteudo:
+      "Opa, irmão, tudo certo? lfaoeiboazndlaepjapnae nodpadpmapdojapowd",
+    thread_id: "thread_aLuzxP6iCUZFI4qi4Hg0DqdI",
+    custo: "0",
+    regiao: "",
+  },
+  {
+    id: "127",
+    id_usuario: "13",
+    id_agente: "",
+    conteudo:
+      "Opa, irmão, tudo certo? ladnwoied dindodoandpo odinapwjpd pdnpawjdpad pdpajwspmwdn awodianwdmwd adnapwd",
+    thread_id: "thread_aLuzxP6iCUZFI4qi4Hg0DqdI",
+    custo: "0",
+    regiao: "",
+  },
+  {
+    id: "128",
+    id_usuario: "13",
+    id_agente: "",
+    conteudo: "Opa, irmão, tudo certo?",
+    thread_id: "thread_aLuzxP6iCUZFI4qi4Hg0DqdI",
+    custo: "0",
+    regiao: "",
+  },
+];
+
+const avatar = "assets/images/logo-dana.png";

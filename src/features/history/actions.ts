@@ -2,7 +2,7 @@
 
 import { api } from "@/lib/api";
 import { cookies } from "next/headers";
-import { HistoryResponse } from "./types";
+import { ChatHistoryResponse, HistoryResponse } from "./types";
 
 export async function getHistory() {
   const token = (await cookies()).get("login@solvus-token")?.value;
@@ -19,11 +19,11 @@ export async function getHistory() {
   }
 }
 
-export async function useGetHistoryChat(threadId: string) {
+export async function getHistoryChat(threadId: string) {
   const token = (await cookies()).get("login@solvus-token")?.value;
 
   try {
-    const { data } = await api.post("/historyChat", {
+    const { data } = await api.post<ChatHistoryResponse>("/historyChat", {
       Authorization: `Bearer ${token}`,
       thread_id: threadId,
     });
@@ -31,5 +31,6 @@ export async function useGetHistoryChat(threadId: string) {
     return data;
   } catch (err) {
     console.log(err);
+    throw new Error("Error to get chat data.");
   }
 }

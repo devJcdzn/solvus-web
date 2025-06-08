@@ -24,3 +24,30 @@ export interface Content {
   conteudo: string;
   id_agente: string;
 }
+
+// Chat history
+
+export interface ChatHistoryResponse {
+  agente_avatar: AgenteAvatar
+  agente: Agente
+  mensagens: Mensagen[]
+}
+
+export interface AgenteAvatar {
+  avatar: string
+}
+
+export interface Agente {
+  agente_nome: string
+  avatar: string
+}
+
+export interface Mensagen {
+  id: string
+  id_usuario: string
+  id_agente: string
+  conteudo: string
+  thread_id: string
+  custo: string
+  regiao: string
+}
