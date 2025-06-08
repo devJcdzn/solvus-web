@@ -34,14 +34,15 @@ const pathTranslations: Record<string, string> = {
   reports: "Relatórios",
   analytics: "Anlytics",
   notifications: "Notificações",
-  help: "Ajuda",
+  help: "Ajuda"
 };
 
 const HeaderBreadcrumb = ({ path }: { path: string }) => {
   const segments = path.split("/").filter(Boolean); // remove vazios
-  const fullPaths = segments.map(
+  const filteredSegments = segments.filter(segment => segment !== "chat-history" && !segment.startsWith("thread"));
+  const fullPaths = filteredSegments.map(
     // biome-ignore lint/style/useTemplate: <explanation>
-    (_, i) => "/" + segments.slice(0, i + 1).join("/")
+    (_, i) => "/" + filteredSegments.slice(0, i + 1).join("/")
   );
 
   const translateSegment = (segment: string) => {
@@ -54,7 +55,7 @@ const HeaderBreadcrumb = ({ path }: { path: string }) => {
         <BreadcrumbItem>
           <BreadcrumbLink href="/">Dashboard</BreadcrumbLink>
         </BreadcrumbItem>
-        {segments.map((segment, i) => (
+        {filteredSegments.map((segment, i) => (
           <React.Fragment key={`segment-${segment}-${i}`}>
             <BreadcrumbSeparator key={`sep-${segment + i}`} />
             <BreadcrumbItem key={fullPaths[i]}>
