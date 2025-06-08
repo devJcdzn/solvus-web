@@ -67,3 +67,13 @@ Content-Type: application/json
 {
   "Authorization": "Bearer"
 }
+
+### Get History 
+POST https://solvus.io/api/rest/historyChat
+
+Content-Type: application/json
+
+{
+  "Authorization": "Bearer",
+  "thread_id" : "thread_id"
+}

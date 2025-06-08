@@ -52,7 +52,7 @@ export default function HistoryPage() {
                   </TableCell>
                   <TableCell>
                     <Link
-                      href={"#"}
+                      href={`/history/chat-history/${thread.id}`}
                       className="font-semibold underline text-primary"
                     >
                       Acessar
