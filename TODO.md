@@ -40,4 +40,4 @@
 
 - [ ] Criar tela com campo para selecionar os leads e digitar a mensagem em "Mailboxes"
 
-- [ ] Criar visualização do chat do histórico
+- [x] Criar visualização do chat do histórico
