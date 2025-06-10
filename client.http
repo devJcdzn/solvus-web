@@ -70,7 +70,6 @@ Content-Type: application/json
 
 ### Get History 
 POST https://solvus.io/api/rest/historyChat
-
 Content-Type: application/json
 
 {

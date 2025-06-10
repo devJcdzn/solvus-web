@@ -10,6 +10,7 @@ import { useSearchParams } from "next/navigation";
 import Loading from "./loading";
 import { ChatViewer } from "./_components/chats-viewer";
 import { ChatsData } from "./_components/chats-data";
+import { BrazilHeatMap } from "@/components/heat-map";
 
 export default function Home() {
   const params = useSearchParams();
@@ -44,6 +45,7 @@ export default function Home() {
           <ChatViewer data={data} />
         </div>
         <DashboardPieChart team={data.teamData} data={data.assistants} />
+        <BrazilHeatMap />
       </div>
     </div>
   );

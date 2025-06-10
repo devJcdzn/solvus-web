@@ -1,3 +1,10 @@
+import { BrazilHeatMap } from "@/components/heat-map";
+
 export default function AnalyticsPage() {
-  return "Alaytics Page";
+  return (
+    <>
+      {/* <BrazilHeatMap /> */}
+      "Analytics"
+    </>
+  );
 }

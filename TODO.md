@@ -36,7 +36,9 @@
 
 - [ ] Criação da Página de chat com assistente dentro da plataforma
 
-- [ ] Criar um card novo na dashboard para gráfico de mapa de calor
+- [x] Criar um card novo na dashboard para gráfico de mapa de calor
+    - [ ] Faltam alguns ajustes
+    - [ ] Endpoint necessário
 
 - [ ] Criar tela com campo para selecionar os leads e digitar a mensagem em "Mailboxes"
 
