@@ -40,6 +40,6 @@
     - [ ] Faltam alguns ajustes
     - [ ] Endpoint necessário
 
-- [ ] Criar tela com campo para selecionar os leads e digitar a mensagem em "Mailboxes"
+- [x] Criar tela com campo para selecionar os leads e digitar a mensagem em "Mailboxes"
 
 - [x] Criar visualização do chat do histórico
