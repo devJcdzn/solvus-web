@@ -32,7 +32,8 @@
 
 - [x] Criar campo "Mailboxes" no painel
 
-- [ ] Criação da Página de chat anônimo por assistente
+- [x] Criação da Página de chat anônimo por assistente
+    - [ ] Faltam alguns ajustes
 
 - [ ] Criação da Página de chat com assistente dentro da plataforma
 
