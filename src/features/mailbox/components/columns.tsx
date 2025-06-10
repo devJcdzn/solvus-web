@@ -10,6 +10,12 @@ export type Payment = {
   email: string;
 };
 
+export type Lead = {
+  remoteJid: string;
+  nome: string;
+  numero: string;
+};
+
 export const payments: Payment[] = [
   {
     id: "728ed52f",
@@ -85,7 +91,7 @@ export const payments: Payment[] = [
   },
 ];
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Lead>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -107,15 +113,11 @@ export const columns: ColumnDef<Payment>[] = [
     ),
   },
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "nome",
+    header: "Nome",
   },
   {
-    accessorKey: "email",
-    header: "Email",
-  },
-  {
-    accessorKey: "amount",
-    header: "Amount",
+    accessorKey: "numero",
+    header: "Numero",
   },
 ];
