@@ -7,7 +7,7 @@ export const useGetGuestChat = (chatSlug: string) => {
     queryKey: ["guest-chat", chatSlug],
     queryFn: async () => {
       const { data } = await api.post<GuestAssistantResponse>(
-        "/getGuestAssistants",
+        "/getGuestAssistant",
         {
           assistente: chatSlug,
         }
