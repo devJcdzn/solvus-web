@@ -7,8 +7,6 @@ export const useGetGuestChat = (chatSlug: string) => {
     queryFn: async () => {
       const data = await getGuestChat(chatSlug);
 
-      console.log(data);
-
       return data;
     },
   });
