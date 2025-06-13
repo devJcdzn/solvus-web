@@ -1,12 +1,13 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { InitialChat } from "./_components/initial-chat";
+import { InitialChat } from "../_components/initial-chat";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { SendHorizonal, Send, Sparkles, User } from "lucide-react";
+import { SendHorizonal, Sparkles, User } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useParams } from "next/navigation";
 
 interface ChatMessage {
   fromChat: boolean;
@@ -14,6 +15,9 @@ interface ChatMessage {
 }
 
 export default function ChatPage() {
+  const params = useParams();
+  const chatSlug = params.chat as string;
+
   const [chatStarted, setChatStarted] = useState(false);
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState<ChatMessage[]>([]);

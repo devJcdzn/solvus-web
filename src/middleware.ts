@@ -3,6 +3,7 @@ import { type NextRequest, NextResponse } from "next/server";
 const publicRoutes = [
   { path: "/login", role: "user", whenAuth: "redirect" },
   { path: "/admin/login", role: "admin", whenAuth: "redirect" },
+  { path: "/chat/:chat", whenAuth: "allow" },
 ];
 
 const REDIRECTS = {
@@ -26,8 +27,8 @@ export function middleware(request: NextRequest) {
   const isAuthenticatedAdmin = !!adminToken;
 
   const isAdminPath = pathname.startsWith("/dashboard");
-  const isPublicRoute = publicRoutes.some(route => route.path === pathname);
-  const routeConfig = publicRoutes.find(route => route.path === pathname);
+  const isPublicRoute = publicRoutes.some((route) => route.path === pathname);
+  const routeConfig = publicRoutes.find((route) => route.path === pathname);
 
   // ⚠️ Protegendo rotas privadas
   if (isAdminPath && !isAuthenticatedAdmin) {
