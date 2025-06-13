@@ -69,6 +69,15 @@ Content-Type: application/json
 }
 
 ### Get History 
+POST https://solvus.io/api/rest/getAssistant
+Content-Type: application/json
+
+{
+  "Authorization": "Bearer",
+  "id" : "id do assistente",
+}
+
+### Get Assistant 
 POST https://solvus.io/api/rest/historyChat
 Content-Type: application/json
 

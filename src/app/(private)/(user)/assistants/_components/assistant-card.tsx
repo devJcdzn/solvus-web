@@ -6,12 +6,21 @@ import Image from "next/image";
 import { useContext } from "react";
 import { Agente } from "../types";
 
-export const AssistantCard = ({ agent }: { agent: Agente }) => {
+export const AssistantCard = ({
+  agent,
+  handleClick,
+}: {
+  agent: Agente;
+  handleClick: () => void;
+}) => {
   const { userData } = useContext(SidebarContext);
 
   return (
-    <Card className="p-0 gap-0 relative overflow-hidden shadow-none 
-      hover:scale-105 transition-all cursor-pointer">
+    <Card
+      onClick={handleClick}
+      className="p-0 gap-0 relative overflow-hidden shadow-none 
+      hover:scale-105 transition-all cursor-pointer"
+    >
       <div className="w-full flex flex-col p-4">
         <Image
           src={`${process.env.NEXT_PUBLIC_S3_FILES}/assets/images/logo-dana.png`}
