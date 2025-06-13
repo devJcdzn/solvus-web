@@ -76,3 +76,12 @@ Content-Type: application/json
   "Authorization": "Bearer",
   "thread_id" : "thread_id"
 }
+
+
+### Get Guest Assistant
+POST https://solvus.io/api/rest/getGuestAssistant
+Content-Type: application/json
+
+{
+  "assistente" : "fortbras"
+}
