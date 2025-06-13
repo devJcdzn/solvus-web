@@ -1,23 +1,33 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { GuestAssistantResponse } from "@/features/guest-chat/types";
 import { Mic, Phone, SendHorizonal } from "lucide-react";
 import Image from "next/image";
 import { FormEvent } from "react";
 
 export const InitialChat = ({
+  data,
   onSubmit,
   message,
   setMessage,
 }: {
+  data: GuestAssistantResponse;
   message: string;
   onSubmit: (e: FormEvent) => void;
   setMessage: (message: string) => void;
 }) => {
+  const { agente } = data;
+
   return (
     <>
       <div className="grid place-items-center mb-10">
-        <Image src={"/solvus.png"} alt="Logo Solvus" width={120} height={120} />
-        <h1 className="text-4xl font-bold">Solvus</h1>
+        <Image
+          src={`${process.env.NEXT_PUBLIC_S3_FILES}/${agente.avatar}`}
+          alt={agente.nome}
+          width={120}
+          height={120}
+        />
+        <h1 className="text-4xl font-bold capitalize">{agente.navegador}</h1>
         <h3 className="text-2xl font-semibold text-muted-foreground mt-4">
           Como posso te ajudar hoje?
         </h3>

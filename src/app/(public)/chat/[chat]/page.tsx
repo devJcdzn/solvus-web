@@ -8,6 +8,7 @@ import { SendHorizonal, Sparkles, User } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useParams } from "next/navigation";
+import { useGetGuestChat } from "@/features/guest-chat/api/use-get-guest-chat";
 
 interface ChatMessage {
   fromChat: boolean;
@@ -18,9 +19,27 @@ export default function ChatPage() {
   const params = useParams();
   const chatSlug = params.chat as string;
 
+  const { data, isLoading, isError, error } = useGetGuestChat(chatSlug);
+
   const [chatStarted, setChatStarted] = useState(false);
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState<ChatMessage[]>([]);
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col h-screen items-center justify-center max-w-5xl mx-auto px-6 md:px-0">
+        <p>Carregando chat...</p>
+      </div>
+    );
+  }
+
+  if (isError || error || !data) {
+    return (
+      <div className="flex flex-col h-screen items-center justify-center max-w-5xl mx-auto px-6 md:px-0">
+        <p>Erro ao carregar chat.</p>
+      </div>
+    );
+  }
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -71,6 +90,7 @@ export default function ChatPage() {
         </div>
       ) : (
         <InitialChat
+          data={data}
           message={message}
           onSubmit={handleSubmit}
           setMessage={setMessage}
