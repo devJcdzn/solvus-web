@@ -39,7 +39,12 @@ const pathTranslations: Record<string, string> = {
 
 const HeaderBreadcrumb = ({ path }: { path: string }) => {
   const segments = path.split("/").filter(Boolean); // remove vazios
-  const filteredSegments = segments.filter(segment => segment !== "chat-history" && !segment.startsWith("thread"));
+  const filteredSegments = segments.filter(segment => 
+    segment !== "chat-history" &&
+    !segment.startsWith("thread") &&
+    // Exclude incrementing string IDs (e.g., "18", "42", etc.)
+    !(typeof segment === "string" && /^\d+$/.test(segment))
+  );
   const fullPaths = filteredSegments.map(
     // biome-ignore lint/style/useTemplate: <explanation>
     (_, i) => "/" + filteredSegments.slice(0, i + 1).join("/")
