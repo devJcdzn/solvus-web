@@ -23,7 +23,7 @@ export default function AssistantsPage() {
           <AssistantCard
             key={agent.ass_id}
             agent={agent}
-            handleClick={() => handleAssistantChat(agent.ass_id)}
+            handleClick={() => handleAssistantChat(agent.id)}
           />
         ))}
       </div>
