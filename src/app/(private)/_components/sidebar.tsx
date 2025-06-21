@@ -2,7 +2,7 @@
 
 import { logout } from "@/app/(public)/(auth)/login/actions/login-action";
 import { UserData } from "@/app/(public)/(auth)/types/user-data";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useGetUserInfo } from "@/features/user/api/use-get-user-info";
 import { useMediaQuery } from "@/hooks/use-mobile";
@@ -134,7 +134,7 @@ export const DashboardSidebar = () => {
           width={200}
           height={200}
           alt="logo-solvus.png"
-          className="object-cover size-10"
+          className="object-contain size-10"
         />
         <h2
           className={cn(
@@ -191,6 +191,10 @@ export const DashboardSidebar = () => {
             )}
           >
             <Avatar className="size-10">
+              <AvatarImage
+                src={`${process.env.NEXT_PUBLIC_S3_FILES}/${userData.time?.logo}`}
+                className="object-contain"
+              />
               <AvatarFallback>
                 {data?.usuario.nome[0] || userData.usuario?.nome[0]}
               </AvatarFallback>

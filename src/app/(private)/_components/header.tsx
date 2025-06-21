@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -34,16 +34,17 @@ const pathTranslations: Record<string, string> = {
   reports: "Relatórios",
   analytics: "Anlytics",
   notifications: "Notificações",
-  help: "Ajuda"
+  help: "Ajuda",
 };
 
 const HeaderBreadcrumb = ({ path }: { path: string }) => {
   const segments = path.split("/").filter(Boolean); // remove vazios
-  const filteredSegments = segments.filter(segment => 
-    segment !== "chat-history" &&
-    !segment.startsWith("thread") &&
-    // Exclude incrementing string IDs (e.g., "18", "42", etc.)
-    !(typeof segment === "string" && /^\d+$/.test(segment))
+  const filteredSegments = segments.filter(
+    (segment) =>
+      segment !== "chat-history" &&
+      !segment.startsWith("thread") &&
+      // Exclude incrementing string IDs (e.g., "18", "42", etc.)
+      !(typeof segment === "string" && /^\d+$/.test(segment))
   );
   const fullPaths = filteredSegments.map(
     // biome-ignore lint/style/useTemplate: <explanation>
@@ -124,6 +125,10 @@ export const DashboardHeader = ({
 
         <Avatar className="" asChild>
           <Link href={"/account"}>
+            <AvatarImage
+              src={`${process.env.NEXT_PUBLIC_S3_FILES}/${userData.time?.logo}`}
+              className="object-contain"
+            />
             <AvatarFallback className="">
               {data?.usuario.nome[0] || userData.usuario?.nome[0]}
             </AvatarFallback>
