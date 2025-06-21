@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useRef, useEffect } from "react";
 import { InitialChat } from "../_components/initial-chat";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -13,17 +13,29 @@ import { useGetGuestChat } from "@/features/guest-chat/api/use-get-guest-chat";
 interface ChatMessage {
   fromChat: boolean;
   message: string;
+  timestamp: Date;
 }
 
 export default function ChatPage() {
   const params = useParams();
   const chatSlug = params.chat as string;
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const { data, isLoading, isError, error } = useGetGuestChat(chatSlug);
 
   const [chatStarted, setChatStarted] = useState(false);
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState<ChatMessage[]>([]);
+  const [isSending, setIsSending] = useState(false);
+
+  // Auto scroll to bottom when new messages are added
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [chat]);
 
   if (isLoading) {
     return (
@@ -41,16 +53,40 @@ export default function ChatPage() {
     );
   }
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setChat((prev) => [
-      ...prev,
-      {
-        fromChat: false,
-        message,
-      },
-    ]);
+    
+    if (!message.trim() || isSending) return;
+
+    const userMessage: ChatMessage = {
+      fromChat: false,
+      message: message.trim(),
+      timestamp: new Date(),
+    };
+
+    setChat((prev) => [...prev, userMessage]);
+    setMessage("");
+    setIsSending(true);
+
     if (!chatStarted) setChatStarted(true);
+
+    // Simulate AI response (replace with actual API call)
+    setTimeout(() => {
+      const aiMessage: ChatMessage = {
+        fromChat: true,
+        message: "Esta é uma resposta simulada do assistente. Em uma implementação real, você faria uma chamada para a API do seu chatbot.",
+        timestamp: new Date(),
+      };
+      setChat((prev) => [...prev, aiMessage]);
+      setIsSending(false);
+    }, 1000);
+  };
+
+  const formatTime = (date: Date) => {
+    return date.toLocaleTimeString('pt-BR', { 
+      hour: '2-digit', 
+      minute: '2-digit' 
+    });
   };
 
   return (
@@ -58,35 +94,115 @@ export default function ChatPage() {
       {chatStarted ? (
         <div
           className="container mx-auto px-6 py-3 shadow min-h-[70lvh] rounded-lg 
-          flex flex-col justify-between gap-4"
+          flex flex-col justify-between gap-4 bg-background"
         >
-          <div className="flex-1 border p-4 rounded-lg">
-            {chat.map((c) => (
-              <div
-                key={c.message}
-                className={cn("flex justify-between w-full gap-6 items-start")}
-              >
-                <Avatar className="size-10">
+          {/* Chat Header */}
+          <div className="flex items-center gap-3 pb-3 border-b">
+            <Avatar className="size-8">
+              <AvatarFallback>
+                <Sparkles className="size-4" />
+              </AvatarFallback>
+            </Avatar>
+            <div>
+              <h3 className="font-semibold">Assistente</h3>
+              <p className="text-sm text-muted-foreground">Online</p>
+            </div>
+          </div>
+
+          {/* Messages Container */}
+          <div className="flex-1 overflow-y-auto max-h-[50vh] p-4 space-y-4">
+            {chat.length === 0 ? (
+              <div className="text-center text-muted-foreground py-8">
+                <Sparkles className="size-8 mx-auto mb-2 opacity-50" />
+                <p>Inicie uma conversa enviando uma mensagem</p>
+              </div>
+            ) : (
+              chat.map((c, index) => (
+                <div
+                  key={`${c.message}-${index}`}
+                  className={cn(
+                    "flex gap-3 items-start",
+                    c.fromChat ? "justify-start" : "justify-end"
+                  )}
+                >
+                  {c.fromChat && (
+                    <Avatar className="size-8 flex-shrink-0">
+                      <AvatarFallback>
+                        <Sparkles className="size-4" />
+                      </AvatarFallback>
+                    </Avatar>
+                  )}
+                  
+                  <div
+                    className={cn(
+                      "max-w-[80%] rounded-lg p-3 relative",
+                      c.fromChat
+                        ? "bg-muted border"
+                        : "bg-primary text-primary-foreground"
+                    )}
+                  >
+                    <p className="text-sm whitespace-pre-wrap break-words">
+                      {c.message}
+                    </p>
+                    <span
+                      className={cn(
+                        "text-xs mt-1 block",
+                        c.fromChat ? "text-muted-foreground" : "text-primary-foreground/70"
+                      )}
+                    >
+                      {formatTime(c.timestamp)}
+                    </span>
+                  </div>
+
+                  {!c.fromChat && (
+                    <Avatar className="size-8 flex-shrink-0">
+                      <AvatarFallback>
+                        <User className="size-4" />
+                      </AvatarFallback>
+                    </Avatar>
+                  )}
+                </div>
+              ))
+            )}
+            
+            {/* Loading indicator */}
+            {isSending && (
+              <div className="flex gap-3 items-start justify-start">
+                <Avatar className="size-8 flex-shrink-0">
                   <AvatarFallback>
-                    {c.fromChat ? <Sparkles /> : <User />}
+                    <Sparkles className="size-4" />
                   </AvatarFallback>
                 </Avatar>
-
-                <div className={cn("border p-3 w-full rounded-lg")}>
-                  {c.message}
+                <div className="bg-muted border rounded-lg p-3">
+                  <div className="flex gap-1">
+                    <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"></div>
+                    <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                    <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                  </div>
                 </div>
               </div>
-            ))}
+            )}
+            
+            <div ref={messagesEndRef} />
           </div>
-          <div className="flex w-full gap-2 items-center">
+
+          {/* Input Form */}
+          <form onSubmit={handleSubmit} className="flex w-full gap-2 items-center pt-3 border-t">
             <Input
               placeholder="Digite sua mensagem..."
               className="p-3 bg-muted"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              disabled={isSending}
             />
-            <Button size={"icon"}>
-              <SendHorizonal />
+            <Button 
+              type="submit" 
+              size="icon"
+              disabled={!message.trim() || isSending}
+            >
+              <SendHorizonal className="size-4" />
             </Button>
-          </div>
+          </form>
         </div>
       ) : (
         <InitialChat
