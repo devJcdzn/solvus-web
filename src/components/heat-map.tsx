@@ -45,7 +45,7 @@ export function BrazilHeatMap() {
   };
 
   return (
-    <Card className="w-full">
+    <Card className="w-full h-fit">
       <CardHeader>
         <CardTitle>Mapa de Calor</CardTitle>
       </CardHeader>
