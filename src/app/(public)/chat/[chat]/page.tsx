@@ -3,7 +3,7 @@
 import { FormEvent, useState, useRef, useEffect } from "react";
 import { InitialChat } from "../_components/initial-chat";
 import { cn } from "@/lib/utils";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { SendHorizonal, Sparkles, User } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -135,13 +135,17 @@ export default function ChatPage() {
           {/* Chat Header */}
           <div className="flex items-center gap-3 pb-3 border-b">
             <Avatar className="size-8">
+              <AvatarImage
+                src={`${process.env.NEXT_PUBLIC_S3_FILES}/${data.agente.avatar}`}
+                className="object-contain"
+              />
               <AvatarFallback>
                 <Sparkles className="size-4" />
               </AvatarFallback>
             </Avatar>
             <div>
-              <h3 className="font-semibold">Assistente</h3>
-              <p className="text-sm text-muted-foreground">Online</p>
+              <h3 className="font-semibold">{data.agente.nome}</h3>
+              {/* <p className="text-sm text-muted-foreground">Online</p> */}
             </div>
           </div>
 
