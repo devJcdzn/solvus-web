@@ -8,6 +8,13 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export function formatTime(date: Date) {
+  return date.toLocaleTimeString("pt-BR", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
 export function normalizarNumero(numero: string): string | null {
   // Remove sufixo do WhatsApp
   const limpo = numero.replace(/@s\.whatsapp\.net$/, "");

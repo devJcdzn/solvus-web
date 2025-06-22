@@ -21,3 +21,9 @@ export interface Agente {
   restrito: string;
   instancia: string;
 }
+
+export interface ChatMessage {
+  fromChat: boolean;
+  message: string;
+  timestamp: Date;
+}
