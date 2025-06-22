@@ -42,7 +42,7 @@ export const InitialChat = ({
           onChange={(e) => setMessage(e.target.value)}
           value={message}
           className="p-6 shadow-lg w-full max-w-full focus:shadow-primary/15 
-                border-none outline-0 ring-0 bg-muted 
+                border-none outline-0 ring-0 bg-background 
                 focus-within:outline-0 focus-within:ring-0 focus-within:border-none 
                 focus:border-none focus:outline-0 focus:ring-0 
                 focus-visible:border-none focus-visible:outline-0 focus-visible:ring-0"

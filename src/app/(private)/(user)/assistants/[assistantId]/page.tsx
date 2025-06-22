@@ -3,7 +3,6 @@
 import Loading from "@/app/(private)/loading";
 import { InitialChat } from "../_components/initial-chat";
 import { useGetAssistantChat } from "@/features/assistants/api/use-get-assistant-chat";
-import Image from "next/image";
 import { useParams } from "next/navigation";
 import { FormEvent, useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
@@ -11,6 +10,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { SendHorizonal, Sparkles, User } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import type {
+  Daum,
+  MessagePayload,
+} from "@/features/assistants/conversation/types";
+import { useGetUserInfo } from "@/features/user/api/use-get-user-info";
+import { useSendMessage } from "@/features/assistants/conversation/use-send-message";
 
 interface ChatMessage {
   fromChat: boolean;
@@ -23,16 +28,27 @@ export default function AssistantPage() {
   const assId = params.assistantId as string;
   const { data, isLoading, isError, error } = useGetAssistantChat(assId);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { data: userInfo } = useGetUserInfo();
 
   const [chatStarted, setChatStarted] = useState(false);
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState<ChatMessage[]>([]);
-  const [isSending, setIsSending] = useState(false);
+  const [threadId, setThreadId] = useState<string | null>(null);
+  const { mutate, isPending } = useSendMessage();
+  const [conversation, setConversation] = useState<Daum[]>([]);
 
   // Auto scroll to bottom when new messages are added
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  useEffect(() => {
+    // If conversation exists, start chat and set threadId
+    if (conversation && conversation.length > 0) {
+      setChatStarted(true);
+      setThreadId(conversation[conversation.length - 1].thread_id || null);
+    }
+  }, [conversation]);
 
   useEffect(() => {
     scrollToBottom();
@@ -41,7 +57,7 @@ export default function AssistantPage() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    if (!message.trim() || isSending) return;
+    if (!message.trim() || isPending) return;
 
     const userMessage: ChatMessage = {
       fromChat: false,
@@ -49,23 +65,52 @@ export default function AssistantPage() {
       timestamp: new Date(),
     };
 
+    // Prepare the payload according to MessagePayload
+    const sendMessageData: MessagePayload = {
+      name: data?.agente.nome ?? "",
+      voz: data?.agente.voz ?? "", // Set this as needed
+      user_id: userInfo?.usuario.id ?? "", // Correct user_id source
+      message: userMessage.message,
+      messageType: "conversation",
+      assistant_id: data?.agente.ass_id ?? "",
+      sk: data?.agente.sk ?? "",
+    };
+    if (threadId) {
+      sendMessageData.thread_id = threadId;
+    }
+
     setChat((prev) => [...prev, userMessage]);
     setMessage("");
-    setIsSending(true);
+
+    mutate(sendMessageData, {
+      // The response.data is an array of Daum objects (see types). Each Daum has a content array, where each content has a text.value.
+      // To add the assistant's reply to the chat, extract the text.value from the first Daum's content.
+      onSuccess: (response) => {
+        setConversation(response[0].data);
+        // Defensive: check if response.data[0] and its content exist
+        const firstDaum = response[0].data[0];
+        const assistantMessage =
+          firstDaum && firstDaum.content && firstDaum.content[0]
+            ? firstDaum.content[0].text.value
+            : "";
+        if (assistantMessage) {
+          setChat((prev) => [
+            ...prev,
+            {
+              fromChat: true,
+              message: assistantMessage,
+              timestamp: new Date(),
+            },
+          ]);
+        }
+        // Update threadId from the first message in the response
+        if (firstDaum && firstDaum.thread_id) {
+          setThreadId(firstDaum.thread_id);
+        }
+      },
+    });
 
     if (!chatStarted) setChatStarted(true);
-
-    // Simulate AI response (replace with actual API call)
-    setTimeout(() => {
-      const aiMessage: ChatMessage = {
-        fromChat: true,
-        message:
-          "Esta é uma resposta simulada do assistente. Em uma implementação real, você faria uma chamada para a API do seu chatbot.",
-        timestamp: new Date(),
-      };
-      setChat((prev) => [...prev, aiMessage]);
-      setIsSending(false);
-    }, 1000);
   };
 
   const formatTime = (date: Date) => {
@@ -168,7 +213,7 @@ export default function AssistantPage() {
             )}
 
             {/* Loading indicator */}
-            {isSending && (
+            {isPending && (
               <div className="flex gap-3 items-start justify-start">
                 <Avatar className="size-8 flex-shrink-0">
                   <AvatarFallback>
@@ -201,15 +246,15 @@ export default function AssistantPage() {
           >
             <Input
               placeholder="Digite sua mensagem..."
-              className="p-3 bg-muted"
+              className="p-3 bg-background"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              disabled={isSending}
+              disabled={isPending}
             />
             <Button
               type="submit"
               size="icon"
-              disabled={!message.trim() || isSending}
+              disabled={!message.trim() || isPending}
             >
               <SendHorizonal className="size-4" />
             </Button>
