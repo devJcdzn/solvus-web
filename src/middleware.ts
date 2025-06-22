@@ -17,6 +17,17 @@ const REDIRECTS = {
   },
 };
 
+function matchRoute(pathname: string, routePath: string) {
+  const routePattern = new RegExp(
+    "^" +
+      routePath
+        .replace(/:[^\/]+/g, "[^/]+") // /chat/:chat → /chat/[^/]+
+        .replace(/\//g, "\\/") +
+      "$"
+  );
+  return routePattern.test(pathname);
+}
+
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -27,10 +38,14 @@ export function middleware(request: NextRequest) {
   const isAuthenticatedAdmin = !!adminToken;
 
   const isAdminPath = pathname.startsWith("/dashboard");
-  const isPublicRoute = publicRoutes.some((route) => route.path === pathname);
-  const routeConfig = publicRoutes.find((route) => route.path === pathname);
+  const isPublicRoute = publicRoutes.some((route) =>
+    matchRoute(pathname, route.path)
+  );
+  const routeConfig = publicRoutes.find((route) =>
+    matchRoute(pathname, route.path)
+  );
 
-  // ⚠️ Protegendo rotas privadas
+  // Proteção de rotas privadas Admin
   if (isAdminPath && !isAuthenticatedAdmin) {
     if (pathname !== REDIRECTS.admin.login) {
       const redirectUrl = request.nextUrl.clone();
@@ -39,6 +54,7 @@ export function middleware(request: NextRequest) {
     }
   }
 
+  // Proteção de rotas privadas User
   if (!isAdminPath && !isPublicRoute && !isAuthenticatedUser) {
     if (pathname !== REDIRECTS.user.login) {
       const redirectUrl = request.nextUrl.clone();
@@ -47,7 +63,7 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  // ⚠️ Redirecionamento de usuários autenticados tentando acessar rotas públicas
+  // Redirecionamento de usuários autenticados tentando acessar rotas públicas
   if (routeConfig?.whenAuth === "redirect") {
     if (routeConfig.role === "admin" && isAuthenticatedAdmin) {
       if (pathname !== REDIRECTS.admin.dashboard) {
