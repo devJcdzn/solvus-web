@@ -156,7 +156,7 @@ export function DashboardPieChart({
           </div>
           <ChartContainer
             config={chartConfig}
-            className="mx-auto aspect-square max-h-[250px] "
+            className="mx-auto aspect-square max-h-[250px] flex-1"
           >
             <PieChart>
               <ChartTooltip
@@ -199,7 +199,6 @@ export function DashboardPieChart({
           ))}
         </div>
       </CardContent>
-      <CardFooter className="flex-col pt-2 border-t text-xs sm:text-sm text-muted-foreground text-center"></CardFooter>
     </Card>
   );
 }
