@@ -16,6 +16,7 @@ import {
   LogOut,
   Mailbox,
   MenuIcon,
+  Network,
   Users,
   X,
 } from "lucide-react";
@@ -52,7 +53,7 @@ const sidebarLinks = [
     icon: Bot,
   },
   {
-    title: "Analytics",
+    title: "Campanhas",
     path: "/analytics",
     icon: ChartCandlestick,
   },
@@ -62,9 +63,14 @@ const sidebarLinks = [
     icon: Contact,
   },
   {
-    title: "Contatos",
+    title: "Conversas",
     path: "/contact",
     icon: Users,
+  },
+  {
+    title: "Integrações",
+    path: "/integrations",
+    icon: Network,
   },
   {
     title: "Histórico",

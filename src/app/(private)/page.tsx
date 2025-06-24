@@ -156,7 +156,7 @@ export default function Home() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4 max-h-[250px] overflow-auto">
+            <div className="space-y-4 overflow-auto">
               {insights.map((insight, index) => (
                 <div
                   key={index}
