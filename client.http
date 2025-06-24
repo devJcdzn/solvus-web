@@ -16,13 +16,11 @@ Content-Type: application/json
 }
 
 ### Get assistants
-POST https://app.solvus.io/rest/assistants
+POST https://solvus.io/api/rest/assistants
 Content-Type: application/json
 
 {
-  "Authorization": "Bearer",
-  "startDate": "2025-05-09",
-  "endDate": "2025-05-11"
+  "Authorization": "Bearer"
 }
 
 
@@ -74,7 +72,7 @@ Content-Type: application/json
 
 {
   "Authorization": "Bearer",
-  "id" : "id do assistente",
+  "id" : "18",
 }
 
 ### Get Assistant 
@@ -92,5 +90,42 @@ POST https://solvus.io/api/rest/getGuestAssistant
 Content-Type: application/json
 
 {
-  "assistente" : "fortbras"
+  "assistente" : "dana"
 }
+
+### Get Assistant
+POST https://solvus.io/api/rest/getAssistant
+Content-Type: application/json
+
+{
+  "Authorization": "Bearer",
+  "id" : "18"
+}
+
+### Guest chat text-message
+POST https://webhook.dev.solvus.io/webhook/app-solvus-guest
+Content-Type: application/json
+
+{
+  "message":"Olá, tudo bem?",
+  "messageType":"conversation",
+  "assistant_id":"asst_rrZPc7XgzXFTiSVCCftZbzk2",
+  "sk":""
+}
+
+### Platform chat text-message
+POST https://webhook.dev.solvus.io/webhook/app-solvus
+Content-Type: application/json
+
+{
+  "name":"dana",
+  "voz": "EXh6ZGogIteemAupI8LZ",
+  "user_id": "13",
+  "message":"Olá, tudo bem?",
+  "messageType":"conversation",
+  "assistant_id":"asst_rrZPc7XgzXFTiSVCCftZbzk2",
+  "sk":""
+}
+
+###
+"base64":"apenas_se_for_audio",
