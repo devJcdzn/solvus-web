@@ -23,7 +23,7 @@ export const AssistantCard = ({
     >
       <div className="w-full flex flex-col p-4">
         <Image
-          src={`${process.env.NEXT_PUBLIC_S3_FILES}/assets/images/logo-dana.png`}
+          src={`${process.env.NEXT_PUBLIC_S3_FILES}/${agent.avatar}`}
           alt="logo dana"
           width={120}
           height={120}
