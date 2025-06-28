@@ -1,12 +1,13 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useGetLeads } from "@/features/leads/api/use-get-leads";
 import { columns, campaigns } from "@/features/mailbox/components/columns";
 import { DataTable } from "@/features/mailbox/components/data-table";
 import { Plus, SendHorizonal } from "lucide-react";
 import Loading from "../../loading";
+import Link from "next/link";
 
 export default function MailboxPage() {
   // const { data, isLoading } = useGetLeads();
@@ -20,10 +21,15 @@ export default function MailboxPage() {
       <div className="px-2 md:px-6 grid grid-cols-1 gap-6">
         <header className="py-2 flex items-center w-full justify-between">
           <h2 className="text-2xl font-semibold">Campanhas</h2>
-          <Button className="rounded-md bg-purple-700">
+          <Link
+            href="/mailbox/create"
+            className={buttonVariants({
+              className: "rounded-md bg-purple-700",
+            })}
+          >
             <Plus />
             Nova Campanha
-          </Button>
+          </Link>
         </header>
         <DataTable data={campaigns} columns={columns} />
         {/* <div className="flex flex-col md:flex-row gap-2 w-full items-center">
