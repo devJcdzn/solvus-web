@@ -24,10 +24,13 @@ export async function getData(startDate?: string, endDate?: string) {
 }
 
 export async function loadDashboardData(startDate?: string, endDate?: string) {
-  const { time, completions_openai, costs_openai, dados_uso } = await getData(
-    startDate,
-    endDate
-  );
+  const {
+    time,
+    completions_openai,
+    costs_openai,
+    dados_uso,
+    assuntos_conversas,
+  } = await getData(startDate, endDate);
 
   const [barChartData, pieChartData] = await Promise.all([
     prepareBarChartData({
@@ -37,19 +40,31 @@ export async function loadDashboardData(startDate?: string, endDate?: string) {
     preparePieChartData(costs_openai),
   ]);
 
+  // Destructure dados_uso for cleaner code
+  const {
+    quantidades_acessos,
+    percentual_acessos,
+    assistentes_usados,
+    quantidade_contatos,
+    quantidade_mensagens,
+    quantidade_chats,
+    chats,
+  } = dados_uso;
+
   const teamData = {
-    primaryColor: time?.cor_primaria ?? undefined,
-    secondaryColor: time?.cor_secundaria ?? undefined,
+    primaryColor: time?.cor_primaria,
+    secondaryColor: time?.cor_secundaria,
   };
 
   return {
-    access: dados_uso.quantidades_acessos,
-    access_percent: dados_uso.percentual_acessos,
-    assistants: dados_uso.assistentes_usados,
-    leads_length: dados_uso.quantidade_contatos,
-    messages_length: dados_uso.quantidade_mensagens,
-    chats_length: dados_uso.quantidade_chats,
-    chats: dados_uso.chats,
+    access: quantidades_acessos,
+    access_percent: percentual_acessos,
+    assistants: assistentes_usados,
+    leads_length: quantidade_contatos,
+    messages_length: quantidade_mensagens,
+    chats_length: quantidade_chats,
+    assuntos_conversas,
+    chats,
     teamData,
     barChartData,
     pieChartData,
