@@ -1,7 +1,6 @@
 export interface DashboardData {
   time: Time;
   dados_uso: accessData;
-  assuntos_conversas: AssuntosConversa[];
   completions_openai: CompletionsOpenai[];
   costs_openai: CostsOpenai[];
 }
@@ -19,6 +18,7 @@ export interface accessData {
   quantidades_acessos: number;
   percentual_acessos: number;
   assistentes_usados: string[];
+  assuntos_conversas: AssuntosConversa[];
   quantidade_contatos: number;
   quantidade_mensagens: number;
   quantidade_chats: number;
@@ -26,6 +26,7 @@ export interface accessData {
     [key: string]: ChatContact[];
   };
 }
+
 export interface AssuntosConversa {
   categoria: string;
   quantidade: number;

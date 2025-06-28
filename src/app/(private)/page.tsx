@@ -144,7 +144,7 @@ export default function Home() {
         <ChatViewer data={data} />
       </div>
       <div className="mt-4">
-        <DashboardPieChart team={data.teamData} data={data.assistants} />
+        <DashboardPieChart team={data.teamData} data={data.assuntos_conversas} />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
         <BrazilHeatMap />

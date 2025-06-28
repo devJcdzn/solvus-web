@@ -17,6 +17,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { cn } from "@/lib/utils";
+import { AssuntosConversa } from "@/features/dashboard/types";
 
 interface PieChartProps {
   primaryColor?: string;
@@ -30,16 +31,8 @@ const colorMap = {
   suporte: "#9B33FF",
   reclamacoes: "#FF33A6",
   curriculos: "#33FF8A",
+  outros: "#6B7280",
 };
-
-const chartData = [
-  { browser: "Produtos", visitors: 325, fill: colorMap.produtos },
-  { browser: "Onde Comprar", visitors: 201, fill: colorMap.ondeComprar },
-  { browser: "Garantia", visitors: 156, fill: colorMap.garantia },
-  { browser: "Suporte", visitors: 143, fill: colorMap.suporte },
-  { browser: "Reclamações", visitors: 89, fill: colorMap.reclamacoes },
-  { browser: "Currículos", visitors: 67, fill: colorMap.curriculos },
-];
 
 const chartConfig = {
   visitors: {
@@ -71,62 +64,61 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const fictionalData = [
-  {
-    name: "Produtos",
-    data: 325,
-    percent: 18,
-  },
-  {
-    name: "Onde Comprar",
-    data: 201,
-    percent: 25,
-  },
-  {
-    name: "Garantia",
-    data: 156,
-    percent: -12,
-  },
-  {
-    name: "Suporte",
-    data: 143,
-    percent: -2,
-  },
-  {
-    name: "Reclamações",
-    data: 89,
-    percent: 8,
-  },
-  {
-    name: "Currículos",
-    data: 67,
-    percent: 35,
-  },
-];
-
 export function DashboardPieChart({
   team,
   data,
 }: {
   team: PieChartProps;
-  data: string[];
+  data: AssuntosConversa[];
 }) {
-  // if (data.length === 0)
-  //   return (
-  //     <Card className="flex flex-col col-span-2">
-  //       <CardHeader className="items-center pb-0">
-  //         <CardTitle>Análise dos Assuntos das Conversas</CardTitle>
-  //       </CardHeader>
-  //       <CardContent className="flex-1 pb-0">
-  //         <p
-  //           className="text-xl font-normal text-muted-foreground
-  //         text-center"
-  //         >
-  //           Sem dados para análise.
-  //         </p>
-  //       </CardContent>
-  //     </Card>
-  //   );
+  console.log(data);
+
+  if (data?.length === 0 || !data) {
+    return (
+      <Card className="flex flex-col col-span-2">
+        <CardHeader className="items-center pb-0">
+          <CardTitle>Análise dos Assuntos das Conversas</CardTitle>
+        </CardHeader>
+        <CardContent className="flex-1 pb-0">
+          <p className="text-xl font-normal text-muted-foreground text-center">
+            Sem dados para análise.
+          </p>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  // Transform the data to match the chart format
+  const chartData = data?.map((item) => {
+    const normalizedCategoria = item.categoria
+      .toLowerCase()
+      .replace(/\s+/g, "");
+    const fill = `hsl(${Math.floor(Math.random() * 360)}, 70%, 60%)`;
+
+    return {
+      browser: item.categoria,
+      visitors: item.quantidade,
+      fill: fill,
+    };
+  });
+
+  // Calculate total for percentage calculations
+  const total = data.reduce((sum, item) => sum + item.quantidade, 0);
+
+  // Create cards data with percentages
+  const cardsData = data.map((item) => {
+    const percentage =
+      total > 0 ? Math.round((item.quantidade / total) * 100) : 0;
+    // Generate a random percentage change for demonstration
+    const percentChange = Math.floor(Math.random() * 40) - 20; // -20 to +20
+
+    return {
+      name: item.categoria,
+      data: item.quantidade,
+      percent: percentChange,
+      percentage: percentage,
+    };
+  });
 
   return (
     <Card className="flex flex-col col-span-2">
@@ -150,7 +142,9 @@ export function DashboardPieChart({
                     {item.browser}
                   </span>
                 </div>
-                <span className="font-semibold text-sm ml-1">{item.visitors}</span>
+                <span className="font-semibold text-sm ml-1">
+                  {item.visitors}
+                </span>
               </div>
             ))}
           </div>
@@ -177,7 +171,7 @@ export function DashboardPieChart({
           </ChartContainer>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3">
-          {fictionalData.map((card, index) => (
+          {cardsData.map((card, index) => (
             <div
               key={index}
               className="grid gap-1 place-items-center p-2 bg-blue-50 border-2 
@@ -187,6 +181,9 @@ export function DashboardPieChart({
                 {card.data}
               </span>
               <h2 className="text-sm text-muted-foreground">{card.name}</h2>
+              <span className="text-xs text-center text-gray-600">
+                {card.percentage}% do total
+              </span>
               <span
                 className={cn(
                   "text-xs text-center",

@@ -24,13 +24,10 @@ export async function getData(startDate?: string, endDate?: string) {
 }
 
 export async function loadDashboardData(startDate?: string, endDate?: string) {
-  const {
-    time,
-    completions_openai,
-    costs_openai,
-    dados_uso,
-    assuntos_conversas,
-  } = await getData(startDate, endDate);
+  const { time, completions_openai, costs_openai, dados_uso } = await getData(
+    startDate,
+    endDate
+  );
 
   const [barChartData, pieChartData] = await Promise.all([
     prepareBarChartData({
@@ -48,6 +45,7 @@ export async function loadDashboardData(startDate?: string, endDate?: string) {
     quantidade_contatos,
     quantidade_mensagens,
     quantidade_chats,
+    assuntos_conversas,
     chats,
   } = dados_uso;
 
