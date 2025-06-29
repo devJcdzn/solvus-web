@@ -18,7 +18,7 @@ export const LoginForm = () => {
 
   useEffect(() => {
     if (state.success) {
-      redirect("/");
+      redirect("/dashboard");
     }
   }, [state]);
 

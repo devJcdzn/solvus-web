@@ -57,15 +57,16 @@ export async function logout() {
 export async function setAdminInfo(usuario: Usuario, time: Time) {
   const payload = JSON.stringify({ usuario, time });
 
-  (await cookies()).set("aminInfo", payload, {
+  (await cookies()).set("adminInfo", payload, {
     path: "/",
     sameSite: "lax",
     maxAge: expires,
   });
 }
 
+
 export async function getSessionData() {
-  const userCookie = (await cookies()).get("aminInfo");
+  const userCookie = (await cookies()).get("adminInfo");
   if (!userCookie) return null;
 
   try {

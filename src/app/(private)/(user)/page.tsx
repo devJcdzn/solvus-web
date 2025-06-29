@@ -12,11 +12,11 @@ import {
   Rocket,
   Wrench,
 } from "lucide-react";
-import { FilterData } from "./_components/filter-data";
+import { FilterData } from "../_components/filter-data";
 import { useGetDashboardData } from "@/features/dashboard/api/use-get-data";
 import { useSearchParams } from "next/navigation";
-import Loading from "./loading";
-import { ChatViewer } from "./_components/chats-viewer";
+import Loading from "../loading";
+import { ChatViewer } from "../_components/chats-viewer";
 import { BrazilHeatMap } from "@/components/heat-map";
 import {
   Card,
@@ -25,7 +25,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { CreditCard } from "./_components/credits-card";
+import { CreditCard } from "../_components/credits-card";
 
 const insights = [
   {
@@ -146,6 +146,7 @@ export default function Home() {
       <div className="mt-4">
         <DashboardPieChart team={data.teamData} data={data.assuntos_conversas} />
       </div>
+      
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
         <BrazilHeatMap />
         <Card>
