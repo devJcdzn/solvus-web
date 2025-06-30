@@ -76,6 +76,24 @@ export default function AdminHome() {
 
   const totalCost = data.barChartData.reduce((sum, item) => sum + item.cost, 0);
 
+  const responseTimes = data.tempo_medio_resposta
+    ? Object.values(data.tempo_medio_resposta)
+        .map((time) => {
+          if (typeof time === "string") {
+            const match = time.match(/([\d.]+)\s*h?/i); // captura "2.3" de "2.3h" ou "2.3 h"
+            return match ? parseFloat(match[1]) : NaN;
+          }
+          return typeof time === "number" && isFinite(time) ? time : NaN;
+        })
+        .filter((time): time is number => !isNaN(time) && isFinite(time))
+    : [];
+
+  const averageResponseTime =
+    responseTimes.length > 0
+      ? responseTimes.reduce((sum, time) => sum + time, 0) /
+        responseTimes.length
+      : 0;
+
   return (
     <div className="p-6 mt-5 rounded-xl">
       <div className="flex gap-2 w-full  flex-col sm:flex-row items-center justify-between mb-6">
@@ -122,7 +140,11 @@ export default function AdminHome() {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle className="text-3xl font-extrabold">2.3s</CardTitle>
+            <CardTitle className="text-3xl font-extrabold">
+              {responseTimes.length > 0
+                ? `${averageResponseTime.toFixed(1)}s`
+                : "N/A"}
+            </CardTitle>
             <CardDescription>Tempo Médio Resposta IA</CardDescription>
             <CardDescription className="text-sm text-emerald-500">
               +12%
@@ -150,7 +172,7 @@ export default function AdminHome() {
         />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-        <BrazilHeatMap />
+        <BrazilHeatMap mapa_calor={data.mapa_calor} />
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-x-2">

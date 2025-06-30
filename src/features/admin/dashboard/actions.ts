@@ -46,6 +46,8 @@ export async function loadDashboardData(startDate?: string, endDate?: string) {
     quantidade_mensagens,
     quantidade_chats,
     assuntos_conversas,
+    tempo_medio_resposta,
+    mapa_calor,
     chats,
   } = dados_uso;
 
@@ -62,6 +64,8 @@ export async function loadDashboardData(startDate?: string, endDate?: string) {
     messages_length: quantidade_mensagens,
     chats_length: quantidade_chats,
     assuntos_conversas,
+    tempo_medio_resposta,
+    mapa_calor,
     chats,
     teamData,
     barChartData,

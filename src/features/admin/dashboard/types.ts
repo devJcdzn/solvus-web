@@ -19,12 +19,25 @@ export interface accessData {
   percentual_acessos: number;
   assistentes_usados: string[];
   assuntos_conversas: AssuntosConversa[];
+  mapa_calor: HeatMap;
   quantidade_contatos: number;
   quantidade_mensagens: number;
+  tempo_medio_resposta: {
+    [key: string]: string;
+  };
   quantidade_chats: number;
   chats: {
     [key: string]: ChatContact[];
   };
+}
+
+interface HeatMap {
+  [key: string]: MapKey[];
+}
+
+export interface MapKey {
+  uf: string;
+  quantidade: string;
 }
 
 export interface AssuntosConversa {
