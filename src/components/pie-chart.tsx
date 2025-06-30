@@ -71,8 +71,6 @@ export function DashboardPieChart({
   team: PieChartProps;
   data: AssuntosConversa[];
 }) {
-  console.log(data);
-
   if (data?.length === 0 || !data) {
     return (
       <Card className="flex flex-col col-span-2">
