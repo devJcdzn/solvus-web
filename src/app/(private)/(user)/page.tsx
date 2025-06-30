@@ -146,7 +146,7 @@ export default function Home() {
                 ? `${averageResponseTime.toFixed(1)}h`
                 : "N/A"}
             </CardTitle>
-            <CardDescription>Tempo Médio Resposta IA</CardDescription>
+            <CardDescription>Tempo Médio Conversa IA</CardDescription>
             <CardDescription className="text-sm text-emerald-500">
               +12%
             </CardDescription>
