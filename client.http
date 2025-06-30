@@ -7,12 +7,30 @@ Content-Type: application/json
   "senha": "123456"
 }
 
+### Admin Login
+POST https://solvus.io/api/rest/loginAdmin
+Content-Type: application/json
+
+{
+  "email": "dana@gmail.com",
+  "senha": "123456"
+}
+
+### Need to use REST CLIENT EXTENSION
+POST https://solvus.io/api/rest/dashboardAdmin
+Content-Type: application/json
+
+{
+  "Authorization": "Bearer "
+
+}
+
 ### Need to use REST CLIENT EXTENSION
 POST https://solvus.io/api/rest/dashboard
 Content-Type: application/json
 
 {
-  "Authorization": "Bearer"
+  "Authorization": "Bearer "
 }
 
 ### Get assistants
@@ -47,7 +65,7 @@ Content-Type: application/json
 
 {
   "Authorization": "Bearer",
-  "remoteJid" : "559183191259@s.whatsapp.net"
+  "remoteJid" : ""
 }
 
 ### Get Leads 

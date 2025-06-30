@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 import { UserData, Usuario } from "../../../types/user-data";
 import { Time } from "@/features/dashboard/types";
 
-const expires = 60 * 60 * 24 * 7; // 7 dias
+const expires = 60 * 60 * 24; // 1 dia
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export async function login(_formState: any, formData: FormData) {
@@ -63,7 +63,6 @@ export async function setAdminInfo(usuario: Usuario, time: Time) {
     maxAge: expires,
   });
 }
-
 
 export async function getSessionData() {
   const userCookie = (await cookies()).get("adminInfo");
