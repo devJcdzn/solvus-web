@@ -35,6 +35,7 @@ const pathTranslations: Record<string, string> = {
   analytics: "Anlytics",
   notifications: "Notificações",
   help: "Ajuda",
+  integrations: "Integrações"
 };
 
 const HeaderBreadcrumb = ({ path }: { path: string }) => {
