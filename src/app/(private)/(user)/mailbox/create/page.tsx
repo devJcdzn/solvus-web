@@ -55,7 +55,7 @@ export default function CreateCampaigns() {
             >
               Email
             </Button>
-            <Button
+            {/* <Button
               onClick={() => setCampaignType("whatsapp")}
               className={cn(
                 "rounded-sm flex-1",
@@ -65,7 +65,7 @@ export default function CreateCampaigns() {
               )}
             >
               WhatsApp
-            </Button>
+            </Button> */}
           </div>
 
           {campaignType === "email" && (
