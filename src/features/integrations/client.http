@@ -2,5 +2,5 @@ POST https://solvus.io/api/rest/integrations
 Content-Type: application/json
 
 {
-  "Authorization" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTE4MTA5NjMsImV4cCI6MTc1MTg5NzM2MywidWlkIjoiMTMiLCJlbWFpbCI6ImRhbmFAZ21haWwuY29tIiwibm9tZSI6IkRhbmEifQ.SjOOu-0wf8iXXeOzUgS4VfDsZrvpnbKWSNgi0nUyGJE"
+  "Authorization" : "Bearer "
 }

@@ -3,7 +3,7 @@ POST https://solvus.io/api/rest/assistantsAdmin
 Content-Type: application/json
 
 {
-  "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTE4MTM2MzYsImV4cCI6MTc1MTkwMDAzNiwidWlkIjoiOCIsImVtYWlsIjoiZGFuYUBnbWFpbC5jb20iLCJub21lIjoiRGFuYSJ9.FuR4DXR0jVMWBoedbCtXmO_pbMQ5jCSy7N56XhtKV9U"
+  "Authorization": "Bearer "
 }
 
 ### Get assistants
@@ -11,5 +11,5 @@ POST https://solvus.io/api/rest/upload/dana
 Content-Type: application/json
 
 {
-  "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTE4MTM2MzYsImV4cCI6MTc1MTkwMDAzNiwidWlkIjoiOCIsImVtYWlsIjoiZGFuYUBnbWFpbC5jb20iLCJub21lIjoiRGFuYSJ9.FuR4DXR0jVMWBoedbCtXmO_pbMQ5jCSy7N56XhtKV9U"
+  "Authorization": "Bearer "
 }

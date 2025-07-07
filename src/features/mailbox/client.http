@@ -3,7 +3,7 @@ POST https://solvus.io/api/rest/campaigns
 Content-Type: application/json
 
 {
-  "Authorization" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTE4MTI5NzIsImV4cCI6MTc1MTg5OTM3MiwidWlkIjoiMTMiLCJlbWFpbCI6ImRhbmFAZ21haWwuY29tIiwibm9tZSI6IkRhbmEifQ.gqXJSJhW98wgKxkFgcnTO3fH77UNSd5_aJCZNlKSAQg"
+  "Authorization" : "Bearer "
 }
 
 ###
@@ -11,5 +11,5 @@ POST https://solvus.io/api/rest/campaigns
 Content-Type: application/json
 
 {
-  "Authorization" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTE4MTMwNDcsImV4cCI6MTc1MTg5OTQ0NywidWlkIjoiOCIsImVtYWlsIjoiZGFuYUBnbWFpbC5jb20iLCJub21lIjoiRGFuYSJ9.fj1tnDugycfv00a_mVapbI2QRBOntL1L8JWXPtO7W8w"
+  "Authorization" : "Bearer "
 }
