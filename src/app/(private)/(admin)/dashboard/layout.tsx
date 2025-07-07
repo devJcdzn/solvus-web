@@ -29,7 +29,7 @@ async function DashboardContent({ children }: { children: ReactNode }) {
   }
 
   return (
-    <SidebarProvider userData={adminInfo}>
+    <SidebarProvider adminData={adminInfo}>
       <DashboardHeader userData={adminInfo} />
       <div className="bg-primary/80 w-full px-6 py-2 rounded-sm flex items-center gap-2">
         <Info className="size-8 text-secondary hidden md:block" />

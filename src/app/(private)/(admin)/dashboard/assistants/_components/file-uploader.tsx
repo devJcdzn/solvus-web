@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Trash2, FileText, UploadCloud } from "lucide-react";
+import { Trash2, FileText, UploadCloud, Loader2 } from "lucide-react";
 import { useUploadFile } from "@/features/admin/assistants/api/use-upload-file";
 
 const ACCEPTED_TYPES = [
@@ -16,7 +16,7 @@ function getFileIcon() {
 }
 
 // Placeholder bucket name
-const bucket = "my-bucket";
+const bucket = "dana";
 
 export function FileUploader() {
   const uploadFileMutation = useUploadFile("dana");
@@ -28,7 +28,6 @@ export function FileUploader() {
 
   // Upload files to API
   const handleFiles = async (fileList: FileList | null) => {
-    console.log(fileList);
     if (!fileList) return;
     setUploading(true);
     for (let i = 0; i < fileList.length; i++) {
@@ -37,19 +36,14 @@ export function FileUploader() {
       const formData = new FormData();
       formData.append("file", file);
       try {
-        // const res = await fetch(`https://solvus.io/api/rest/upload/dana`, {
-        //   method: "POST",
-        //   body: formData,
-        // });
-        console.log(formData);
-
-        uploadFileMutation.mutate(formData, {
-          onSuccess: (data) => {
-            console.log(data);
-            setFiles((prev) => [...prev, data]);
-          },
-          onError: (err) => console.log(err),
+        const res = await fetch(`https://api.solvus.io/upload/dana`, {
+          method: "POST",
+          body: formData,
         });
+
+        const data = await res.json();
+
+        setFiles((prev) => [...prev, data]);
       } catch (err) {
         // Optionally show error toast
         console.error("Upload error", err);
@@ -66,6 +60,7 @@ export function FileUploader() {
 
   // Delete file from API and remove from list
   const handleDelete = async (etag: string) => {
+    setUploading(true);
     try {
       await fetch(`https://api.solvus.io/delete/${bucket}/${etag}`, {
         method: "DELETE",
@@ -75,6 +70,8 @@ export function FileUploader() {
     } catch (err) {
       // Optionally show error toast
       console.error("Delete error", err);
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -97,7 +94,11 @@ export function FileUploader() {
           onClick={() => inputRef.current?.click()}
           style={{ cursor: "pointer" }}
         >
-          <UploadCloud className="size-10 text-blue-400 mb-2" />
+          {uploading ? (
+            <Loader2 className="size-10 text-blue-400 mb-2 animate-spin" />
+          ) : (
+            <UploadCloud className="size-10 text-blue-400 mb-2" />
+          )}
           <span className="text-sm text-gray-700 text-center">
             <b>Clique para fazer o upload</b> ou segure e solte
             <br />
@@ -132,7 +133,11 @@ export function FileUploader() {
                 onClick={() => handleDelete(file.etag)}
                 disabled={uploading}
               >
-                <Trash2 className="size-4" />
+                {uploading ? (
+                  <Loader2 className="size-4 animate-spin" />
+                ) : (
+                  <Trash2 className="size-4" />
+                )}
               </Button>
             </div>
           ))}

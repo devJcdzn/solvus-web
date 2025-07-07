@@ -1,14 +1,18 @@
 "use server";
 
-import { api } from "@/lib/api";
+import axios from "axios";
 
 export async function uploadFile(formData: FormData, bucket: string) {
   try {
-    const { data } = await api.post(`upload/${bucket}`, {
-      formData,
-    });
+    console.log(`https://api.solvus.io/upload/${bucket}`);
+    const { data } = await axios.post(
+      `https://api.solvus.io/upload/${bucket}`,
+      {
+        formData,
+      }
+    );
     return { data };
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
+    console.log(err.message);
   }
 }

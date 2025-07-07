@@ -6,14 +6,15 @@ import { api } from "@/lib/api";
 
 export async function getAssistants() {
   try {
-    const token = (await cookies()).get("login@solvus-token")?.value;
+    const token =
+      (await cookies()).get("login@solvus-token")?.value ||
+      (await cookies()).get("admin@solvus-token")?.value;
 
-    const { data } = await api.post<AssistantsData>(
-      `/assistants`,
-      {
-        Authorization: `Bearer ${token}`,
-      }
-    );
+    console.log(token);
+
+    const { data } = await api.post<AssistantsData>(`/assistants`, {
+      Authorization: `Bearer ${token}`,
+    });
 
     return data;
   } catch (err) {

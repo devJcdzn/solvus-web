@@ -15,6 +15,8 @@ export const AssistantCard = ({
 }) => {
   const { userData } = useContext(SidebarContext);
 
+  console.log(userData);
+
   return (
     <Card
       onClick={handleClick}

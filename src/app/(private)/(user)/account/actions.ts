@@ -20,10 +20,13 @@ export async function getProfileInfo(): Promise<{
       }
     );
 
+    console.log(data);
+
     return data;
   } catch (err) {
     console.log(err);
-    const userCookie = (await cookies()).get("userinfo");
+    const userCookie =
+      (await cookies()).get("userinfo") || (await cookies()).get("adminInfo");
     if (!userCookie) throw new Error("Error to fetch userData");
 
     try {

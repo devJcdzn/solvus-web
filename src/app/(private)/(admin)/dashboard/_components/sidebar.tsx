@@ -37,7 +37,8 @@ export const SidebarContext = createContext(
   {} as {
     expanded: boolean;
     setExpanded: Dispatch<SetStateAction<boolean>>;
-    userData: Partial<UserData>;
+    userData?: Partial<UserData>;
+    adminData?: Partial<UserData>;
   }
 );
 
@@ -85,7 +86,8 @@ const sidebarLinks = [
 ];
 
 export const DashboardSidebar = () => {
-  const { expanded, setExpanded, userData } = useContext(SidebarContext);
+  const { expanded, setExpanded, userData, adminData } =
+    useContext(SidebarContext);
   const { data } = useGetUserInfo();
 
   const pathname = usePathname();
@@ -96,13 +98,15 @@ export const DashboardSidebar = () => {
   };
 
   const userName =
-    data?.usuario.nome.split(" ")[0] || userData.usuario?.nome.split(" ")[0];
+    data?.usuario.nome.split(" ")[0] ||
+    userData?.usuario?.nome.split(" ")[0] ||
+    adminData?.usuario?.nome.split("")[0];
 
   const teamData = {
-    name: userData.time?.nome || "Solvus - DevTeam",
-    primaryColor: userData.time?.cor_primaria,
-    secondaryColor: userData.time?.cor_secundaria,
-    logo: userData.time?.logo,
+    name: userData?.time?.nome || "Solvus - DevTeam",
+    primaryColor: userData?.time?.cor_primaria,
+    secondaryColor: userData?.time?.cor_secundaria,
+    logo: userData?.time?.logo,
   };
 
   const logoUrl = teamData.logo
@@ -198,11 +202,11 @@ export const DashboardSidebar = () => {
           >
             <Avatar className="size-10">
               <AvatarImage
-                src={`${process.env.NEXT_PUBLIC_S3_FILES}/${userData.time?.logo}`}
+                src={`${process.env.NEXT_PUBLIC_S3_FILES}/${userData?.time?.logo}`}
                 className="object-contain"
               />
               <AvatarFallback>
-                {data?.usuario.nome[0] || userData.usuario?.nome[0]}
+                {data?.usuario.nome[0] || userData?.usuario?.nome[0]}
               </AvatarFallback>
             </Avatar>
             <span className="text-slate-950 text-xs">{userName}</span>
@@ -229,9 +233,11 @@ export const SidebarTrigger = () => {
 export const SidebarProvider = ({
   children,
   userData,
+  adminData,
 }: {
   children: ReactNode;
-  userData: Partial<UserData>;
+  userData?: Partial<UserData>;
+  adminData?: Partial<UserData>;
 }) => {
   const [expanded, setExpanded] = useState<boolean>(false);
   const isDesktop = useMediaQuery("(min-width: 1024px)");
@@ -241,7 +247,9 @@ export const SidebarProvider = ({
   }, [isDesktop]);
 
   return (
-    <SidebarContext.Provider value={{ expanded, setExpanded, userData }}>
+    <SidebarContext.Provider
+      value={{ expanded, setExpanded, userData, adminData }}
+    >
       <main className="flex h-screen min-h-screen bg-secondary overflow-hidden">
         {expanded && (
           <div

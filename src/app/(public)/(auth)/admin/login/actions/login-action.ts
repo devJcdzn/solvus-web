@@ -70,6 +70,7 @@ export async function getSessionData() {
 
   try {
     const parsed = JSON.parse(userCookie.value);
+    console.log(parsed);
     return parsed as { usuario: Usuario; time: Time };
   } catch {
     return null;
