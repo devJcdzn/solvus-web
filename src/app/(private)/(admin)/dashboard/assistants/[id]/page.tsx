@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Bot, Lock, Play, Database } from "lucide-react";
@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useParams } from "next/navigation";
 import { useGetAssistantChat } from "@/features/assistants/api/use-get-assistant-chat";
 import Loading from "@/app/(private)/loading";
+import Link from "next/link";
 
 export default function AdminAssistantsPage() {
   const params = useParams();
@@ -47,16 +48,19 @@ export default function AdminAssistantsPage() {
 
   const switchVectorStores = async (checked: boolean) => {
     try {
-      const response = await fetch("https://api.solvus.io/switch-vector-stores", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id,
-          ativo: checked,
-        }),
-      });
+      const response = await fetch(
+        "https://api.solvus.io/switch-vector-stores",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id,
+            ativo: checked,
+          }),
+        }
+      );
       const data = await response.json();
       console.log(data);
       setVectorStores(checked);
@@ -150,13 +154,17 @@ export default function AdminAssistantsPage() {
                 <CardTitle>Testar Assistente</CardTitle>
               </div>
               <div className="">
-                <Button
-                  className="rounded-sm text-xs bg-blue-500 hover:bg-blue-600"
-                  size={"sm"}
+                <Link
+                  href={`/assistants/${id}`}
+                  className={buttonVariants({
+                    className:
+                      "rounded-sm text-xs bg-blue-500 hover:bg-blue-600",
+                    size: "sm",
+                  })}
                 >
                   <Play />
                   Testar
-                </Button>
+                </Link>
               </div>
             </CardHeader>
           </Card>
