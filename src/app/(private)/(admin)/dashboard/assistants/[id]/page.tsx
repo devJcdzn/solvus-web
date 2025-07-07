@@ -5,7 +5,6 @@ import { Switch } from "@/components/ui/switch";
 import { Bot, Lock, Play, Database } from "lucide-react";
 import { FileUploader } from "../_components/file-uploader";
 import { useState } from "react";
-import axios from "axios";
 import { useParams } from "next/navigation";
 import { useGetAssistantChat } from "@/features/assistants/api/use-get-assistant-chat";
 import Loading from "@/app/(private)/loading";
@@ -27,11 +26,18 @@ export default function AdminAssistantsPage() {
   const sendPrompt = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.post("https://api.solvus.io/send-prompt", {
-        id,
-        prompt: prompt,
+      const response = await fetch("https://api.solvus.io/send-prompt", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id,
+          prompt: prompt,
+        }),
       });
-      console.log(response.data);
+      const data = await response.json();
+      console.log(data);
     } catch (error) {
       console.error("Error:", error);
     } finally {
@@ -41,14 +47,18 @@ export default function AdminAssistantsPage() {
 
   const switchVectorStores = async (checked: boolean) => {
     try {
-      const response = await axios.post(
-        "https://api.solvus.io/switch-vector-stores",
-        {
+      const response = await fetch("https://api.solvus.io/switch-vector-stores", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
           id,
           ativo: checked,
-        }
-      );
-      console.log(response.data);
+        }),
+      });
+      const data = await response.json();
+      console.log(data);
       setVectorStores(checked);
     } catch (error) {
       console.error("Error:", error);
@@ -57,11 +67,18 @@ export default function AdminAssistantsPage() {
 
   const switchAgentStatus = async (checked: boolean) => {
     try {
-      const response = await axios.post("https://api.solvus.io/switch-status", {
-        id,
-        ativo: checked,
+      const response = await fetch("https://api.solvus.io/switch-status", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id,
+          ativo: checked,
+        }),
       });
-      console.log(response.data);
+      const data = await response.json();
+      console.log(data);
       setAgentStatus(checked);
     } catch (error) {
       console.error("Error:", error);
