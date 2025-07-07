@@ -49,7 +49,7 @@ const sidebarLinks = [
   },
   {
     title: "Assistentes",
-    path: "#",
+    path: "/dashboard/assistants",
     icon: Bot,
   },
   {

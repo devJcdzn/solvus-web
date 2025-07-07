@@ -38,7 +38,7 @@ POST https://solvus.io/api/rest/assistants
 Content-Type: application/json
 
 {
-  "Authorization": "Bearer"
+  "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTE4MTY3NzUsImV4cCI6MTc1MTkwMzE3NSwidWlkIjoiMTMiLCJlbWFpbCI6ImRhbmFAZ21haWwuY29tIiwibm9tZSI6IkRhbmEifQ.Ys2lGVoiBMz5o1Kf1zlQtmFQafQWRGl7TYkzGSDOtX8"
 }
 
 
