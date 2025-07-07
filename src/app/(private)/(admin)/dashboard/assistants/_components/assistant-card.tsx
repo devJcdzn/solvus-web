@@ -1,10 +1,10 @@
 "use client";
 
-import { SidebarContext } from "@/app/(private)/(admin)/dashboard/_components/sidebar";
+import { SidebarContext } from "../../_components/sidebar";
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
 import { useContext } from "react";
-import { Agente } from "../types";
+import { Agente } from "@/features/assistants/type";
 
 export const AssistantCard = ({
   agent,
@@ -14,6 +14,8 @@ export const AssistantCard = ({
   handleClick: () => void;
 }) => {
   const { adminData } = useContext(SidebarContext);
+
+  console.log(adminData);
 
   return (
     <Card

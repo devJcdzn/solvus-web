@@ -11,7 +11,7 @@ export default function AdminAssistantsPage() {
   const { data, isLoading } = useGetAssistants();
 
   const handleAssistantChat = (assistantId: string) => {
-    router.push(`/assistants/${assistantId}`);
+    router.push(`/dashboard/assistants/${assistantId}`);
   };
 
   if (!data || isLoading) return <Loading />;

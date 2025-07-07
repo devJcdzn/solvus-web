@@ -16,11 +16,8 @@ function getFileIcon() {
 }
 
 // Placeholder bucket name
-const bucket = "dana";
 
-export function FileUploader() {
-  const uploadFileMutation = useUploadFile("dana");
-
+export function FileUploader({ bucket }: { bucket: string }) {
   const [files, setFiles] = useState<any[]>([]); // Store uploaded file info from API
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragActive, setDragActive] = useState(false);
@@ -36,7 +33,7 @@ export function FileUploader() {
       const formData = new FormData();
       formData.append("file", file);
       try {
-        const res = await fetch(`https://api.solvus.io/upload/dana`, {
+        const res = await fetch(`https://api.solvus.io/upload/${bucket}`, {
           method: "POST",
           body: formData,
         });

@@ -99,14 +99,14 @@ export const DashboardSidebar = () => {
 
   const userName =
     data?.usuario.nome.split(" ")[0] ||
-    userData?.usuario?.nome.split(" ")[0] ||
-    adminData?.usuario?.nome.split("")[0];
+    adminData?.usuario?.nome.split(" ")[0] ||
+    userData?.usuario?.nome.split(" ")[0];
 
   const teamData = {
-    name: userData?.time?.nome || "Solvus - DevTeam",
-    primaryColor: userData?.time?.cor_primaria,
-    secondaryColor: userData?.time?.cor_secundaria,
-    logo: userData?.time?.logo,
+    name: adminData?.time?.nome || userData?.time?.nome || "Solvus - DevTeam",
+    primaryColor: adminData?.time?.cor_primaria || userData?.time?.cor_primaria,
+    secondaryColor: adminData?.time?.cor_secundaria || userData?.time?.cor_secundaria,
+    logo: adminData?.time?.logo || userData?.time?.logo,
   };
 
   const logoUrl = teamData.logo
@@ -152,7 +152,7 @@ export const DashboardSidebar = () => {
             expanded ? "opacity-100" : "opacity-0 ml-0 w-0 overflow-hidden"
           )}
         >
-          {data?.time.nome || teamData.name} - Admin
+          {data?.time.nome || adminData?.time?.nome || userData?.time?.nome || teamData.name} - Admin
         </h2>
       </div>
 
@@ -202,11 +202,11 @@ export const DashboardSidebar = () => {
           >
             <Avatar className="size-10">
               <AvatarImage
-                src={`${process.env.NEXT_PUBLIC_S3_FILES}/${userData?.time?.logo}`}
+                src={`${process.env.NEXT_PUBLIC_S3_FILES}/${adminData?.time?.logo || userData?.time?.logo}`}
                 className="object-contain"
               />
               <AvatarFallback>
-                {data?.usuario.nome[0] || userData?.usuario?.nome[0]}
+                {data?.usuario.nome[0] || adminData?.usuario?.nome[0] || userData?.usuario?.nome[0]}
               </AvatarFallback>
             </Avatar>
             <span className="text-slate-950 text-xs">{userName}</span>

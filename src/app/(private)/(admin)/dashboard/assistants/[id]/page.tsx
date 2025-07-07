@@ -5,13 +5,15 @@ import { Switch } from "@/components/ui/switch";
 import { Bot, Lock, Play, Database } from "lucide-react";
 import { FileUploader } from "../_components/file-uploader";
 import { useState } from "react";
-import { api } from "@/lib/api";
 import axios from "axios";
 import { useParams } from "next/navigation";
+import { useGetAssistantChat } from "@/features/assistants/api/use-get-assistant-chat";
+import Loading from "@/app/(private)/loading";
 
 export default function AdminAssistantsPage() {
   const params = useParams();
   const id = params.id as string;
+  const { data, isLoading: fetching } = useGetAssistantChat(id);
 
   const [prompt, setPrompt] = useState(
     "Olá, sou o Assistente Virtual da Solvus! Estou aqui para ajudar você a automatizar tarefas, responder dúvidas frequentes e otimizar o atendimento ao cliente. Configure meus parâmetros, defina fluxos de conversa e personalize minhas respostas para garantir a melhor experiência possível aos seus usuários. Conte comigo para transformar seu atendimento!"
@@ -19,6 +21,8 @@ export default function AdminAssistantsPage() {
   const [agentStatus, setAgentStatus] = useState(false);
   const [vectorStores, setVectorStores] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const loading = isLoading || fetching;
 
   const sendPrompt = async () => {
     setIsLoading(true);
@@ -64,6 +68,8 @@ export default function AdminAssistantsPage() {
     }
   };
 
+  if (isLoading || !data) return <Loading />;
+
   return (
     <div className="p-6 mt-5">
       <div className="px-2 md:px-6 grid md:grid-cols-2 gap-4">
@@ -89,7 +95,7 @@ export default function AdminAssistantsPage() {
               disabled={true}
               className="mt-3 w-full bg-blue-500 hover:bg-blue-600"
             >
-              {isLoading ? "Enviando..." : "Enviar Prompt"}
+              {loading ? "Enviando..." : "Enviar Prompt"}
             </Button>
           </CardContent>
         </Card>
@@ -163,7 +169,7 @@ export default function AdminAssistantsPage() {
         </Card>
 
         <div className="col-span-2 mt-4">
-          <FileUploader />
+          <FileUploader bucket={data.agente.bucket} />
         </div>
       </div>
     </div>

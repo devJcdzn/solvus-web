@@ -10,8 +10,8 @@ export default function AssistantsPage() {
 
   const { data, isLoading } = useGetAssistants();
 
-  const handleAssistantChat = (assistantId: string) => {
-    router.push(`/assistants/${assistantId}`);
+  const handleEditPage = (assistantId: string) => {
+    router.push(`/dashboard/assistants/${assistantId}`);
   };
 
   if (!data || isLoading) return <Loading />;
@@ -23,7 +23,7 @@ export default function AssistantsPage() {
           <AssistantCard
             key={agent.ass_id}
             agent={agent}
-            handleClick={() => handleAssistantChat(agent.id)}
+            handleClick={() => handleEditPage(agent.id)}
           />
         ))}
       </div>
