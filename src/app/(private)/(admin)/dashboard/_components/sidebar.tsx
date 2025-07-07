@@ -44,7 +44,7 @@ export const SidebarContext = createContext(
 const sidebarLinks = [
   {
     title: "Dashboard",
-    path: "#",
+    path: "/dashboard",
     icon: Gauge,
   },
   {

@@ -8,7 +8,9 @@ export async function getProfileInfo(): Promise<{
   usuario: Usuario;
   time: Time;
 } | null> {
-  const token = (await cookies()).get("login@solvus-token")?.value;
+  const token =
+    (await cookies()).get("login@solvus-token")?.value ||
+    (await cookies()).get("admin@solvus-token")?.value;
 
   try {
     const { data } = await api.post<{ usuario: Usuario; time: Time }>(
